@@ -28,7 +28,7 @@ Bonsai is built with modern mobile technologies for smooth performance and a del
 
 - **React Native + Expo** for cross-platform mobile development  
 - **TypeScript** for reliability and clean code  
-- **Next.js** for API integrations
+- **Nest.js** for API integrations
 
 
 
