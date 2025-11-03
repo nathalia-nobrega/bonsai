@@ -1,0 +1,27 @@
+{
+  "name": "bonsai",
+  "version": "1.0.0",
+  "description": "**A calm garden starts with Bonsai**   Your all-in-one garden manager and plant tracker.",
+  "main": "index.js",
+  "scripts": {
+    "mobile": "cd mobile && npx expo start",
+    "backend": "cd backend && npm run start:dev",
+    "backend:prod": "cd backend && npm run start:prod",
+    "install:all": "cd backend && npm install && cd ../mobile && npm install",
+    "dev": "concurrently \"npm run backend\" \"npm run mobile\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nathalia-nobrega/bonsai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nathalia-nobrega/bonsai/issues"
+  },
+  "homepage": "https://github.com/nathalia-nobrega/bonsai#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
