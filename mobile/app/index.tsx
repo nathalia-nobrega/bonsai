@@ -5,21 +5,23 @@ import {
   Image, 
   ImageBackground, 
   TouchableOpacity, 
-  StyleSheet, 
-  Alert 
+  StyleSheet
 } from "react-native";
 
-export default function Ihome() {
+import { useRouter } from "expo-router";
+
+export default function Index() {
+  const router = useRouter();
   return (
     <ImageBackground
-      source={require("../../assets/images/image.png")}
+      source={require("../assets/images/image.png")}
       style={styles.background}
       resizeMode="cover"
     >
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
           <Image
-            source={require("../../assets/images/florfofa.png")}
+            source={require("../assets/images/florfofa.png")}
             style={styles.image}
             resizeMode="cover"
           />
@@ -31,14 +33,16 @@ export default function Ihome() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => Alert.alert("Botão clicado")}
+          onPress={() => router.push("/signup")}
         >
           <Text style={styles.buttonText}>Get Started!</Text>
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
           Already have an account?{" "}
-          <Text style={styles.signInText}>Sign in</Text>
+          <TouchableOpacity  onPress={() => router.push("/signin")}>
+            <Text style={styles.signInText}>Sign in</Text>
+          </TouchableOpacity>
         </Text>
       </View>
     </ImageBackground>
@@ -99,5 +103,6 @@ const styles = StyleSheet.create({
   },
   signInText: {
     fontWeight: "900",
+    color: "white",
   },
 });

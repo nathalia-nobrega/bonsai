@@ -10,17 +10,20 @@ import {
   TextInput
 } from "react-native";
 
-export default function Ihome() {
+import { useRouter } from "expo-router";
+
+export default function Signup() {
+  const router = useRouter();
   return (
     <ImageBackground
-    source={require("../../assets/images/image.png")}
+    source={require("../assets/images/image.png")}
     style={styles.background}
     resizeMode="cover"
   >
     {/* Imagem flutuante */}
     <View style={styles.floatingImage}>
       <Image
-        source={require("../../assets/images/flor.png")}
+        source={require("../assets/images/flor.png")}
         resizeMode="cover"
       />
     </View>
@@ -31,10 +34,10 @@ export default function Ihome() {
         </Text>
 
       <View style={styles.container}>
-        <Text style={styles.label}>Email Adress</Text>
+        <Text style={styles.label}>Email Address</Text>
         <TextInput
             style={styles.input}
-            keyboardType="email-address"
+            keyboardType="email-address" 
             autoCapitalize="none"
             />
       </View>
@@ -43,14 +46,14 @@ export default function Ihome() {
         <Text style={styles.label}>Password</Text>
         <TextInput
             style={styles.input}
-            keyboardType="password-address"
+            secureTextEntry={true}
             autoCapitalize="none"
             />
       </View>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => Alert.alert("botao clicado")}
+          onPress={() => router.push("/(tabs)/home")}
         >
           <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>
@@ -142,4 +145,7 @@ const styles = StyleSheet.create({
   signInText: {
     fontWeight: "900",
   },
+  container:{
+    
+  }
 });
