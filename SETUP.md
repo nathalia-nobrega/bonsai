@@ -138,8 +138,13 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-## 📚 Documentação
+## Documentação da API
 
-- [Nest.js Docs](https://docs.nestjs.com)
-- [Expo Docs](https://docs.expo.dev)
-- [React Native Docs](https://reactnative.dev)
+### Para acessar nossa API, siga os seguintes passos:
+
+```bash
+npm run backend # no diretório raiz ou
+npm run start # no diretório do backend
+```
+
+✅ A documentação da API estará disponível em `http://localhost:3000/api/docs`

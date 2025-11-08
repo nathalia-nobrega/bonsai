@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { User } from "./entities/user.entity";
 import { UserResponseDto } from "./dto/user-response-dto";
-import { randomUUID } from "crypto";
 import { plainToInstance } from "class-transformer";
 
 @Injectable()
