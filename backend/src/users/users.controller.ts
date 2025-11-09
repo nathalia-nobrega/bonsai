@@ -1,6 +1,7 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Param, Post, Body, ValidationPipe } from "@nestjs/common";
 import { ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserResponseDto } from "./dto/user-response-dto";
+import { UserCreationDto } from "./dto/user-creation-dto";
 import { UsersService } from "./users.service";
 
 @ApiTags('bonsai')
@@ -16,5 +17,24 @@ export class UserController {
   })
   findUserById(@Param('id') id: string): UserResponseDto {
     return this.usersService.findUserById(id);
+  }
+
+  @Post()
+  @ApiResponse({ 
+    status: 201, 
+    description: 'Usuário criado com sucesso',
+    type: UserResponseDto 
+  })
+  @ApiResponse({ 
+    status: 409, 
+    description: '{email}: Este e-mail já foi cadastrado' 
+  })
+  @ApiResponse({ 
+    status: 400, 
+    description: 'Dados mal-formatados.',
+  })
+
+  create(@Body(ValidationPipe) userCreationDto: UserCreationDto): UserResponseDto {
+    return this.usersService.createUser(userCreationDto);
   }
 }

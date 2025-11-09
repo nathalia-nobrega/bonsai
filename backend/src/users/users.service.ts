@@ -1,6 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 import { UserResponseDto } from "./dto/user-response-dto";
+import { User } from "./entities/user.entity";
 import { plainToInstance } from "class-transformer";
+import { UserCreationDto } from "./dto/user-creation-dto";
 
 @Injectable()
 export class UsersService {
@@ -37,5 +39,33 @@ export class UsersService {
 
   findUserById(id: string): UserResponseDto {
     return plainToInstance(UserResponseDto, this.users.at(2));
+  }
+
+  //POST - SÓ PRA TESTAR AS RESPOSTAS E O ARRAY (MUDAR COM PERSISTÊNCIA DEPOIS)
+  createUser(userCreationDto: UserCreationDto): UserResponseDto {
+
+    const emailExists = this.users.some(
+      user => user.email === userCreationDto.email
+    );
+
+    if (emailExists) {
+      throw new ConflictException('Email já cadastrado');
+    }
+
+    const newUser = new User({
+      id: crypto.randomUUID(),
+      createdAt: new Date(),
+      name: userCreationDto.name,
+      email: userCreationDto.email,
+      photoUrl: userCreationDto.photoUrl || 'https://example.com/photos/default.jpg',
+      level: userCreationDto.level || 1,
+      points: userCreationDto.points || 0,
+    });
+
+    //inserção no banco aqui -> mudar depois
+
+    this.users.push(newUser);
+
+    return plainToInstance(UserResponseDto, newUser);
   }
 }
