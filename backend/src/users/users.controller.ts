@@ -15,26 +15,44 @@ export class UserController {
     description: "The found user",
     type: UserResponseDto,
   })
-  findUserById(@Param('id') id: string): UserResponseDto {
+
+  //FIND USER BY ID ORIGINAL 
+  // findUserById(@Param('id') id: string): UserResponseDto {
+  //   return this.usersService.findUserById(id);
+  // }
+
+  //TESTANDO O LOWDB
+  findUserById(@Param('id') id: string): Promise<UserResponseDto> {
     return this.usersService.findUserById(id);
   }
 
   @Post()
-  @ApiResponse({ 
-    status: 201, 
-    description: 'Usuário criado com sucesso',
-    type: UserResponseDto 
+  @ApiResponse({
+    status: 201,
+    description: 'Usuário criado com sucesso!',
+    schema: {
+      example: {
+        id: 'c1c89493-3e0a-436d-b4d2-a161819b5519',
+      },
+      properties: {
+        id: {
+          type: 'string',
+          description: 'Unique user ID',
+        },
+      },
+    },
   })
+
   @ApiResponse({ 
     status: 409, 
-    description: '{email}: Este e-mail já foi cadastrado' 
+    description: 'Este e-mail já foi cadastrado.' 
   })
   @ApiResponse({ 
     status: 400, 
-    description: 'Dados mal-formatados.',
+    description: 'Dados mal-formatados. Verifique os campos e tente novamente!',
   })
 
-  create(@Body(ValidationPipe) userCreationDto: UserCreationDto): UserResponseDto {
+  create(@Body(ValidationPipe) userCreationDto: UserCreationDto): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
   }
 }
