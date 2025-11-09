@@ -22,10 +22,17 @@
   },
   "homepage": "https://github.com/nathalia-nobrega/bonsai#readme",
   "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-native": "^0.72.8",
     "concurrently": "^9.2.1",
     "typescript": "~5.9.2"
   },
   "dependencies": {
-    "expo": "^54.0.22"
+    "@nestjs/common": "^11.1.8",
+    "@nestjs/swagger": "^11.2.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
+    "expo": "^54.0.22",
+    "react-native-reanimated": "^4.1.3"
   }
 }
