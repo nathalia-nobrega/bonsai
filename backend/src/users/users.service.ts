@@ -92,7 +92,9 @@ constructor(private readonly lowdbService: LowdbService) {}
   db.data.users.push(newUser);
   await db.write();
 
-  return plainToInstance(UserResponseDto, newUser.id, { excludeExtraneousValues: true });
+  const response = plainToInstance(UserResponseDto, { id: newUser.id });
+
+  return response;
 
 }
 

@@ -27,11 +27,22 @@ export class UserController {
   }
 
   @Post()
-  @ApiResponse({ 
-    status: 201, 
+  @ApiResponse({
+    status: 201,
     description: 'Usuário criado com sucesso!',
-    type: UserResponseDto 
+    schema: {
+      example: {
+        id: 'c1c89493-3e0a-436d-b4d2-a161819b5519',
+      },
+      properties: {
+        id: {
+          type: 'string',
+          description: 'Unique user ID',
+        },
+      },
+    },
   })
+
   @ApiResponse({ 
     status: 409, 
     description: 'Este e-mail já foi cadastrado.' 
