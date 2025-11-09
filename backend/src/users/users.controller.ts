@@ -15,11 +15,13 @@ export class UserController {
     description: "The found user",
     type: UserResponseDto,
   })
+
+  //FIND USER BY ID ORIGINAL 
   // findUserById(@Param('id') id: string): UserResponseDto {
   //   return this.usersService.findUserById(id);
   // }
 
-  //TESTANDO O LOWDB -> APAGAR DPS
+  //TESTANDO O LOWDB
   findUserById(@Param('id') id: string): Promise<UserResponseDto> {
     return this.usersService.findUser(id);
   }

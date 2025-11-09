@@ -30,6 +30,21 @@ export class User {
     this._pointsGained= params.pointsGained ?? 0;
   }
 
+  //pra evitar o stringify do lowdb de trazer tudo com underline
+  toJSON() {
+    return {
+      id: this._id,
+      createdAt: this._createdAt,
+      name: this._name,
+      email: this._email,
+      password: this._password,
+      photoUrl: this._photoUrl,
+      level: this._level,
+      pointsGained: this._pointsGained,
+    };
+  }
+
+
   get id(): string {
     return this._id;
   }
