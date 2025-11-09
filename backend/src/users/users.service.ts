@@ -44,7 +44,7 @@ constructor(private readonly lowdbService: LowdbService) {}
   },
 ];
 
-  //GET - SÓ PRA TESTAR o lowdb
+  //GET - testando o lowdb -> MODIFICAR DPS?
   async findUser(id: String): Promise<UserResponseDto> {
     const db = await this.lowdbService.start();
 
@@ -58,11 +58,12 @@ constructor(private readonly lowdbService: LowdbService) {}
 
   }
 
+  //FIND USER ORIGINAL
   // findUserById(id: string): UserResponseDto {
   //   return plainToInstance(UserResponseDto, this.users.at(2));
   // }
 
-  //POST - SÓ PRA TESTAR AS RESPOSTAS E O ARRAY (MUDAR COM PERSISTÊNCIA DEPOIS)
+  //POST - testando o lowdb -> MODIFICAR DPS?
   async createUser(userCreationDto: UserCreationDto): Promise<UserResponseDto> {
   const db = await this.lowdbService.start();
 
