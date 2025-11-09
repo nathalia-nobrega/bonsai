@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, Text, ImageBackground, StyleSheet, Alert, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import { View, Image, Text, ImageBackground, StyleSheet, Alert, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView, useWindowDimensions, } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     (async () => {
@@ -43,10 +46,9 @@ export default function Index() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
     >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center", alignItems: "center" }}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="interactive">
     <ImageBackground
   source={require("../assets/images/image.png")}
   style={styles.background}
@@ -90,7 +92,10 @@ export default function Index() {
         autoCapitalize="words"
       />
     </View>
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity
+      style={[styles.button, { width: (width * 0.5) - 20 }]}
+      onPress={() => router.push("/(tabs)/home")}
+    >
       <Text style={styles.buttonText}>Next</Text>
     </TouchableOpacity>
   </ImageBackground>

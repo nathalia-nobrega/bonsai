@@ -8,7 +8,8 @@ import {
   TextInput,
   KeyboardAvoidingView, 
   Platform, 
-  ScrollView
+  ScrollView,
+  useWindowDimensions,
 } from "react-native";
 import Flor from "../assets/images/flower.svg";
 import Balao from "../assets/images/balao bg.svg"
@@ -17,6 +18,7 @@ import { LinearGradient } from "expo-linear-gradient"
 
 export default function Signup() {
   const router = useRouter();
+  const { width, height } = useWindowDimensions();
 
   return (
     <KeyboardAvoidingView
@@ -42,19 +44,17 @@ export default function Signup() {
         end={{ x: 0.5, y: 1 }}
         style={styles.overlay}
       />
-      {/* Flor */}
+      {/* Flor e balão, utilizando width e height aqui pq não pode utilizar ambos dentro do stylesheets create!! */}
       <View style={styles.floatingImage}>
-        <Flor width={120} height={130} />
-
-        {/* balao */}
-        <View style={styles.speakerBubble}>
-          <Balao width={150} height={120} style={styles.speakerBubble} />
-          <Text style={styles.speakerText}>Nice to meet you!</Text>
-        </View>
+        <Flor width={width * 0.25} height={height * 0.15} />
+          <View style={[styles.speakerBubble, { width: width * 0.35, height: height * 0.15 }]}>
+            <Balao width={width * 0.35} height={height * 0.15} />
+            <Text style={styles.speakerText}>Nice to meet you!</Text>
+          </View>
       </View>
 
-      {/* Metade branca da tela */}
-      <View style={styles.halfWhiteBackground}>
+          {/* Metade inferior branca */}
+      <View style={[styles.halfWhiteBackground, { paddingTop: height * 0.15, paddingVertical: height * 0.1 }]}>
         <Text style={styles.title}>Sign up</Text>
 
         <View style={styles.container}>
@@ -76,10 +76,10 @@ export default function Signup() {
         </View>
       {/* Botao de criar conta */}
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => router.push("/profile")}
-        >
-          <Text style={styles.buttonText}>Create Account</Text>
+            style={[styles.button, { width: width * 0.9 }]}
+            onPress={() => router.push("/profile")}
+          >
+            <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -116,21 +116,17 @@ const styles = StyleSheet.create({
     marginBottom: -10, 
     resizeMode: "contain", 
   },
-
   speakerBubble: {
     position: "absolute",
-    top: -40, 
-    left: 15, 
-    width: 140,
-    height: 90,
+    top: -85,
+    left: 25,
     justifyContent: "center",
     alignItems: "center",
   },
-
   speakerText: {
     position: "absolute",
-    top: -1,
-    left: 20,
+    top: 45,
+    left: 5,
     color: "#3C3C3C",
     fontWeight: "600",
     fontSize: 14,
@@ -180,18 +176,18 @@ const styles = StyleSheet.create({
     color: "#5C9F60",
     marginBottom: 30,
   },
-
   button: {
     backgroundColor: "#5C9F60",
     borderRadius: 25,
-    paddingVertical: 12,
-    paddingHorizontal: 120,
-    marginTop: 50,
+    paddingVertical: 15,
+    alignSelf: "center",
+    marginTop: 40,
+    alignItems: "center",
   },
-
   buttonText: {
-    color: "white",
+    color: "#fff",
     fontWeight: "700",
     fontSize: 16,
+    textAlign: "center",
   },
 });
