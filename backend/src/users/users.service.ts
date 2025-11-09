@@ -3,9 +3,16 @@ import { UserResponseDto } from "./dto/user-response-dto";
 import { User } from "./entities/user.entity";
 import { plainToInstance } from "class-transformer";
 import { UserCreationDto } from "./dto/user-creation-dto";
+import { LowdbService } from "src/database/lowdb.service";
+import { Low } from 'lowdb'
+import { JSONFile } from 'lowdb/node'
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UsersService {
+//testando o lowdb -> MODIFICAR DPS?
+constructor(private readonly lowdbService: LowdbService) {}
+
 // Colocando isso aqui somente para fins de teste!!!!
  private users = [
   {
@@ -37,35 +44,51 @@ export class UsersService {
   },
 ];
 
-  findUserById(id: string): UserResponseDto {
-    return plainToInstance(UserResponseDto, this.users.at(2));
-  }
+  //GET - SÓ PRA TESTAR o lowdb
+  async findUser(id: String): Promise<UserResponseDto> {
+    const db = await this.lowdbService.start();
 
-  //POST - SÓ PRA TESTAR AS RESPOSTAS E O ARRAY (MUDAR COM PERSISTÊNCIA DEPOIS)
-  createUser(userCreationDto: UserCreationDto): UserResponseDto {
+    const user = db.data.users.find(user => user.id === id);
 
-    const emailExists = this.users.some(
-      user => user.email === userCreationDto.email
-    );
-
-    if (emailExists) {
-      throw new ConflictException('Email já cadastrado');
+    if (!user) {
+      throw new Error('User not found');
     }
 
-    const newUser = new User({
-      id: crypto.randomUUID(),
-      createdAt: new Date(),
-      name: userCreationDto.name,
-      email: userCreationDto.email,
-      photoUrl: userCreationDto.photoUrl || 'https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg',
-      level: userCreationDto.level || 1,
-      points: userCreationDto.points || 0,
-    });
+    return plainToInstance(UserResponseDto, user);
 
-    //inserção no banco aqui -> mudar depois
-
-    this.users.push(newUser);
-
-    return plainToInstance(UserResponseDto, newUser);
   }
+
+  // findUserById(id: string): UserResponseDto {
+  //   return plainToInstance(UserResponseDto, this.users.at(2));
+  // }
+
+  //POST - SÓ PRA TESTAR AS RESPOSTAS E O ARRAY (MUDAR COM PERSISTÊNCIA DEPOIS)
+  async createUser(userCreationDto: UserCreationDto): Promise<UserResponseDto> {
+  const db = await this.lowdbService.start();
+
+  const emailExists = db.data.users.some(
+    user => user.email === userCreationDto.email
+  );
+
+  if (emailExists) {
+    throw new ConflictException('Email já cadastrado');
+  }
+
+  const newUser = new User({
+    id: randomUUID(),
+    createdAt: new Date(),
+    name: userCreationDto.name,
+    email: userCreationDto.email,
+    password: userCreationDto.password,
+    photoUrl: userCreationDto.photoUrl || 'https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg',
+    level: Number(userCreationDto.level) || 1,
+    pointsGained: Number(userCreationDto.pointsGained) || 0,
+  });
+
+  db.data.users.push(newUser);
+  await db.write();
+
+  return plainToInstance(UserResponseDto, newUser);
+}
+
 }

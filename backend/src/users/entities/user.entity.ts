@@ -5,16 +5,18 @@ export class User {
   private readonly _createdAt: Date;
   private _name: string;
   private _email: string;
+  private _password: string;
   private _photoUrl: string;
   private _level: number;
-  private _points: number;
+  private _pointsGained: number;
 
   constructor(params: {
     name: string;
     email: string;
+    password: string;
     photoUrl: string;
     level?: number;
-    points?: number;
+    pointsGained?: number;
     id?: string;
     createdAt?: Date;
   }) {
@@ -22,9 +24,10 @@ export class User {
     this._createdAt = params.createdAt ?? new Date();
     this._name = params.name;
     this._email = params.email;
+    this._password = params.password;
     this._photoUrl = params.photoUrl;
     this._level = params.level ?? 1;
-    this._points = params.points ?? 0;
+    this._pointsGained= params.pointsGained ?? 0;
   }
 
   get id(): string {
@@ -43,6 +46,10 @@ export class User {
     return this._email;
   }
 
+  get password(): string {
+    return this._password;
+  }
+
   get photoUrl(): string {
     return this._photoUrl;
   }
@@ -51,8 +58,8 @@ export class User {
     return this._level;
   }
 
-  get points(): number {
-    return this._points;
+  get pointsGained(): number {
+    return this._pointsGained;
   }
 
   set name(newName: string) {
@@ -72,6 +79,6 @@ export class User {
 
   set points(newPoints: number) {
     if (newPoints < 0) throw new Error("Pontos inválidos");
-    this._points = newPoints;
+    this._pointsGained = newPoints;
   }
 }

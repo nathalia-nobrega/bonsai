@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger"
 import type { User } from "../entities/user.entity"
 import { Expose } from "class-transformer"
-import { IsString, IsEmail, MinLength, IsNotEmpty, IsUrl } from 'class-validator';
+import { IsString, IsEmail, MinLength, IsNotEmpty, IsUrl, IsNumber } from 'class-validator';
 
 @Expose()
 export class UserCreationDto {
@@ -39,15 +39,16 @@ export class UserCreationDto {
     @IsUrl()
     photoUrl: string;
 
+    
     @ApiProperty({
         description: 'Number of points the user has gained',
         example: 67,
     })
-    points: number;
+    pointsGained: Number;
 
     @ApiProperty({
         description: 'The user\'s current level',
         example: 10,
     })
-    level: number;
+    level: Number;
 }

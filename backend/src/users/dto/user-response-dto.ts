@@ -38,7 +38,7 @@ export class UserResponseDto {
         description: 'Number of points the user has gained',
         example: 67,
     })
-    points: Number
+    pointsGained: Number
 
     @ApiProperty({
         description: 'The user\'s current level',

@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": "cbdf3d05-f171-4e3a-9b2f-4e98608b276e",
+      "createdAt": "2025-11-09T20:33:05.466Z",
+      "name": "Jason Todd",
+      "email": "concordA@will.fly",
+      "password": "123456",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 10,
+      "pointsGained": 67
+    },
+    {
+      "id": "57b7e90f-6ea7-4bde-81c1-dfb63117f6d0",
+      "createdAt": "2025-11-09T20:33:23.731Z",
+      "name": "Jason Peter Todd",
+      "email": "concordc@will.fly",
+      "password": "123456",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 10,
+      "pointsGained": 67
+    }
+  ]
+}
