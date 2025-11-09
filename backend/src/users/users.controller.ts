@@ -23,7 +23,7 @@ export class UserController {
 
   //TESTANDO O LOWDB
   findUserById(@Param('id') id: string): Promise<UserResponseDto> {
-    return this.usersService.findUser(id);
+    return this.usersService.findUserById(id);
   }
 
   @Post()

@@ -45,7 +45,7 @@ constructor(private readonly lowdbService: LowdbService) {}
 ];
 
   //GET - testando o lowdb -> MODIFICAR DPS?
-  async findUser(id: String): Promise<UserResponseDto> {
+  async findUserById(id: String): Promise<UserResponseDto> {
     const db = await this.lowdbService.start();
 
     const user = db.data.users.find(user => user.id === id);
