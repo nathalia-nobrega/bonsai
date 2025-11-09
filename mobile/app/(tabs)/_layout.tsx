@@ -1,55 +1,106 @@
 // app/(tabs)/_layout.tsx
-import { Tabs } from 'expo-router';
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
+import { View } from 'react-native';
+import { BlurView } from 'expo-blur';
+
+import PerfilIconGray from '../../assets/images/perfil-icon-gray.svg';
+import PerfilIconGreen from '../../assets/images/perfil-icon-green.svg';
+import HomeIconGray from '../../assets/images/home-icon-gray.svg';
+import HomeIconGreen from '../../assets/images/home-icon-green.svg';
+import JornadaIconGray from '../../assets/images/jornada-icon-gray.svg';
+import JornadaIconGreen from '../../assets/images/jornada-icon-green.svg';
+import PlantaIconGray from '../../assets/images/planta-icon-gray.svg';
+import PlantaIconGreen from '../../assets/images/planta-icon-green.svg';
+
+const ICON_SIZE = 45;
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#5C9F60',
-        tabBarInactiveTintColor: '#gray',
-        tabBarStyle: {
-          backgroundColor: 'white',
-          borderTopWidth: 1,
-          borderTopColor: '#f0f0f0',
-        },
         headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: {    
+          position: 'absolute',
+          left: 20,
+          right: 20,
+          height: 100,
+          paddingTop: 25,
+          backgroundColor: 'transparent',
+          borderTopWidth: 0,
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        tabBarBackground: () => (
+          <BlurView
+            intensity={70}
+            tint="light"
+            style={{
+              flex: 1,
+              overflow: 'hidden',
+              backgroundColor: 'transparent',
+            }}
+          />
+        ),
       }}
     >
       <Tabs.Screen
-        name="home"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="jornada"
         options={{
-          title: 'Jornada',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="leaf" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              {focused ? (
+                <JornadaIconGreen width={ICON_SIZE} height={ICON_SIZE} />
+              ) : (
+                <JornadaIconGray width={ICON_SIZE} height={ICON_SIZE} />
+              )}
+            </View>
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="home"
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              {focused ? (
+                <HomeIconGreen width={ICON_SIZE} height={ICON_SIZE} />
+              ) : (
+                <HomeIconGray width={ICON_SIZE} height={ICON_SIZE} />
+              )}
+            </View>
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="plantas"
         options={{
-          title: 'Plantas',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="flower" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              {focused ? (
+                <PlantaIconGreen width={ICON_SIZE} height={ICON_SIZE} />
+              ) : (
+                <PlantaIconGray width={ICON_SIZE} height={ICON_SIZE} />
+              )}
+            </View>
           ),
         }}
       />
+
       <Tabs.Screen
         name="perfil"
         options={{
-          title: 'Perfil',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
+          tabBarIcon: ({ focused }) => (
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              {focused ? (
+                <PerfilIconGreen width={ICON_SIZE} height={ICON_SIZE} />
+              ) : (
+                <PerfilIconGray width={ICON_SIZE} height={ICON_SIZE} />
+              )}
+            </View>
           ),
         }}
       />
