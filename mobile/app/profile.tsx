@@ -93,10 +93,10 @@ export default function Index() {
       />
     </View>
     <TouchableOpacity
-      style={[styles.button, { width: (width * 0.5) - 20 }]}
+      style={[styles.button, { width: width * 0.55, height: 55 }]}
       onPress={() => router.push("/(tabs)/home")}
     >
-      <Text style={styles.buttonText}>Next</Text>
+      <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="clip">Next</Text>
     </TouchableOpacity>
   </ImageBackground>
   </ScrollView>
@@ -174,17 +174,21 @@ const styles = StyleSheet.create({
   },
   button: {
     position: "absolute",
-    top: 800,
+    bottom: 40,
     right: 25,
     backgroundColor: "#FFFFFF",
-    paddingVertical: 15,
-    paddingHorizontal: 70,
+    paddingHorizontal: 60,
     borderRadius: 50,
   },
   buttonText: {
     color: "#5C9F60",
     fontWeight: "700",
-    fontSize: 17,
+    fontSize: 20,
+    left: 1,
+    marginTop: 10,
+    textAlign: "center",
+    textAlignVertical: "center",
+    flexShrink: 1,
   },
 });
 
