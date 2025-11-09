@@ -58,7 +58,6 @@ export default function Signin() {
                 style={styles.input}
                 keyboardType="email-address"
                 autoCapitalize="none"
-                placeholder="Enter your email"
                 placeholderTextColor="#999"
               />
             </View>
@@ -69,7 +68,6 @@ export default function Signin() {
                 style={styles.input}
                 secureTextEntry={true}
                 autoCapitalize="none"
-                placeholder="Enter your password"
                 placeholderTextColor="#999"
               />
             </View>
