@@ -57,7 +57,7 @@ export class UsersService {
       createdAt: new Date(),
       name: userCreationDto.name,
       email: userCreationDto.email,
-      photoUrl: userCreationDto.photoUrl || 'https://example.com/photos/default.jpg',
+      photoUrl: userCreationDto.photoUrl || 'https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg',
       level: userCreationDto.level || 1,
       points: userCreationDto.points || 0,
     });

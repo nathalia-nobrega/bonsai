@@ -33,6 +33,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.2",
     "expo": "^54.0.22",
+    "lowdb": "^5.1.0",
     "react-native-reanimated": "^4.1.3"
   }
 }
