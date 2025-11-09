@@ -116,12 +116,12 @@ const styles = StyleSheet.create({
   speakerText: {
     position: "absolute",
     top: 45,
-    left: 10,
+    left: 5,
     color: "#3C3C3C",
-    fontWeight: "600",
-    fontSize: 14,
+    fontSize: 12,
     textAlign: "center",
     paddingHorizontal: 8,
+    fontFamily: "Poppins-Medium",
   },
   halfWhiteBackground: {
     width: "100%",
@@ -136,9 +136,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    fontWeight: "700",
     color: "#5C9F60",
     marginBottom: 30,
+    fontFamily: "Nunito-ExtraBold",
   },
   container: {
     width: "100%",
@@ -148,10 +148,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "Poppins-Regular",
     color: "#5C9F60",
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 15,
     left: 10,
   },
   input: {
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontWeight: "700",
+    fontFamily: "Nunito-Medium",
     fontSize: 16,
     textAlign: "center",
   },

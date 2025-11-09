@@ -128,10 +128,10 @@ const styles = StyleSheet.create({
     top: 45,
     left: 5,
     color: "#3C3C3C",
-    fontWeight: "600",
-    fontSize: 14,
+    fontSize: 12,
     textAlign: "center",
     paddingHorizontal: 8,
+    fontFamily: "Poppins-Medium",
   },
 
   halfWhiteBackground: {
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
 
   label: {
     fontSize: 16,
-    fontWeight: "600",
+    fontFamily: "Poppins-Regular",
     color: "#5C9F60",
     marginBottom: 10,
     marginTop: 15,
@@ -172,9 +172,9 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 26,
-    fontWeight: "700",
     color: "#5C9F60",
     marginBottom: 30,
+    fontFamily: "Nunito-ExtraBold",
   },
   button: {
     backgroundColor: "#5C9F60",
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontWeight: "700",
+    fontFamily: "Nunito-Medium",
     fontSize: 16,
     textAlign: "center",
   },
