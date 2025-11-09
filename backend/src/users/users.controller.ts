@@ -15,8 +15,13 @@ export class UserController {
     description: "The found user",
     type: UserResponseDto,
   })
-  findUserById(@Param('id') id: string): UserResponseDto {
-    return this.usersService.findUserById(id);
+  // findUserById(@Param('id') id: string): UserResponseDto {
+  //   return this.usersService.findUserById(id);
+  // }
+
+  //TESTANDO O LOWDB -> APAGAR DPS
+  findUserById(@Param('id') id: string): Promise<UserResponseDto> {
+    return this.usersService.findUser(id);
   }
 
   @Post()
@@ -34,7 +39,7 @@ export class UserController {
     description: 'Dados mal-formatados.',
   })
 
-  create(@Body(ValidationPipe) userCreationDto: UserCreationDto): UserResponseDto {
+  create(@Body(ValidationPipe) userCreationDto: UserCreationDto): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
   }
 }
