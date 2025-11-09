@@ -9,6 +9,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 10,
       "pointsGained": 67
+    },
+    {
+      "id": "81b9b755-80c7-4c6a-822a-5806c397f0aa",
+      "createdAt": "2025-11-09T21:40:41.490Z",
+      "name": "EIGHT NINE",
+      "email": "concorde@will.fly",
+      "password": "123456",
+      "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
+      "level": 10,
+      "pointsGained": 67
     }
   ]
 }

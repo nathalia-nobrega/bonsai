@@ -29,16 +29,16 @@ export class UserController {
   @Post()
   @ApiResponse({ 
     status: 201, 
-    description: 'Usuário criado com sucesso',
+    description: 'Usuário criado com sucesso!',
     type: UserResponseDto 
   })
   @ApiResponse({ 
     status: 409, 
-    description: '{email}: Este e-mail já foi cadastrado' 
+    description: 'Este e-mail já foi cadastrado.' 
   })
   @ApiResponse({ 
     status: 400, 
-    description: 'Dados mal-formatados.',
+    description: 'Dados mal-formatados. Verifique os campos e tente novamente!',
   })
 
   create(@Body(ValidationPipe) userCreationDto: UserCreationDto): Promise<UserResponseDto> {
