@@ -19,6 +19,16 @@
       "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
       "level": 10,
       "pointsGained": 67
+    },
+    {
+      "id": "291379d7-d972-4300-baea-1dbec3c3ab82",
+      "createdAt": "2025-11-09T21:54:28.280Z",
+      "name": "EIGHT NINE",
+      "email": "concordgge@will.fly",
+      "password": "$2b$10$2AxMLIa5H6kHbEdfFwgtTuGiAyDCXA.KXHwdCx7XtFSfWYH3iR3sa",
+      "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
+      "level": 10,
+      "pointsGained": 67
     }
   ]
 }

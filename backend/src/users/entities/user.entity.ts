@@ -92,7 +92,7 @@ export class User {
     this._level = newLevel;
   }
 
-  set points(newPoints: number) {
+  set pointsGained(newPoints: number) {
     if (newPoints < 0) throw new Error("Pontos inválidos");
     this._pointsGained = newPoints;
   }

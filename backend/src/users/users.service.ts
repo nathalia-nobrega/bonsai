@@ -7,6 +7,7 @@ import { LowdbService } from "src/database/lowdb.service";
 import { Low } from 'lowdb'
 import { JSONFile } from 'lowdb/node'
 import { randomUUID } from 'crypto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -45,7 +46,7 @@ constructor(private readonly lowdbService: LowdbService) {}
 ];
 
   //GET - testando o lowdb -> MODIFICAR DPS?
-  async findUserById(id: String): Promise<UserResponseDto> {
+  async findUserById(id: string): Promise<UserResponseDto> {
     const db = await this.lowdbService.start();
 
     const user = db.data.users.find(user => user.id === id);
@@ -75,12 +76,14 @@ constructor(private readonly lowdbService: LowdbService) {}
     throw new ConflictException('Email já cadastrado');
   }
 
+  const hashedPassword = await bcrypt.hash(userCreationDto.password, 10);
+
   const newUser = new User({
     id: randomUUID(),
     createdAt: new Date(),
     name: userCreationDto.name,
     email: userCreationDto.email,
-    password: userCreationDto.password,
+    password: hashedPassword,
     photoUrl: userCreationDto.photoUrl || 'https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg',
     level: Number(userCreationDto.level) || 1,
     pointsGained: Number(userCreationDto.pointsGained) || 0,
