@@ -7,7 +7,7 @@ import {
   TouchableOpacity, 
   StyleSheet
 } from "react-native";
-
+import { LinearGradient } from "expo-linear-gradient"; // ✅ import correto
 import { useRouter } from "expo-router";
 
 export default function Index() {
@@ -18,6 +18,13 @@ export default function Index() {
       style={styles.background}
       resizeMode="cover"
     >
+      <LinearGradient
+        colors={["rgba(0,0,0,0.0)", "rgba(33,57,35,0.5)"]}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 1 }}
+        style={styles.overlay}
+      />
+
       <View style={styles.container}>
         <View style={styles.imageWrapper}>
           <Image
@@ -35,14 +42,14 @@ export default function Index() {
           style={styles.button}
           onPress={() => router.push("/signup")}
         >
-          <Text style={styles.buttonText}>Get Started!</Text>
+          <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
 
         <Text style={styles.footerText}>
           Already have an account?{" "}
-          <TouchableOpacity  onPress={() => router.push("/signin")}>
-            <Text style={styles.signInText}>Sign in</Text>
-          </TouchableOpacity>
+          <Text style={styles.signInText} onPress={() => router.push("/signin")}>
+            Sign In
+          </Text>
         </Text>
       </View>
     </ImageBackground>
@@ -57,12 +64,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 1,
+  },
   container: {
     alignItems: "center",
     justifyContent: "center",
     gap: 16,
+    zIndex: 2,
   },
   imageWrapper: {
+    position: "absolute",
+    top: -100,
     width: 200,
     height: 200,
     borderRadius: 100,
@@ -76,18 +90,23 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   title: {
-    fontSize: 28,
+    position: "absolute",
+    top: 180,
+    fontSize: 32,
     fontWeight: "900",
     color: "white",
-    textAlign: "center",
-    fontFamily: "Nunito", // instale via expo-font se quiser a mesma fonte
+    textAlign: "left",
+    right: -120,
+    fontFamily: "Nunito",
   },
   button: {
-    marginTop: 24,
+    position: "absolute",
+    top: 290,
     backgroundColor: "white",
-    borderRadius: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 48,
+    borderRadius: 28,
+    paddingVertical: 17,
+    paddingHorizontal: 120,
+    right: -170,
   },
   buttonText: {
     color: "#5C9F60",
@@ -95,7 +114,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   footerText: {
-    marginTop: 12,
+    position: "absolute",
+    top: 380,
     fontWeight: "200",
     color: "white",
     textAlign: "center",
