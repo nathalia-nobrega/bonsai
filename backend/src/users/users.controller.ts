@@ -26,7 +26,7 @@ export class UserController {
     status: 404,
     description: 'User not found',
   })
-  findUserById(@Param('id') id: string): Promise<UserResponseDto> {
+  findUserById(@Param('id') id: string): UserResponseDto {
     return this.usersService.findUserById(id);
   }
 

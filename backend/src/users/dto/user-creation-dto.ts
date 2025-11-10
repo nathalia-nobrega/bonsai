@@ -17,7 +17,7 @@ export class UserCreationDto {
     example: 'concorde@will.fly',
   })
   @IsString()
-  @IsEmail({}, { message: 'E-mail inválido' })
+  @IsEmail({}, { message: 'Invalid e-mail' })
   @IsNotEmpty()
   email: string;
 
@@ -25,7 +25,7 @@ export class UserCreationDto {
     description: "The users's password",
     example: '123456',
   })
-  @MinLength(6, { message: 'A senha deve ter no mínimo 6 caracteres' })
+  @MinLength(6, { message: 'Your password must have at least 6 characters' })
   @IsString()
   @IsNotEmpty()
   password: string;

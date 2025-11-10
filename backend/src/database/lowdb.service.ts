@@ -25,11 +25,11 @@ export class LowdbService implements OnModuleInit {
     return this.db;
   }
 
-  getData(): Database {
+  get data(): Database {
     return this.db.data;
   }
 
-  getDb(): Low<Database> {
-    return this.db;
+  async write() {
+    await this.db.write();
   }
 }

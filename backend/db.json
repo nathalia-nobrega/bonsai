@@ -99,6 +99,16 @@
       "photoUrl": "https://i.pinimg.com/1200x/78/85/a9/7885a994b7171e8abf73be589156b095.jpg",
       "level": 10,
       "pointsGained": 67
+    },
+    {
+      "id": "8313dbd5-e97b-4e71-8565-a2dba583664b",
+      "createdAt": "2025-11-10T02:15:31.745Z",
+      "name": "I told you I loved you in front of black midi",
+      "email": "trackx@ftft.uk",
+      "password": "$2b$10$iMx/8vCIUHtjGn/MBA72UuRtTZlFWuzX0WtouC.6m6tF7WfOTimue",
+      "photoUrl": "https://i.scdn.co/image/ab67616d0000b273abad98aa732148f2682fa687",
+      "level": 1,
+      "pointsGained": 100
     }
   ]
 }

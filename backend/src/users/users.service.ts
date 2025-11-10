@@ -14,12 +14,10 @@ import { User } from './entities/user.entity';
 @Injectable()
 export class UsersService {
   //testando o lowdb -> MODIFICAR DPS?
-  constructor(private readonly lowdbService: LowdbService) {}
+  constructor(private readonly db: LowdbService) {}
 
-  async findUserById(id: string): Promise<UserResponseDto> {
-    const db = await this.lowdbService.start();
-
-    const user = db.data.users.find((user) => user.id === id);
+  findUserById(id: string): UserResponseDto {
+    const user = this.db.data.users.find((user) => user.id === id);
 
     if (!user) {
       throw new ResourceNotFoundException('User', id);
@@ -30,9 +28,7 @@ export class UsersService {
 
   //POST - testando o lowdb -> MODIFICAR DPS?
   async createUser(userCreationDto: UserCreationDto): Promise<UserResponseDto> {
-    const db = await this.lowdbService.start();
-
-    const emailExists = db.data.users.some(
+    const emailExists = this.db.data.users.some(
       (user) => user.email === userCreationDto.email
     );
 
@@ -56,8 +52,8 @@ export class UsersService {
       pointsGained: Number(userCreationDto.pointsGained) || 0,
     });
 
-    db.data.users.push(newUser);
-    await db.write();
+    this.db.data.users.push(newUser);
+    await this.db.write();
 
     const response = plainToInstance(UserResponseDto, { id: newUser.id });
 

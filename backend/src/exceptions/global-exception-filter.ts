@@ -8,6 +8,7 @@ import {
 import { Response, Request } from 'express';
 
 /* https://docs.nestjs.com/exception-filters */
+// TODO: "content" duplicates the informations sometimes
 @Catch(HttpException)
 export class GlobalExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
