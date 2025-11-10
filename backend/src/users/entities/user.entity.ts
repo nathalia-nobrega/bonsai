@@ -1,4 +1,4 @@
-import { randomUUID } from "crypto";
+import { randomUUID } from 'crypto';
 
 export class User {
   private readonly _id: string;
@@ -27,7 +27,7 @@ export class User {
     this._password = params.password;
     this._photoUrl = params.photoUrl;
     this._level = params.level ?? 1;
-    this._pointsGained= params.pointsGained ?? 0;
+    this._pointsGained = params.pointsGained ?? 0;
   }
 
   //pra evitar o stringify do lowdb de trazer tudo com underline
@@ -43,7 +43,6 @@ export class User {
       pointsGained: this._pointsGained,
     };
   }
-
 
   get id(): string {
     return this._id;
@@ -78,22 +77,22 @@ export class User {
   }
 
   set name(newName: string) {
-    if (!newName.trim()) throw new Error("Nome inválido");
+    if (!newName.trim()) throw new Error('Nome inválido');
     this._name = newName;
   }
 
   set photoUrl(newUrl: string) {
-    if (!newUrl.startsWith("http")) throw new Error("URL inválida");
+    if (!newUrl.startsWith('http')) throw new Error('URL inválida');
     this._photoUrl = newUrl;
   }
 
   set level(newLevel: number) {
-    if (newLevel < 1) throw new Error("Nível inválido");
+    if (newLevel < 1) throw new Error('Nível inválido');
     this._level = newLevel;
   }
 
   set pointsGained(newPoints: number) {
-    if (newPoints < 0) throw new Error("Pontos inválidos");
+    if (newPoints < 0) throw new Error('Pontos inválidos');
     this._pointsGained = newPoints;
   }
 }

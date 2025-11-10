@@ -1,8 +1,15 @@
-import { Controller, Get, Param, Post, Body, ValidationPipe } from "@nestjs/common";
-import { ApiResponse, ApiTags } from "@nestjs/swagger";
-import { UserResponseDto } from "./dto/user-response-dto";
-import { UserCreationDto } from "./dto/user-creation-dto";
-import { UsersService } from "./users.service";
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  ValidationPipe,
+} from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserResponseDto } from './dto/user-response-dto';
+import { UserCreationDto } from './dto/user-creation-dto';
+import { UsersService } from './users.service';
 
 @ApiTags('bonsai')
 @Controller('users')
@@ -12,11 +19,11 @@ export class UserController {
   @Get(':id')
   @ApiResponse({
     status: 200,
-    description: "The found user",
+    description: 'The found user',
     type: UserResponseDto,
   })
 
-  //FIND USER BY ID ORIGINAL 
+  //FIND USER BY ID ORIGINAL
   // findUserById(@Param('id') id: string): UserResponseDto {
   //   return this.usersService.findUserById(id);
   // }
@@ -42,17 +49,17 @@ export class UserController {
       },
     },
   })
-
-  @ApiResponse({ 
-    status: 409, 
-    description: 'Este e-mail já foi cadastrado.' 
+  @ApiResponse({
+    status: 409,
+    description: 'Este e-mail já foi cadastrado.',
   })
-  @ApiResponse({ 
-    status: 400, 
+  @ApiResponse({
+    status: 400,
     description: 'Dados mal-formatados. Verifique os campos e tente novamente!',
   })
-
-  create(@Body(ValidationPipe) userCreationDto: UserCreationDto): Promise<UserResponseDto> {
+  create(
+    @Body(ValidationPipe) userCreationDto: UserCreationDto,
+  ): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
   }
 }
