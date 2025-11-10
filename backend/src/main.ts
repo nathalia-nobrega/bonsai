@@ -15,6 +15,7 @@ async function bootstrap() {
   /* Exception filters */
   app.useGlobalFilters(new GlobalExceptionFilter());
 
+  app.setGlobalPrefix('api');
   await app.listen(process.env.PORT ?? 3000);
 }
 

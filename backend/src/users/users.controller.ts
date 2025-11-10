@@ -33,7 +33,7 @@ export class UserController {
   @Post()
   @ApiResponse({
     status: 201,
-    description: 'Usuário criado com sucesso!',
+    description: 'User created',
     schema: {
       example: {
         id: 'c1c89493-3e0a-436d-b4d2-a161819b5519',
@@ -48,11 +48,11 @@ export class UserController {
   })
   @ApiResponse({
     status: 409,
-    description: 'Este e-mail já foi cadastrado.',
+    description: 'E-mail already registered',
   })
   @ApiResponse({
     status: 400,
-    description: 'Dados mal-formatados. Verifique os campos e tente novamente!',
+    description: 'Invalid request data',
   })
   create(
     @Body(ValidationPipe) userCreationDto: UserCreationDto

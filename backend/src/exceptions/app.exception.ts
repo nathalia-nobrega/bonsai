@@ -12,7 +12,6 @@ export class AppException extends HttpException {
         message,
         errorCode,
         details,
-        timestamp: new Date().toISOString(),
       },
       statusCode
     );

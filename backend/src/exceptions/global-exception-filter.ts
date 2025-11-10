@@ -18,7 +18,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const status =
       exception instanceof HttpException ? exception.getStatus() : 500;
 
-    const message =
+    const content =
       exception instanceof HttpException
         ? exception.getResponse()
         : 'Internal server error';
@@ -27,7 +27,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       statusCode: status,
       timestamp: new Date().toISOString(),
       path: request.url,
-      message,
+      content,
     });
   }
 }
