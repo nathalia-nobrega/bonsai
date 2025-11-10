@@ -43,12 +43,12 @@ export class UsersService {
     },
   ];
 
-  //GET - testando o lowdb -> MODIFICAR DPS?
   async findUserById(id: string): Promise<UserResponseDto> {
     const db = await this.lowdbService.start();
 
     const user = db.data.users.find((user) => user.id === id);
 
+    // TODO: exception
     if (!user) {
       throw new Error('User not found');
     }
@@ -56,19 +56,15 @@ export class UsersService {
     return plainToInstance(UserResponseDto, user);
   }
 
-  //FIND USER ORIGINAL
-  // findUserById(id: string): UserResponseDto {
-  //   return plainToInstance(UserResponseDto, this.users.at(2));
-  // }
-
   //POST - testando o lowdb -> MODIFICAR DPS?
   async createUser(userCreationDto: UserCreationDto): Promise<UserResponseDto> {
     const db = await this.lowdbService.start();
 
     const emailExists = db.data.users.some(
-      (user) => user.email === userCreationDto.email,
+      (user) => user.email === userCreationDto.email
     );
 
+    // TODO: colocar no arquivo de exceptions
     if (emailExists) {
       throw new ConflictException('Email já cadastrado');
     }

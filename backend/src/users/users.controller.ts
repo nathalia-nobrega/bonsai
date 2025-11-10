@@ -22,13 +22,10 @@ export class UserController {
     description: 'The found user',
     type: UserResponseDto,
   })
-
-  //FIND USER BY ID ORIGINAL
-  // findUserById(@Param('id') id: string): UserResponseDto {
-  //   return this.usersService.findUserById(id);
-  // }
-
-  //TESTANDO O LOWDB
+  @ApiResponse({
+    status: 404,
+    description: 'User not found',
+  })
   findUserById(@Param('id') id: string): Promise<UserResponseDto> {
     return this.usersService.findUserById(id);
   }
@@ -58,7 +55,7 @@ export class UserController {
     description: 'Dados mal-formatados. Verifique os campos e tente novamente!',
   })
   create(
-    @Body(ValidationPipe) userCreationDto: UserCreationDto,
+    @Body(ValidationPipe) userCreationDto: UserCreationDto
   ): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
   }

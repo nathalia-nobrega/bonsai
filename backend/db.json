@@ -79,6 +79,26 @@
       "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
       "level": 10,
       "pointsGained": 67
+    },
+    {
+      "id": "698e99d5-fec2-4d39-9dad-1d31531fe575",
+      "createdAt": "2025-11-10T00:16:05.861Z",
+      "name": "Julie",
+      "email": "phoneticsON@and.on",
+      "password": "$2b$10$O6pIa9mtKHH33YzmJvxyOu8a257Wa.JIQM8QUiSKWjrmDDihyA3le",
+      "photoUrl": "https://i.guim.co.uk/img/media/475343f2d184c57564d6410d9e585edaba1d60e6/0_66_2100_1261/master/2100.jpg?width=1200&quality=85&auto=format&fit=max&s=3942353afaf3010575d89aa2b7f15668",
+      "level": 10,
+      "pointsGained": 67
+    },
+    {
+      "id": "986eff80-fbc6-4461-bc20-758a78297f73",
+      "createdAt": "2025-11-10T00:20:17.726Z",
+      "name": "Isak Valtersen Literalmente Eu",
+      "email": "isakvaltersen2121@hotmail.com",
+      "password": "$2b$10$wiklQGWaHvia.Dfn4RYM0.QlGUQYWkPA05xG1BD1gBiUMoNbFdH4G",
+      "photoUrl": "https://i.pinimg.com/1200x/78/85/a9/7885a994b7171e8abf73be589156b095.jpg",
+      "level": 10,
+      "pointsGained": 67
     }
   ]
 }
