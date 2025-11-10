@@ -25,7 +25,7 @@ export default function Signin() {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <ImageBackground
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontFamily: "Nunito-Medium",
+    fontFamily: "Nunito-ExtraBold",
     fontSize: 16,
     textAlign: "center",
   },

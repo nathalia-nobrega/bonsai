@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontFamily: "Nunito-Medium",
+    fontFamily: "Nunito-ExtraBold",
     fontSize: 16,
     textAlign: "center",
   },
