@@ -4,12 +4,16 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 export default function Index() {
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
   const { width, height } = useWindowDimensions();
+
+  const { email, password } = useLocalSearchParams();
+  const [name, setName] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -36,6 +40,41 @@ export default function Index() {
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
       setSelectedImage(result.assets[0].uri);
+    }
+  };
+
+  const handleCreateUser = async () => {
+    const response = await fetch("http://20.10.54.119:3000/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        name,
+        photoUrl: selectedImage?.startsWith("http")
+          ? selectedImage
+          : "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+        level: 1,
+        pointsGained: 0,
+      }),
+    });
+
+    console.log("STATUS:", response.status);
+
+     let data = {};
+    try {
+      data = await response.json();
+      console.log("DATA:", data);
+    } catch (err) {
+      console.error("ERROR PARSING JSON", err);
+    }
+
+    if (response.ok) {
+      router.push("/(tabs)/home");
+    } else {
+      Alert.alert("Erro", data.message || "Erro ao criar conta");
     }
   };
 
@@ -91,11 +130,12 @@ export default function Index() {
         style={styles.input}
         keyboardType="default"
         autoCapitalize="words"
+        onChangeText={setName}
       />
     </View>
     <TouchableOpacity
-      style={[styles.button, { width: width * 0.55, height: 55 }]}
-      onPress={() => router.push("/(tabs)/home")}
+      style={[styles.button, { width: width * 0.55, height: 50 }]} //rebecca
+      onPress={handleCreateUser}
     >
       <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="clip">Next</Text>
     </TouchableOpacity>

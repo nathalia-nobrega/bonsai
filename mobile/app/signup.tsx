@@ -15,18 +15,25 @@ import Flor from "../assets/images/flower.svg";
 import Balao from "../assets/images/balao bg.svg"
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient"
+import { useState } from "react";
 
 export default function Signup() {
   const router = useRouter();
   const { width, height } = useWindowDimensions();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
 
   return (
     <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
           >
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+          >
       <ImageBackground
           source={require("../assets/images/image.png")}
           style={{ flex: 1 }}
@@ -63,6 +70,7 @@ export default function Signup() {
             style={styles.input}
             keyboardType="email-address"
             autoCapitalize="none"
+            onChangeText={setEmail} 
           />
         </View>
 
@@ -70,14 +78,18 @@ export default function Signup() {
           <Text style={styles.label}>Password</Text>
           <TextInput
             style={styles.input}
-            secureTextEntry={true}
+            secureTextEntry
             autoCapitalize="none"
+            onChangeText={setPassword}
           />
         </View>
       {/* Botao de criar conta */}
         <TouchableOpacity
             style={[styles.button, { width: width * 0.9 }]}
-            onPress={() => router.push("/profile")}
+              onPress={() => router.push({
+              pathname: "/profile",
+              params: { email, password }
+            })}
           >
             <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>

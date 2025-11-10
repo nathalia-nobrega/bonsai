@@ -109,6 +109,16 @@
       "photoUrl": "https://i.scdn.co/image/ab67616d0000b273abad98aa732148f2682fa687",
       "level": 1,
       "pointsGained": 100
+    },
+    {
+      "id": "508d7ca4-6cf2-4f92-889e-337ac1d3b74d",
+      "createdAt": "2025-11-10T15:11:24.173Z",
+      "name": "Klissia ",
+      "email": "akfm.anaklissia@gmail.com",
+      "password": "$2b$10$u3XRWXOzY40QnVBJpZWts.jEjkJinlImpEeZpSt96XIqjJB0bxN92",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ]
 }

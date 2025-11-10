@@ -27,7 +27,10 @@ export default function Signin() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
+            >
         <ImageBackground
           source={require("../assets/images/image.png")}
           style={styles.background}
