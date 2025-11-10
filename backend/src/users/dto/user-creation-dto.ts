@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger"
 import type { User } from "../entities/user.entity"
 import { Expose } from "class-transformer"
-import { IsString, IsEmail, MinLength, IsNotEmpty, IsUrl } from 'class-validator';
+import { IsString, IsEmail, MinLength, IsNotEmpty, IsUrl, IsNumber, IsOptional } from 'class-validator';
 
 @Expose()
 export class UserCreationDto {
@@ -11,7 +11,7 @@ export class UserCreationDto {
         example: 'concorde@will.fly',
     })
     @IsString()
-    @IsEmail()
+    @IsEmail({}, { message: 'E-mail inválido' })
     @IsNotEmpty()
     email: string;
 
@@ -19,7 +19,8 @@ export class UserCreationDto {
         description: 'The users\'s password',
         example: '123456',
     })
-    @MinLength(6)
+    @MinLength(6, { message: 'A senha deve ter no mínimo 6 caracteres' })
+    @IsString()
     @IsNotEmpty()
     password: string;
 
@@ -35,19 +36,25 @@ export class UserCreationDto {
         description: 'The URL containing the user\'s profile picture',
         example: 'https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg',
     })
+    
     @IsString()
     @IsUrl()
     photoUrl: string;
 
+    
     @ApiProperty({
         description: 'Number of points the user has gained',
         example: 67,
     })
-    points: number;
+    @IsNumber()
+    @IsOptional()
+    pointsGained: Number;
 
     @ApiProperty({
         description: 'The user\'s current level',
         example: 10,
     })
-    level: number;
+    @IsNumber()
+    @IsOptional()
+    level: Number;
 }
