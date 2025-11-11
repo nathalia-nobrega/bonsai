@@ -5,6 +5,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
+import Constants from "expo-constants";
 
 export default function Index() {
   const router = useRouter();
@@ -14,7 +15,9 @@ export default function Index() {
 
   const { email, password } = useLocalSearchParams();
   const [name, setName] = useState("");
-
+  const host = Constants?.expoGoConfig?.hostUri?.split(':')[0]
+         || Constants?.expoConfig?.hostUri?.split(':')[0];
+         
   useEffect(() => {
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -43,8 +46,9 @@ export default function Index() {
     }
   };
 
+
   const handleCreateUser = async () => {
-    const response = await fetch("http://20.10.54.119:3000/api/users", {
+    const response = await fetch(`http://${host}:3000/api/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

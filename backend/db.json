@@ -119,6 +119,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "91a61856-b355-435c-941f-fccb542ecd6b",
+      "createdAt": "2025-11-11T02:03:50.105Z",
+      "name": "Klissia",
+      "email": "akfma.snf24@uea.edu.br",
+      "password": "$2b$10$ZWrFT0endWhrM35YZ3td0.2BCc9lwPuEZ1Lv/YfW.Bdtwq2epJx8G",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ]
 }

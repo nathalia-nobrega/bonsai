@@ -10,6 +10,7 @@ import {
   Platform, 
   ScrollView,
   useWindowDimensions,
+  Alert
 } from "react-native";
 import Flor from "../assets/images/flower.svg";
 import Balao from "../assets/images/balao bg.svg"
@@ -17,11 +18,37 @@ import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient"
 import { useState } from "react";
 
+
 export default function Signup() {
   const router = useRouter();
   const { width, height } = useWindowDimensions();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleCreateAccount = () => {
+    // Validação simples de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return Alert.alert(
+        "Email inválido",
+        "Por favor, insira um e-mail válido."
+      );
+    }
+
+    // Validação simples de senha
+    if (password.length < 6) {
+      return Alert.alert(
+        "Senha Fraca",
+        "Sua senha deve ter no mínimo 6 caracteres."
+      );
+    }
+
+    router.push({
+      pathname: "/profile",
+      params: { email, password }
+    });
+  };
 
 
   return (
@@ -86,10 +113,7 @@ export default function Signup() {
       {/* Botao de criar conta */}
         <TouchableOpacity
             style={[styles.button, { width: width * 0.9 }]}
-              onPress={() => router.push({
-              pathname: "/profile",
-              params: { email, password }
-            })}
+            onPress={handleCreateAccount}
           >
             <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>
