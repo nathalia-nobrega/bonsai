@@ -9,7 +9,7 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient"; // ✅ import correto
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { s } from "./styleHome"
 

@@ -31,7 +31,7 @@ import { StyleSheet, View, Text } from 'react-native';
   },
   halfWhiteBackground: {
     width: "100%",
-    height: "60%",
+    height: "80%",
     backgroundColor: "white",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
