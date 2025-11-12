@@ -252,6 +252,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "4cca6516-3470-4002-aa5c-6da00584334b",
+      "createdAt": "2025-11-12T06:41:43.546Z",
+      "name": "jes",
+      "email": "bhcgh@gmail.com",
+      "password": "$2b$10$f0t.Bo1kE5qilT.1p333I.qXEXEwnK2hsyUTKmDpW73u1qACiwDCq",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ]
 }
