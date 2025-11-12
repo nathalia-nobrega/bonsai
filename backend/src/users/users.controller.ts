@@ -5,11 +5,14 @@ import {
   Post,
   Body,
   ValidationPipe,
+  UsePipes,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserResponseDto } from './dto/user-response-dto';
 import { UserCreationDto } from './dto/user-creation-dto';
 import { UsersService } from './users.service';
+import { UserValidationDto } from './dto/user-validation-dto';
 
 @ApiTags('bonsai')
 @Controller('users')
@@ -58,5 +61,24 @@ export class UserController {
     @Body(ValidationPipe) userCreationDto: UserCreationDto
   ): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
+  }
+
+  //VALIDAÇÃO // TODO: Adicionar nas exceções
+  @Post('validate')
+  @UsePipes(
+    new ValidationPipe({
+      exceptionFactory: (errors) => {
+        const messages = errors.map((err) => {
+          if (err.constraints) {
+            return Object.values(err.constraints).join(', ');
+          }
+          return 'Invalid field: ' + err.property;
+        });
+        return new BadRequestException(messages);
+      },
+    })
+  )
+  validateCredentials(@Body() userValidationDto: UserValidationDto) {
+    return { valid: true };
   }
 }

@@ -1,23 +1,23 @@
 import React from "react";
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  TouchableOpacity, 
-  StyleSheet, 
+import {
+  View,
+  Text,
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
   TextInput,
-  KeyboardAvoidingView, 
-  Platform, 
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   useWindowDimensions,
-  Alert
+  Alert,
 } from "react-native";
 import Flor from "../assets/images/flower.svg";
-import Balao from "../assets/images/balao bg.svg"
+import Balao from "../assets/images/balao bg.svg";
 import { useRouter } from "expo-router";
-import { LinearGradient } from "expo-linear-gradient"
+import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
-
+import Toast from "react-native-toast-message";
 
 export default function Signup() {
   const router = useRouter();
@@ -25,109 +25,182 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleCreateAccount = () => {
-    // Validação simples de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //HANDLE CREATE ACCOUNT ORIGINAL
+  // const handleCreateAccount = () => {
+  //   // Validação simples de email
+  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailRegex.test(email)) {
-      return Alert.alert(
-        "Email inválido",
-        "Por favor, insira um e-mail válido."
+  //   if (!emailRegex.test(email)) {
+  //     return Alert.alert(
+  //       "Email inválido",
+  //       "Por favor, insira um e-mail válido."
+  //     );
+  //   }
+
+  //   // Validação simples de senha
+  //   if (password.length < 6) {
+  //     return Alert.alert(
+  //       "Senha Fraca",
+  //       "Sua senha deve ter no mínimo 6 caracteres."
+  //     );
+  //   }
+
+  //   router.push({
+  //     pathname: "/profile",
+  //     params: { email, password }
+  //   });
+  // };
+
+  //HANDLE CREATE ACCOUNT MODIFICADO PARA USAR VALIDACAO DO BACK + CHAMAR O TOAST
+
+  const handleCreateAccount = async () => {
+    try {
+      const response = await fetch(
+        "http://192.168.15.16:3000/api/users/validate",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
       );
-    }
 
-    // Validação simples de senha
-    if (password.length < 6) {
-      return Alert.alert(
-        "Senha Fraca",
-        "Sua senha deve ter no mínimo 6 caracteres."
-      );
-    }
+      if (!response.ok) {
+        console.log("Response error:", response.status);
+        let message = "Erro de validação.";
 
-    router.push({
-      pathname: "/profile",
-      params: { email, password }
-    });
+        try {
+          const errorData = await response.json();
+          console.log(
+            "Error data completo:",
+            JSON.stringify(errorData, null, 2)
+          ); // LOG MELHORADO
+
+          if (Array.isArray(errorData.message)) {
+            message = errorData.message.join("\n");
+            console.log("Mensagem formatada (array):", message);
+          } else if (typeof errorData.message === "string") {
+            message = errorData.message;
+            console.log("Mensagem formatada (string):", message);
+          } else if (typeof errorData.error === "string") {
+            message = errorData.error;
+            console.log("Mensagem formatada (error):", message);
+          }
+        } catch (parseErr) {
+          console.error("Erro ao interpretar resposta JSON:", parseErr);
+        }
+
+        console.log("Mensagem final que será exibida:", message);
+        Toast.show({
+          type: "error",
+          text1: "Check your information!",
+          text2: message,
+          position: "bottom",
+        });
+        return;
+      }
+
+      router.push({
+        pathname: "/profile",
+        params: { email, password },
+      });
+    } catch (err) {
+      console.error("Erro de rede:", err);
+
+      Toast.show({
+        type: "error",
+        text1: "Erro de conexão",
+        text2: "Não foi possível se conectar ao servidor.",
+        position: "bottom",
+      });
+    }
   };
-
 
   return (
     <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
-          >
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="interactive"
-          >
-      <ImageBackground
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
+      >
+        <ImageBackground
           source={require("../assets/images/image.png")}
           style={{ flex: 1 }}
           resizeMode="cover"
         >
-    <ImageBackground
-      source={require("../assets/images/image.png")}
-      style={styles.background}
-      resizeMode="cover"
-    >
-
-      <LinearGradient
-        colors={["rgba(0,0,0,0.1)", "rgba(33, 57, 35, 1)"]}
-        start={{ x: 0.5, y: 0.1 }}
-        end={{ x: 0.5, y: 1 }}
-        style={styles.overlay}
-      />
-      {/* Flor e balão, utilizando width e height aqui pq não pode utilizar ambos dentro do stylesheets create!! */}
-      <View style={styles.floatingImage}>
-        <Flor width={width * 0.25} height={height * 0.15} />
-          <View style={[styles.speakerBubble, { width: width * 0.35, height: height * 0.15 }]}>
-            <Balao width={width * 0.35} height={height * 0.15} />
-            <Text style={styles.speakerText}>Nice to meet you!</Text>
-          </View>
-      </View>
-
-          {/* Metade inferior branca */}
-      <View style={[styles.halfWhiteBackground, { paddingTop: height * 0.15, paddingVertical: height * 0.1 }]}>
-        <Text style={styles.title}>Sign up</Text>
-
-        <View style={styles.container}>
-          <Text style={styles.label}>Email Adress</Text>
-          <TextInput
-            style={styles.input}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            onChangeText={setEmail} 
-          />
-        </View>
-
-        <View style={styles.container}>
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            style={styles.input}
-            secureTextEntry
-            autoCapitalize="none"
-            onChangeText={setPassword}
-          />
-        </View>
-      {/* Botao de criar conta */}
-        <TouchableOpacity
-            style={[styles.button, { width: width * 0.9 }]}
-            onPress={handleCreateAccount}
+          <ImageBackground
+            source={require("../assets/images/image.png")}
+            style={styles.background}
+            resizeMode="cover"
           >
-            <Text style={styles.buttonText}>Create Account</Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
-    </ImageBackground>
-    </ScrollView>
+            <LinearGradient
+              colors={["rgba(0,0,0,0.1)", "rgba(33, 57, 35, 1)"]}
+              start={{ x: 0.5, y: 0.1 }}
+              end={{ x: 0.5, y: 1 }}
+              style={styles.overlay}
+            />
+            {/* Flor e balão, utilizando width e height aqui pq não pode utilizar ambos dentro do stylesheets create!! */}
+            <View style={styles.floatingImage}>
+              <Flor width={width * 0.25} height={height * 0.15} />
+              <View
+                style={[
+                  styles.speakerBubble,
+                  { width: width * 0.35, height: height * 0.15 },
+                ]}
+              >
+                <Balao width={width * 0.35} height={height * 0.15} />
+                <Text style={styles.speakerText}>Nice to meet you!</Text>
+              </View>
+            </View>
+
+            {/* Metade inferior branca */}
+            <View
+              style={[
+                styles.halfWhiteBackground,
+                { paddingTop: height * 0.15, paddingVertical: height * 0.1 },
+              ]}
+            >
+              <Text style={styles.title}>Sign up</Text>
+
+              <View style={styles.container}>
+                <Text style={styles.label}>Email Adress</Text>
+                <TextInput
+                  style={styles.input}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  onChangeText={setEmail}
+                />
+              </View>
+
+              <View style={styles.container}>
+                <Text style={styles.label}>Password</Text>
+                <TextInput
+                  style={styles.input}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  onChangeText={setPassword}
+                />
+              </View>
+              {/* Botao de criar conta */}
+              <TouchableOpacity
+                style={[styles.button, { width: width * 0.9 }]}
+                onPress={handleCreateAccount}
+              >
+                <Text style={styles.buttonText}>Create Account</Text>
+              </TouchableOpacity>
+            </View>
+          </ImageBackground>
+        </ImageBackground>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-
-    background: {
+  background: {
     flex: 1,
     width: "100%",
     height: "100%",
@@ -143,14 +216,14 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
-  floatingImage: { 
-    position: "absolute", 
-    bottom: "80%", 
-    left: 15, 
-    width: 20, 
-    height: 1, 
-    marginBottom: -10, 
-    resizeMode: "contain", 
+  floatingImage: {
+    position: "absolute",
+    bottom: "80%",
+    left: 15,
+    width: 20,
+    height: 1,
+    marginBottom: -10,
+    resizeMode: "contain",
   },
   speakerBubble: {
     position: "absolute",

@@ -129,6 +129,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "b2be0700-0dc6-4c31-aae7-ba1633c2ce3a",
+      "createdAt": "2025-11-12T03:55:03.314Z",
+      "name": "jess",
+      "email": "dickgrayson@gmail.com",
+      "password": "$2b$10$GY5jXktv.IIUiqjbxKnVJOrKzJaomZRvZFZMwfNFQyrqt6zZtzNui",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ]
 }

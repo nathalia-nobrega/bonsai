@@ -33,6 +33,7 @@ export class UsersService {
     );
 
     // TODO: colocar no arquivo de exceptions
+    //vou deixar essa verificação aqui mesmo pq não fez sentindo o controller tocar no banco
     if (emailExists) {
       throw new ResourceAlreadyExists('User', userCreationDto.email);
     }
