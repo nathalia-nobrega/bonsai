@@ -55,62 +55,44 @@ export default function Signup() {
 
   const handleCreateAccount = async () => {
     try {
-      const response = await fetch(
-        "http://192.168.15.16:3000/api/users/validate",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("http://192.168.15.16:3000/api/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
       if (!response.ok) {
-        console.log("Response error:", response.status);
-        let message = "Erro de validação.";
+        const errorData = await response.json();
+        console.log("Error data:", errorData);
 
-        try {
-          const errorData = await response.json();
-          console.log(
-            "Error data completo:",
-            JSON.stringify(errorData, null, 2)
-          ); // LOG MELHORADO
+        const messageText =
+          errorData?.content?.message ||
+          (Array.isArray(errorData?.message)
+            ? errorData.message.join("\n")
+            : errorData?.message) ||
+          "Unexpected error. Please try again later.";
 
-          if (Array.isArray(errorData.message)) {
-            message = errorData.message.join("\n");
-            console.log("Mensagem formatada (array):", message);
-          } else if (typeof errorData.message === "string") {
-            message = errorData.message;
-            console.log("Mensagem formatada (string):", message);
-          } else if (typeof errorData.error === "string") {
-            message = errorData.error;
-            console.log("Mensagem formatada (error):", message);
-          }
-        } catch (parseErr) {
-          console.error("Erro ao interpretar resposta JSON:", parseErr);
-        }
-
-        console.log("Mensagem final que será exibida:", message);
         Toast.show({
           type: "error",
-          text1: "Check your information!",
-          text2: message,
+          text1: "Account creation failed",
+          text2: messageText,
           position: "bottom",
         });
+
         return;
       }
 
-      router.push({
-        pathname: "/profile",
-        params: { email, password },
-      });
+      const data = await response.json();
+      console.log("User created:", data);
+
+      router.push({ pathname: "/profile", params: { userId: data.id } });
     } catch (err) {
-      console.error("Erro de rede:", err);
+      console.error("Network error:", err);
 
       Toast.show({
         type: "error",
-        text1: "Erro de conexão",
-        text2: "Não foi possível se conectar ao servidor.",
-        position: "bottom",
+        text1: "Connection error",
+        text2: "Please check your internet connection and try again.",
       });
     }
   };

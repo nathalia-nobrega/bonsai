@@ -19,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import Constants from "expo-constants";
+import Toast from "react-native-toast-message";
 
 export default function Index() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function Index() {
   const [hasPermission, setHasPermission] = useState(null);
   const { width, height } = useWindowDimensions();
 
-  const { email, password } = useLocalSearchParams();
+  const { userId } = useLocalSearchParams();
   const [name, setName] = useState("");
   const host =
     Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
@@ -62,45 +63,58 @@ export default function Index() {
   };
 
   const handleCreateUser = async () => {
-    const response = await fetch(`http://${host}:3000/api/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        name,
-        photoUrl: selectedImage?.startsWith("http")
-          ? selectedImage
-          : "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
-        level: 1,
-        pointsGained: 0,
-      }),
-    });
-
-    console.log("STATUS:", response.status);
-
-    let data = {};
-    try {
-      data = await response.json();
-      console.log("DATA:", data);
-    } catch (err) {
-      console.error("ERROR PARSING JSON", err);
+    if (!name.trim()) {
+      Toast.show({
+        type: "error",
+        text1: "Empty Field :(",
+        text2: "Please, enter your name to proceed.",
+        position: "bottom",
+      });
+      return;
     }
 
-    if (response.ok) {
-      router.push("/(tabs)/home");
-    } else {
-      Alert.alert("Erro", data.message || "Erro ao criar conta");
+    try {
+      const response = await fetch(
+        `http://192.168.15.16:3000/api/users/${userId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name.trim(),
+            photoUrl: "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Error data:", errorData);
+        Toast.show({
+          type: "error",
+          text1: "Something went wrong...",
+          text2: errorData.message || "Could not update your profile.",
+          position: "top",
+        });
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Hello {name}!",
+        text2: "Welcome to Bonsai!",
+        position: "top",
+      });
+
+      router.push("/home");
+    } catch (err) {
+      console.error("Network error:", err);
     }
   };
 
   return (
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1, backgroundColor: "#fff" }}
     >
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}

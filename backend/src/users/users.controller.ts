@@ -7,10 +7,12 @@ import {
   ValidationPipe,
   UsePipes,
   BadRequestException,
+  Patch,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserResponseDto } from './dto/user-response-dto';
 import { UserCreationDto } from './dto/user-creation-dto';
+import { UserUpdateDto } from './dto/user-update-dto';
 import { UsersService } from './users.service';
 import { UserValidationDto } from './dto/user-validation-dto';
 
@@ -58,27 +60,20 @@ export class UserController {
     description: 'Invalid request data',
   })
   create(
-    @Body(ValidationPipe) userCreationDto: UserCreationDto
+    @Body() userCreationDto: UserCreationDto
   ): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
   }
 
-  //VALIDAÇÃO // TODO: Adicionar nas exceções
-  @Post('validate')
-  @UsePipes(
-    new ValidationPipe({
-      exceptionFactory: (errors) => {
-        const messages = errors.map((err) => {
-          if (err.constraints) {
-            return Object.values(err.constraints).join(', ');
-          }
-          return 'Invalid field: ' + err.property;
-        });
-        return new BadRequestException(messages);
-      },
-    })
-  )
-  validateCredentials(@Body() userValidationDto: UserValidationDto) {
-    return { valid: true };
+  @ApiResponse({
+    status: 404,
+    description: 'User not found',
+  })
+  @Patch(':id')
+  updateUser(
+    @Param('id') id: string,
+    @Body() userUpdateDto: UserUpdateDto
+  ): Promise<UserResponseDto> {
+    return this.usersService.updateUser(id, userUpdateDto);
   }
 }

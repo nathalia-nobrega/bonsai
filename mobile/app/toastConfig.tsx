@@ -9,55 +9,71 @@ interface CustomToastProps extends BaseToastProps {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffffff",
-    borderRadius: 20,
-    borderWidth: 0.5,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    marginHorizontal: 20,
-    justifyContent: `flex-start`,
-    shadowColor: "#ffffffff",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    marginHorizontal: 24,
+    marginVertical: 6,
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 4,
   },
   text1: {
-    fontFamily: "Poppins-Bold",
-    fontSize: 14,
-    marginBottom: 4,
-    color: "#000",
-    paddingRight: 40,
+    fontFamily: "Poppins-SemiBold",
+    fontSize: 15,
+    color: "#222",
+    marginBottom: 2,
   },
   text2: {
     fontFamily: "Poppins-Regular",
-    fontSize: 11,
-    color: "#1b1b1bff",
-    paddingRight: 40,
+    fontSize: 12.5,
+    color: "#444",
+    lineHeight: 18,
   },
 });
 
 const toastConfig = {
   error: ({ text1, text2 }: CustomToastProps) => (
-    <View style={[styles.container, { shadowColor: "#1e1e1eff", shadowOpacity: 0.2, shadowRadius: 2, shadowOffset: { width: 0, height: 1 }, elevation: 1 }]}>
+    <View
+      style={[
+        styles.container,
+        { borderLeftWidth: 4, borderLeftColor: "#E53935" },
+      ]}
+    >
       {text1 && (
-        <Text style={[styles.text1, { color: "#79120aff" }]}>{text1}</Text>
+        <Text style={[styles.text1, { color: "#D32F2F" }]}>{text1}</Text>
       )}
       {text2 && <Text style={styles.text2}>{text2}</Text>}
     </View>
   ),
+
   success: ({ text1, text2 }: CustomToastProps) => (
-    <View style={[styles.container, { shadowColor: "#1e1e1eff", shadowOpacity: 0.2, shadowRadius: 2, shadowOffset: { width: 0, height: 1 }, elevation: 1 }]}>
+    <View
+      style={[
+        styles.container,
+        { borderLeftWidth: 4, borderLeftColor: "#43A047" },
+      ]}
+    >
       {text1 && (
-        <Text style={[styles.text1, { color: "#5C9F60" }]}>{text1}</Text>
+        <Text style={[styles.text1, { color: "#388E3C" }]}>{text1}</Text>
       )}
       {text2 && <Text style={styles.text2}>{text2}</Text>}
     </View>
   ),
+
   delete: ({ text1, text2 }: CustomToastProps) => (
-    <View style={[styles.container, { shadowColor: "#1e1e1eff", shadowOpacity: 0.2, shadowRadius: 2, shadowOffset: { width: 0, height: 1 }, elevation: 1 }]}>
+    <View
+      style={[
+        styles.container,
+        { borderLeftWidth: 4, borderLeftColor: "#C62828" },
+      ]}
+    >
       {text1 && (
-        <Text style={[styles.text1, { color: "#79120aff" }]}>{text1}</Text>
+        <Text style={[styles.text1, { color: "#B71C1C" }]}>{text1}</Text>
       )}
       {text2 && <Text style={styles.text2}>{text2}</Text>}
     </View>

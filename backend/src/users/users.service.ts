@@ -9,6 +9,7 @@ import {
 } from 'src/exceptions/exceptions';
 import { UserCreationDto } from './dto/user-creation-dto';
 import { UserResponseDto } from './dto/user-response-dto';
+import { UserUpdateDto } from './dto/user-update-dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -59,5 +60,32 @@ export class UsersService {
     const response = plainToInstance(UserResponseDto, { id: newUser.id });
 
     return response;
+  }
+
+  //ATUALIZAÇÃO DE USUÁRIO
+  async updateUser(
+    id: string,
+    userUpdateDto: UserUpdateDto
+  ): Promise<UserResponseDto> {
+    const userIndex = this.db.data.users.findIndex((user) => user.id === id);
+
+    if (userIndex === -1) {
+      throw new ResourceNotFoundException('User', id);
+    }
+
+    const user = this.db.data.users[userIndex];
+
+    if (userUpdateDto.name !== undefined) {
+      user.name = userUpdateDto.name;
+    }
+
+    if (userUpdateDto.photoUrl !== undefined) {
+      user.photoUrl = userUpdateDto.photoUrl;
+    }
+
+    this.db.data.users[userIndex] = user;
+    await this.db.write();
+
+    return plainToInstance(UserResponseDto, user);
   }
 }
