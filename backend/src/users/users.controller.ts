@@ -14,7 +14,6 @@ import { UserResponseDto } from './dto/user-response-dto';
 import { UserCreationDto } from './dto/user-creation-dto';
 import { UserUpdateDto } from './dto/user-update-dto';
 import { UsersService } from './users.service';
-import { UserValidationDto } from './dto/user-validation-dto';
 
 @ApiTags('bonsai')
 @Controller('users')
@@ -59,9 +58,7 @@ export class UserController {
     status: 400,
     description: 'Invalid request data',
   })
-  create(
-    @Body() userCreationDto: UserCreationDto
-  ): Promise<UserResponseDto> {
+  create(@Body() userCreationDto: UserCreationDto): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
   }
 
