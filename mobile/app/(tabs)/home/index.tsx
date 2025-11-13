@@ -25,11 +25,13 @@ export default function Index() {
       <LinearGradient
         colors={["rgba(0,0,0,0.1)", "rgba(33, 57, 35, 1)"]}
         start={{ x: 0.5, y: 0.1 }}
-        end={{ x: 0.5, y: 1 }}
+        end={{ x: 0.5, y: 0.9 }}
         style={s.overlay}
     />
 
-      <View style={[s.halfWhiteBackground, { paddingTop: height * 0.1, paddingVertical: height * 0.1 } ]}></View>
+      <View style={[s.halfWhiteBackground, { paddingTop: height * 0.1, paddingVertical: height * 0.1 } ]}>
+        <Text style={s.title}>Your garden</Text>
+      </View>
       </ImageBackground>
 
   );

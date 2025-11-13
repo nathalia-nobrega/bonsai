@@ -138,11 +138,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     zIndex: 0,
   },
-  container: {
-    width: "100%",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
   floatingImage: { 
     position: "absolute", 
     bottom: "80%", 
@@ -183,15 +178,26 @@ const styles = StyleSheet.create({
     paddingVertical: 250,
   },
 
+  title: {
+    fontSize: 26,
+    color: "#5C9F60",
+    fontFamily: "Nunito-ExtraBold",
+    paddingBottom: 40,
+    marginTop: -100,
+  },
+  container: {
+    width: "100%",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    paddingVertical: 10,
+    gap: 6,
+  },
   label: {
     fontSize: 16,
     fontFamily: "Poppins-Regular",
     color: "#5C9F60",
-    marginBottom: 10,
-    marginTop: 15,
     left: 10,
   },
-
   input: {
     width: "100%",
     height: 48,
@@ -202,22 +208,14 @@ const styles = StyleSheet.create({
     color: "#333",
     borderWidth: 1,
     borderColor: "#5C9F60",
-    textAlign: "left",
     textAlignVertical: "center",
-  },
-
-  title: {
-    fontSize: 26,
-    color: "#5C9F60",
-    marginBottom: 30,
-    fontFamily: "Nunito-ExtraBold",
   },
   button: {
     backgroundColor: "#5C9F60",
     borderRadius: 25,
     paddingVertical: 15,
+    marginTop: 30,
     alignSelf: "center",
-    marginTop: 40,
     alignItems: "center",
   },
   buttonText: {

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     color: "white",
     textAlign: "left",
-    right: -140, //rebecca
+    right: -140,
     fontFamily: "Nunito-ExtraBold",
 },
   button: {

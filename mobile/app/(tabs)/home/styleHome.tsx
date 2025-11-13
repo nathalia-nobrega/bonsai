@@ -19,26 +19,26 @@ import { StyleSheet, View, Text } from 'react-native';
     gap: 16,
     zIndex: 2,
   },
-  imageWrapper: {
-    position: "absolute",
-    top: -100,
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    overflow: "hidden",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   halfWhiteBackground: {
-    width: "100%",
-    height: "80%",
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    alignItems: "flex-start",
-    justifyContent: "center",
-    paddingHorizontal: 70,
-    paddingVertical: 250,
-    zIndex: 1,
-  },
+  width: "100%",
+  height: "70%",
+  marginTop: "auto",
+  backgroundColor: "white",
+  borderTopLeftRadius: 20,
+  borderTopRightRadius: 20,
+  paddingHorizontal: 24,
+  paddingTop: 18, // mantém conteúdo abaixo do título
+  justifyContent: "flex-start",
+  zIndex: 2,
+},
+title: {
+  position: "absolute",
+  top: 5,            // exatamente na borda superior do painel
+  left: 20,          // alinhado com paddingHorizontal
+  fontSize: 17,
+  color: "#5C9F60",
+  fontFamily: "Nunito-ExtraBold",
+  paddingTop: 10,     // se quiser pequeno "respiro" visual (opcional)
+  zIndex: 5,
+},
 });
