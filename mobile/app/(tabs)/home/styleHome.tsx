@@ -71,17 +71,19 @@ second_title: {
   color: "#5C9F60",
   fontFamily: "Nunito-ExtraBold",
   paddingTop: 135,
+  marginBottom: 1,
   zIndex: 5,
 },
 container2: {
-  top: 30,
-  width: "105%",
+  top: 25,
+  width: "100%",
   height: 77,
   backgroundColor: "transparent",
   borderWidth: 1,
   borderColor: "#8F8F8F",
   borderRadius: 25,
-  left: -10,
+  left: 0,
+  marginTop: 10,
 },
 textcontainer: {
   position: "absolute",
@@ -132,6 +134,34 @@ circleButton: {
   borderColor: "#5C9F60",
   left: 310,
   top: 15,
+},
+scrollView: {
+  maxHeight: 500,
+},
+scrollViewContent: {
+  paddingBottom: 100,
+},
+fadeTop: {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  height: 30,
+  backgroundColor: 'transparent',
+  backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)',
+},
+plantsSection: {
+  height: 200,
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: 20,
+  marginBottom: 20,
+},
+missionsSection: {
+  height: 150,
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: 40,
 },
 
 

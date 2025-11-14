@@ -13,6 +13,9 @@ import { s } from "./styleHome";
 import Carousel from "react-native-reanimated-carousel";
 import * as React from "react";
 import { BlurView } from "expo-blur";
+import { ScrollView } from "react-native";
+import Noplants from "@/components/Noplants";
+
 
 const carouselData = [
   {
@@ -31,6 +34,29 @@ const carouselData = [
     image: require("../../../assets/images/Damian.jpeg"),
   },
 ];
+
+const missionCarousel = [
+  {
+    mission: "First Sprout!",
+    image: require("../../../assets/images/mission1icon.png"),
+  },
+  {
+    mission: "New Life!",
+    image: require("../../../assets/images/mission2icon.png"),
+  },
+  {
+    mission: "Triple Threat!",
+    image: require("../../../assets/images/mission3icon.png"),
+  },
+  {
+    mission: "Raining Season!",
+    image: require("../../../assets/images/mission4icon.png"),
+  },
+  {
+    mission: "Its time to trim!",
+    image: require("../../../assets/images/mission5icon.png")
+  },
+]
 
 export default function Index() {
   const router = useRouter();
@@ -88,19 +114,25 @@ export default function Index() {
   </View>
 );
 
+  // verificação se ta vazio
+  const hasNoPlants = !carouselData || carouselData.length === 0;
+  const hasNoMissions = !missionCarousel || missionCarousel.length === 0;
+
   return (
     <ImageBackground
       source={require("../../../assets/images/image.png")}
       style={s.background}
       resizeMode="cover"
     >
+      <Noplants carouselData={carouselData} />
+      {carouselData && carouselData.length > 0 && (
+      <>
       <LinearGradient
         colors={["rgba(0,0,0,0.1)", "rgba(33, 57, 35, 1)"]}
         start={{ x: 0.5, y: 0.1 }}
         end={{ x: 0.5, y: 0.9 }}
         style={s.overlay}
       />
-
       <View
         style={[
           s.halfWhiteBackground,
@@ -143,19 +175,64 @@ export default function Index() {
                 overflow: "visible",
               }}
             />
+            {/* dados todos mockados! */}
         </View>
         <Text style={s.second_title}>Daily Missions</Text>
-          <View style={s.container2}>
-            <Text style={s.textcontainer}> 
-              Water {""}
-            <Text style={s.secondtext}>Cassandra</Text>
-            </Text>
-            <Text style={s.desctextname}>Aloe Vera {""}
-            <Text style={s.desctext}>needs to be watered daily!</Text>
-            </Text>
-            <TouchableOpacity style={s.circleButton}></TouchableOpacity>
-          </View>
+          <View>
+          <ScrollView 
+            style={s.scrollView}
+            contentContainerStyle={s.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Water {""}
+                <Text style={s.secondtext}>{carouselData[0].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[0].species} {""}
+                <Text style={s.desctext}>needs to be watered daily!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Water {""}
+                <Text style={s.secondtext}>{carouselData[1].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[1].species} {""}
+                <Text style={s.desctext}>needs to be watered daily!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Trim {""}
+                <Text style={s.secondtext}>{carouselData[2].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[2].species} {""}
+                <Text style={s.desctext}>needs to be trimmed every week!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Trim {""}
+                <Text style={s.secondtext}>{carouselData[2].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[2].species} {""}
+                <Text style={s.desctext}>needs to be trimmed every week!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+          </ScrollView>
+          <LinearGradient
+            colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']}
+            style={s.fadeTop}
+          />
+        </View>
       </View>
-    </ImageBackground>
+      </>
+  )}
+  </ImageBackground>
   );
 }
