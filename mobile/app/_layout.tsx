@@ -26,6 +26,7 @@ export default function RootLayout() {
         "Nunito-Medium": require("../assets/fonts/Nunito-Medium.ttf"),
         "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
         "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
+        "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
       });
       setFontsLoaded(true);
       await SplashScreen.hideAsync();
