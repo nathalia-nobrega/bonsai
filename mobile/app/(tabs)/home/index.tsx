@@ -1,27 +1,238 @@
-// app/(tabs)/home/index.tsx
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { 
+  View, 
+  Text, 
+  Image, 
+  ImageBackground, 
+  TouchableOpacity, 
+  StyleSheet,
+  useWindowDimensions,
+} from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import { s } from "./styleHome";
+import Carousel from "react-native-reanimated-carousel";
+import * as React from "react";
+import { BlurView } from "expo-blur";
+import { ScrollView } from "react-native";
+import Noplants from "@/components/Noplants";
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Home</Text>
-      <Text>Bem-vindo à sua jardim!</Text>
+
+const carouselData = [
+  {
+    name: "Cassandra",
+    species: "aloe vera",
+    image: require("../../../assets/images/Jason.jpeg"),
+  },
+  {
+    name: "Timothy",
+    species: "pothos",
+    image: require("../../../assets/images/Tim.jpeg"),
+  },
+  {
+    name: "Damian",
+    species: "bambu",
+    image: require("../../../assets/images/Damian.jpeg"),
+  },
+];
+
+const missionCarousel = [
+  {
+    mission: "First Sprout!",
+    image: require("../../../assets/images/mission1icon.png"),
+  },
+  {
+    mission: "New Life!",
+    image: require("../../../assets/images/mission2icon.png"),
+  },
+  {
+    mission: "Triple Threat!",
+    image: require("../../../assets/images/mission3icon.png"),
+  },
+  {
+    mission: "Raining Season!",
+    image: require("../../../assets/images/mission4icon.png"),
+  },
+  {
+    mission: "Its time to trim!",
+    image: require("../../../assets/images/mission5icon.png")
+  },
+]
+
+export default function Index() {
+  const router = useRouter();
+  const { width, height } = useWindowDimensions();
+
+
+  const GAP = 18; 
+  const VISIBLE_ITEMS = 2.3;
+
+
+  const ITEM_WIDTH = (width - GAP * (VISIBLE_ITEMS + 1)) / VISIBLE_ITEMS;
+
+  const renderItem = ({ item }) => (
+  <View
+    style={{
+      width: ITEM_WIDTH,
+      height: ITEM_WIDTH * 1.7,
+      borderRadius: 15,
+      backgroundColor: "#ffffff22",
+      marginHorizontal: GAP / 2,
+      marginTop: 20,
+    }}
+  >
+    <View
+      style={{
+        width: "90%",
+        height: "70%",
+        borderRadius: 15,
+        overflow: "hidden",
+      }}
+    >
+      <Image
+        source={item.image}
+        style={{
+          width: "100%",
+          height: "100%",
+          zIndex: 0,
+        }}
+        resizeMode="cover"
+      />
+      <LinearGradient
+        colors={["rgba(0,0,0,0.1)", "rgba(0, 0, 0, 1)"]}
+        start={{ x: 0.5, y: 0 }}
+        end={{ x: 0.5, y: 4 }}
+        style={s.overlay}
+        />
+        <BlurView intensity={10} tint="dark" pointerEvents="none" style={s.blur} />
+       
     </View>
+
+    <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
+      <Text style={s.name}>{item.name}</Text>
+      <Text style={s.namesci}>{item.species}</Text>
+    </View>
+  </View>
+);
+
+  // verificação se ta vazio
+  const hasNoPlants = !carouselData || carouselData.length === 0;
+  const hasNoMissions = !missionCarousel || missionCarousel.length === 0;
+
+  return (
+    <ImageBackground
+      source={require("../../../assets/images/image.png")}
+      style={s.background}
+      resizeMode="cover"
+    >
+      <Noplants carouselData={carouselData} />
+      {carouselData && carouselData.length > 0 && (
+      <>
+      <LinearGradient
+        colors={["rgba(0,0,0,0.1)", "rgba(33, 57, 35, 1)"]}
+        start={{ x: 0.5, y: 0.1 }}
+        end={{ x: 0.5, y: 0.9 }}
+        style={s.overlay}
+      />
+      <View
+        style={[
+          s.halfWhiteBackground,
+          {
+            paddingTop: height * 0.11,
+            paddingBottom: height * 0.25,
+          },
+        ]}
+      >
+        <Text style={s.title}>Your garden</Text>
+
+        {/* CARROSSEL */}
+        <View
+          style={{
+            width: "100%",
+            height: ITEM_WIDTH * 1.6,
+            marginTop: -30,
+            marginLeft: -20,
+            overflow: "visible",
+          }}
+        >
+          <Carousel
+              loop={false}
+              pagingEnabled={false}
+              mode="parallax"
+              modeConfig={{
+                parallaxScrollingOffset: 0,
+                parallaxScrollingScale: 0.98,
+                parallaxAdjacentItemScale: 1,
+              }}
+              width={ITEM_WIDTH + GAP}
+              height={ITEM_WIDTH * 1.8}
+              data={carouselData}
+              scrollAnimationDuration={0}
+              renderItem={renderItem}
+              snapEnabled={false}
+              style={{
+                width: "10%",
+                alignSelf: "flex-start",
+                overflow: "visible",
+              }}
+            />
+            {/* dados todos mockados! */}
+        </View>
+        <Text style={s.second_title}>Daily Missions</Text>
+          <View>
+          <ScrollView 
+            style={s.scrollView}
+            contentContainerStyle={s.scrollViewContent}
+            showsVerticalScrollIndicator={false}
+          >
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Water {""}
+                <Text style={s.secondtext}>{carouselData[0].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[0].species} {""}
+                <Text style={s.desctext}>needs to be watered daily!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Water {""}
+                <Text style={s.secondtext}>{carouselData[1].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[1].species} {""}
+                <Text style={s.desctext}>needs to be watered daily!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Trim {""}
+                <Text style={s.secondtext}>{carouselData[2].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[2].species} {""}
+                <Text style={s.desctext}>needs to be trimmed every week!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+            <View style={s.container2}>
+              <Text style={s.textcontainer}> 
+                Trim {""}
+                <Text style={s.secondtext}>{carouselData[2].name}</Text>
+              </Text>
+              <Text style={s.desctextname}>{carouselData[2].species} {""}
+                <Text style={s.desctext}>needs to be trimmed every week!</Text>
+              </Text>
+              <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+            </View>
+          </ScrollView>
+          <LinearGradient
+            colors={['rgba(255,255,255,1)', 'rgba(255,255,255,0)']}
+            style={s.fadeTop}
+          />
+        </View>
+      </View>
+      </>
+  )}
+  </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#5C9F60",
-    marginBottom: 10,
-  },
-});

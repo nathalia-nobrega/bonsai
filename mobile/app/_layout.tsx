@@ -12,8 +12,9 @@ import Toast from "react-native-toast-message";
 import toastConfig from "./toastConfig";
 import { View } from "react-native";
 
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useEffect, useState } from "react";
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useEffect, useState } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,6 +34,7 @@ export default function RootLayout() {
         "Nunito-Medium": require("../assets/fonts/Nunito-Medium.ttf"),
         "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
         "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
+        "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
       });
       setFontsLoaded(true);
       await SplashScreen.hideAsync();

@@ -140,21 +140,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 26,
     color: "#5C9F60",
-    marginBottom: 30,
     fontFamily: "Nunito-ExtraBold",
+    paddingBottom: 40,
+    marginTop: -100,
   },
   container: {
     width: "100%",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    marginBottom: 15,
+    paddingVertical: 10,
+    gap: 6,
   },
   label: {
     fontSize: 16,
     fontFamily: "Poppins-Regular",
     color: "#5C9F60",
-    marginBottom: 10,
-    marginTop: 15,
     left: 10,
   },
   input: {
@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#5C9F60",
     borderRadius: 25,
     paddingVertical: 15,
+    marginTop: 30,
     alignSelf: "center",
-    marginTop: 40,
     alignItems: "center",
   },
   buttonText: {

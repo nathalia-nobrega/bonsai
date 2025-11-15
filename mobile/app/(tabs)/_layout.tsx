@@ -31,6 +31,7 @@ export default function TabLayout() {
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,
+          zIndex: 10,
         },
         tabBarBackground: () => (
           <BlurView
