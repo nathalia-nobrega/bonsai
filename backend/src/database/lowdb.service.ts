@@ -4,7 +4,16 @@ import { JSONFile } from 'lowdb/node';
 import { User } from 'src/users/entities/user.entity';
 
 interface Database {
-  users: User[];
+  users: Array<{
+    id: string;
+    createdAt: Date;
+    name: string;
+    email: string;
+    password: string;
+    photoUrl: string;
+    level: number;
+    pointsGained: number;
+  }>;
 }
 
 @Injectable()

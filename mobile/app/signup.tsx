@@ -25,37 +25,11 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  //HANDLE CREATE ACCOUNT ORIGINAL
-  // const handleCreateAccount = () => {
-  //   // Validação simples de email
-  //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  //   if (!emailRegex.test(email)) {
-  //     return Alert.alert(
-  //       "Email inválido",
-  //       "Por favor, insira um e-mail válido."
-  //     );
-  //   }
-
-  //   // Validação simples de senha
-  //   if (password.length < 6) {
-  //     return Alert.alert(
-  //       "Senha Fraca",
-  //       "Sua senha deve ter no mínimo 6 caracteres."
-  //     );
-  //   }
-
-  //   router.push({
-  //     pathname: "/profile",
-  //     params: { email, password }
-  //   });
-  // };
-
   //HANDLE CREATE ACCOUNT MODIFICADO PARA USAR VALIDACAO DO BACK + CHAMAR O TOAST
 
   const handleCreateAccount = async () => {
     try {
-      const response = await fetch("http://192.168.15.16:3000/api/users", {
+      const response = await fetch("http://192.168.15.13:3000/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -85,7 +59,7 @@ export default function Signup() {
       const data = await response.json();
       console.log("User created:", data);
 
-      router.push({ pathname: "/profile", params: { userId: data.id } });
+      router.push(`/profile?userId=${data._id}`);
     } catch (err) {
       console.error("Network error:", err);
 
@@ -193,19 +167,19 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     zIndex: 0,
   },
-  container: {
-    width: "100%",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  floatingImage: { 
-    position: "absolute", 
-    bottom: "80%", 
-    left: 15, 
-    width: 20, 
-    height: 1, 
-    marginBottom: -10, 
-    resizeMode: "contain", 
+  // container: {
+  //   width: "100%",
+  //   alignItems: "flex-start",
+  //   justifyContent: "flex-start",
+  // },
+  floatingImage: {
+    position: "absolute",
+    bottom: "80%",
+    left: 15,
+    width: 20,
+    height: 1,
+    marginBottom: -10,
+    resizeMode: "contain",
   },
   speakerBubble: {
     position: "absolute",
