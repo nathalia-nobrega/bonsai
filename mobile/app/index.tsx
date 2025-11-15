@@ -1,11 +1,14 @@
 import React from "react";
-import { 
-  View, 
-  Text, 
-  Image, 
-  ImageBackground, 
-  TouchableOpacity, 
-  StyleSheet
+import { Button } from "react-native";
+import Toast from "react-native-toast-message";
+// import toastConfig from './toastConfig';
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient"; // ✅ import correto
 import { useRouter } from "expo-router";
@@ -34,9 +37,7 @@ export default function Index() {
           />
         </View>
 
-        <Text style={styles.title}>
-          Grow your Garden.{"\n"}Grow Yourself.
-        </Text>
+        <Text style={styles.title}>Grow your Garden.{"\n"}Grow Yourself.</Text>
 
         <TouchableOpacity
           style={styles.button}
@@ -47,7 +48,10 @@ export default function Index() {
 
         <Text style={styles.footerText}>
           Already have an account?{" "}
-          <Text style={styles.signInText} onPress={() => router.push("/signin")}>
+          <Text
+            style={styles.signInText}
+            onPress={() => router.push("/signin")}
+          >
             Sign In
           </Text>
         </Text>
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     right: -140,
     fontFamily: "Nunito-ExtraBold",
-},
+  },
   button: {
     position: "absolute",
     top: 290,

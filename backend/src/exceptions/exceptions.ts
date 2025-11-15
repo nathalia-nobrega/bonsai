@@ -1,5 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { AppException } from './app.exception';
+import { ConflictException } from '@nestjs/common';
 
 /* Every new exception type must be added here! */
 export class ResourceNotFoundException extends AppException {
@@ -11,7 +12,7 @@ export class ResourceNotFoundException extends AppException {
 
 export class ResourceAlreadyExists extends AppException {
   constructor(resourceType: string, resourceIdentifier: string) {
-    const message = `${resourceType} with identifier ${resourceIdentifier} already registered`;
+    const message = `This e-mail already belongs to another account!`;
     super(message, HttpStatus.CONFLICT);
   }
 }

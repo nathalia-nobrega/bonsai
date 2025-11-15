@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, Text, ImageBackground, StyleSheet, Alert, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, ScrollView, useWindowDimensions, } from "react-native";
+import {
+  View,
+  Image,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  useWindowDimensions,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import Constants from "expo-constants";
+import Toast from "react-native-toast-message";
 
 export default function Index() {
   const router = useRouter();
@@ -13,14 +27,16 @@ export default function Index() {
   const [hasPermission, setHasPermission] = useState(null);
   const { width, height } = useWindowDimensions();
 
-  const { email, password } = useLocalSearchParams();
+  const { userId } = useLocalSearchParams();
   const [name, setName] = useState("");
-  const host = Constants?.expoGoConfig?.hostUri?.split(':')[0]
-         || Constants?.expoConfig?.hostUri?.split(':')[0];
-         
+  const host =
+    Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+    Constants?.expoConfig?.hostUri?.split(":")[0];
+
   useEffect(() => {
     (async () => {
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -46,107 +62,127 @@ export default function Index() {
     }
   };
 
-
   const handleCreateUser = async () => {
-    const response = await fetch(`http://${host}:3000/api/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        name,
-        photoUrl: selectedImage?.startsWith("http")
-          ? selectedImage
-          : "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
-        level: 1,
-        pointsGained: 0,
-      }),
-    });
-
-    console.log("STATUS:", response.status);
-
-     let data = {};
-    try {
-      data = await response.json();
-      console.log("DATA:", data);
-    } catch (err) {
-      console.error("ERROR PARSING JSON", err);
+    if (!name.trim()) {
+      Toast.show({
+        type: "error",
+        text1: "Empty Field :(",
+        text2: "Please, enter your name to proceed.",
+        position: "bottom",
+      });
+      return;
     }
 
-    if (response.ok) {
-      router.push("/(tabs)/home");
-    } else {
-      Alert.alert("Erro", data.message || "Erro ao criar conta");
+    try {
+      const response = await fetch(
+        `http://192.168.15.16:3000/api/users/${userId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: name.trim(),
+            photoUrl: "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Error data:", errorData);
+        Toast.show({
+          type: "error",
+          text1: "Something went wrong...",
+          text2: errorData.message || "Could not update your profile.",
+          position: "top",
+        });
+        return;
+      }
+
+      Toast.show({
+        type: "success",
+        text1: "Hello {name}!",
+        text2: "Welcome to Bonsai!",
+        position: "top",
+      });
+
+      router.push("/home");
+    } catch (err) {
+      console.error("Network error:", err);
     }
   };
 
   return (
-
     <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1, backgroundColor: "#fff" }}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled"
-      keyboardDismissMode="interactive"
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
       >
-    <ImageBackground
-  source={require("../assets/images/image.png")}
-  style={styles.background}
-  resizeMode="cover"
->
-  {/* blur */}
-  <LinearGradient
-    colors={["rgba(0,0,0,0.0)", "rgba(33,57,35,0.5)"]}
-    start={{ x: 0.5, y: 0 }}
-    end={{ x: 0.5, y: 1 }}
-    style={styles.overlay}
-  />
+        <ImageBackground
+          source={require("../assets/images/image.png")}
+          style={styles.background}
+          resizeMode="cover"
+        >
+          {/* blur */}
+          <LinearGradient
+            colors={["rgba(0,0,0,0.0)", "rgba(33,57,35,0.5)"]}
+            start={{ x: 0.5, y: 0 }}
+            end={{ x: 0.5, y: 1 }}
+            style={styles.overlay}
+          />
 
-  {/* Círculo */}
-  <View style={styles.circle}>
-    {selectedImage ? (
-      <Image
-        source={{ uri: selectedImage }}
-        style={styles.circleImage}
-        resizeMode="cover"
-      />
-    ) : (
-      <Image
-        source={require("../assets/images/default.png")}
-        style={styles.circleImage}
-        resizeMode="cover"
-      />
-    )}
+          {/* Círculo */}
+          <View style={styles.circle}>
+            {selectedImage ? (
+              <Image
+                source={{ uri: selectedImage }}
+                style={styles.circleImage}
+                resizeMode="cover"
+              />
+            ) : (
+              <Image
+                source={require("../assets/images/default.png")}
+                style={styles.circleImage}
+                resizeMode="cover"
+              />
+            )}
 
-    {/* Botão de edição */}
-    <TouchableOpacity style={styles.editButton} onPress={handlePickImage}>
-      <Ionicons name="pencil-outline" size={22} color="#68B36D" />
-    </TouchableOpacity>
-  </View>
+            {/* Botão de edição */}
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={handlePickImage}
+            >
+              <Ionicons name="pencil-outline" size={22} color="#68B36D" />
+            </TouchableOpacity>
+          </View>
 
-    <View style={styles.inputContainer}>
-      <Text style={styles.label}>Your Name</Text>
-      <TextInput
-        style={styles.input}
-        keyboardType="default"
-        autoCapitalize="words"
-        onChangeText={setName}
-      />
-    </View>
-    <TouchableOpacity
-      style={[styles.button, { width: width * 0.55, height: 50 }]} //rebecca
-      onPress={handleCreateUser}
-    >
-      <Text style={styles.buttonText} numberOfLines={1} ellipsizeMode="clip">Next</Text>
-    </TouchableOpacity>
-  </ImageBackground>
-  </ScrollView>
-  </KeyboardAvoidingView>
-
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Your Name</Text>
+            <TextInput
+              style={styles.input}
+              keyboardType="default"
+              autoCapitalize="words"
+              onChangeText={setName}
+            />
+          </View>
+          <TouchableOpacity
+            style={[styles.button, { width: width * 0.55, height: 50 }]} //rebecca
+            onPress={handleCreateUser}
+          >
+            <Text
+              style={styles.buttonText}
+              numberOfLines={1}
+              ellipsizeMode="clip"
+            >
+              Next
+            </Text>
+          </TouchableOpacity>
+        </ImageBackground>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -164,15 +200,15 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-  width: "80%",        
-  marginTop: 20,           
+    width: "80%",
+    marginTop: 20,
   },
 
   label: {
     fontSize: 16,
     fontWeight: "600",
     color: "#ffffffff",
-    marginBottom: 8,        
+    marginBottom: 8,
   },
 
   input: {
@@ -236,4 +272,3 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
 });
-

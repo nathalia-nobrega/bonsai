@@ -5,10 +5,14 @@ import {
   Post,
   Body,
   ValidationPipe,
+  UsePipes,
+  BadRequestException,
+  Patch,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserResponseDto } from './dto/user-response-dto';
 import { UserCreationDto } from './dto/user-creation-dto';
+import { UserUpdateDto } from './dto/user-update-dto';
 import { UsersService } from './users.service';
 
 @ApiTags('bonsai')
@@ -54,9 +58,19 @@ export class UserController {
     status: 400,
     description: 'Invalid request data',
   })
-  create(
-    @Body(ValidationPipe) userCreationDto: UserCreationDto
-  ): Promise<UserResponseDto> {
+  create(@Body() userCreationDto: UserCreationDto): Promise<UserResponseDto> {
     return this.usersService.createUser(userCreationDto);
+  }
+
+  @ApiResponse({
+    status: 404,
+    description: 'User not found',
+  })
+  @Patch(':id')
+  updateUser(
+    @Param('id') id: string,
+    @Body() userUpdateDto: UserUpdateDto
+  ): Promise<UserResponseDto> {
+    return this.usersService.updateUser(id, userUpdateDto);
   }
 }
