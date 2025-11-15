@@ -35,7 +35,7 @@ export class UserCreationDto {
     example: 'EIGHT NINE',
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   name: string;
 
   @ApiProperty({
@@ -45,6 +45,7 @@ export class UserCreationDto {
   })
   @IsString()
   @IsUrl()
+  @IsOptional()
   photoUrl: string;
 
   @ApiProperty({
