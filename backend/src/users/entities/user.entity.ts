@@ -7,7 +7,7 @@ import {
 } from 'src/exceptions/exceptions';
 import { UserCreationDto } from '../dto/user-creation-dto';
 import { UserResponseDto } from '../dto/user-response-dto';
-import { plainToInstance } from 'class-transformer';
+import { plainToInstance, Exclude } from 'class-transformer';
 import { UserUpdateDto } from '../dto/user-update-dto';
 
 export class User {
@@ -21,6 +21,7 @@ export class User {
   private readonly _createdAt: Date;
   private _name: string;
   private _email: string;
+  @Exclude({ toPlainOnly: true })
   private _password: string;
   private _photoUrl: string;
   private _level: number;
@@ -54,6 +55,7 @@ export class User {
     if (!user) {
       throw new ResourceNotFoundException('User', id);
     }
+    console.log(plainToInstance(UserResponseDto, user));
 
     return plainToInstance(UserResponseDto, user);
   }
@@ -140,6 +142,7 @@ export class User {
     return this._email;
   }
 
+  @Exclude({ toPlainOnly: true })
   get password(): string {
     return this._password;
   }

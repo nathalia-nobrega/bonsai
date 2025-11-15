@@ -1,30 +1,34 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
-@Expose() // exposes every field unless marked with @Exclude()
+@Exclude()
 export class UserResponseDto {
   @ApiProperty({
     description: 'Unique user ID',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
+  @Expose()
   id: string;
 
   @ApiProperty({
     description: "The user's creation date",
     example: '2024-01-15T10:30:00Z',
   })
+  @Expose()
   createdAt: Date;
 
   @ApiProperty({
     description: "The users's e-mail",
     example: 'concorde@will.fly',
   })
+  @Expose()
   email: string;
 
   @ApiProperty({
     description: "The user's name",
     example: 'SIX SEVEN',
   })
+  @Expose()
   name: string;
 
   @ApiProperty({
@@ -32,17 +36,20 @@ export class UserResponseDto {
     example:
       'https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg',
   })
+  @Expose()
   photoUrl: string;
 
   @ApiProperty({
-    description: 'Number of points the user has gained',
-    example: 67,
-  })
-  pointsGained: number;
-
-  @ApiProperty({
-    description: "The user's current level",
+    description: "The user's level",
     example: 10,
   })
+  @Expose()
   level: number;
+
+  @ApiProperty({
+    description: "The user's gained points",
+    example: 100,
+  })
+  @Expose()
+  pointsGained: number;
 }

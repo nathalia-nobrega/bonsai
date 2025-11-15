@@ -355,5 +355,67 @@
       "level": 1,
       "pointsGained": 0
     }
+  ],
+  "plants": [
+    {
+      "id": "e333e0bf-9f90-48b2-bea9-dcc1dc22d8cf",
+      "createdAt": "2025-11-15T20:54:39.279Z",
+      "chosenName": "Long Island City Here I Come",
+      "userId": "8313dbd5-e97b-4e71-8565-a2dba583664b",
+      "commonName": "Boston Fern",
+      "scientificName": "Nephrolepis exaltata",
+      "otherName": "Sword Fern",
+      "family": "Lomariopsidaceae",
+      "type": "Fern",
+      "cycle": "Perennial",
+      "wateringPeriod": "Weekly",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "Indirect",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": false,
+      "floweringSeason": "N/A",
+      "trimmingCount": 2,
+      "trimmingMonths": [
+        "Spring",
+        "Fall"
+      ],
+      "photoUrl": "https://example.com/boston-fern.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
+    },
+    {
+      "id": "5223499e-0d74-44b1-9a6b-546f321596df",
+      "createdAt": "2025-11-15T21:04:58.597Z",
+      "chosenName": "Today I Met Who I'm Gonna Be From Now On And She's a Piece Ofs",
+      "userId": "8313dbd5-e97b-4e71-8565-a2dba583664b",
+      "commonName": "Boston Fern",
+      "scientificName": "Nephrolepis exaltata",
+      "otherName": "Sword Fern",
+      "family": "Lomariopsidaceae",
+      "type": "Fern",
+      "cycle": "Perennial",
+      "wateringPeriod": "Weekly",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "Indirect",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": false,
+      "floweringSeason": "N/A",
+      "trimmingCount": 2,
+      "trimmingMonths": [
+        "Spring",
+        "Fall"
+      ],
+      "photoUrl": "https://example.com/boston-fern.jpg",
+      "wasWatered": true,
+      "gotSunlight": false,
+      "wasTrimmed": false
+    }
   ]
 }
