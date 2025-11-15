@@ -1,11 +1,18 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { UserController } from './users.controller';
-import { UsersService } from './users.service';
 import { LowdbModule } from 'src/database/lowdb.module';
+import { LowdbService } from 'src/database/lowdb.service';
+import { User } from './entities/user.entity';
 
 @Module({
   imports: [LowdbModule],
   controllers: [UserController],
-  providers: [UsersService],
+  providers: [],
 })
-export class UsersModule {}
+export class UsersModule implements OnModuleInit {
+  constructor(private readonly db: LowdbService) {}
+
+  onModuleInit() {
+    User.injectDb(this.db);
+  }
+}

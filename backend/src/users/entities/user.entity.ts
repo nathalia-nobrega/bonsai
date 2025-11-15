@@ -1,6 +1,22 @@
 import { randomUUID } from 'crypto';
+import * as bcrypt from 'bcrypt';
+import { LowdbService } from 'src/database/lowdb.service';
+import {
+  ResourceNotFoundException,
+  ResourceAlreadyExists,
+} from 'src/exceptions/exceptions';
+import { UserCreationDto } from '../dto/user-creation-dto';
+import { UserResponseDto } from '../dto/user-response-dto';
+import { plainToInstance } from 'class-transformer';
+import { UserUpdateDto } from '../dto/user-update-dto';
 
 export class User {
+  private static db: LowdbService;
+
+  static injectDb(db: LowdbService) {
+    this.db = db;
+  }
+
   private readonly _id: string;
   private readonly _createdAt: Date;
   private _name: string;
@@ -30,7 +46,71 @@ export class User {
     this._pointsGained = params.pointsGained ?? 0;
   }
 
-  //pra evitar o stringify do lowdb de trazer tudo com underline
+  //metodos do service
+
+  public static findById(id: string): UserResponseDto {
+    const user = this.db.data.users.find((u) => u.id === id);
+
+    if (!user) {
+      throw new ResourceNotFoundException('User', id);
+    }
+
+    return plainToInstance(UserResponseDto, user);
+  }
+
+  public static async create(dto: UserCreationDto): Promise<UserResponseDto> {
+    const emailExists = this.db.data.users.some((u) => u.email === dto.email);
+
+    if (emailExists) {
+      throw new ResourceAlreadyExists('User', dto.email);
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+
+    const newUser = new User({
+      id: randomUUID(),
+      createdAt: new Date(),
+      name: dto.name,
+      email: dto.email,
+      password: hashedPassword,
+      photoUrl:
+        dto.photoUrl || 'https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg',
+      level: Number(dto.level) || 1,
+      pointsGained: Number(dto.pointsGained) || 0,
+    });
+
+    this.db.data.users.push(newUser);
+    await this.db.write();
+
+    return plainToInstance(UserResponseDto, newUser);
+  }
+
+  static async updateUser(
+    id: string,
+    userUpdateDto: UserUpdateDto
+  ): Promise<UserResponseDto> {
+    const userIndex = this.db.data.users.findIndex((user) => user.id === id);
+
+    if (userIndex === -1) {
+      throw new ResourceNotFoundException('User', id);
+    }
+
+    const user = this.db.data.users[userIndex];
+
+    if (userUpdateDto.name !== undefined) {
+      user.name = userUpdateDto.name;
+    }
+
+    if (userUpdateDto.photoUrl !== undefined) {
+      user.photoUrl = userUpdateDto.photoUrl;
+    }
+
+    this.db.data.users[userIndex] = user;
+    await this.db.write();
+
+    return plainToInstance(UserResponseDto, user);
+  }
+
   toJSON() {
     return {
       id: this._id,

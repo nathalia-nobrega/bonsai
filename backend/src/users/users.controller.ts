@@ -5,20 +5,18 @@ import {
   Post,
   Body,
   ValidationPipe,
-  UsePipes,
-  BadRequestException,
   Patch,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserResponseDto } from './dto/user-response-dto';
 import { UserCreationDto } from './dto/user-creation-dto';
+import { User } from './entities/user.entity';
 import { UserUpdateDto } from './dto/user-update-dto';
-import { UsersService } from './users.service';
 
 @ApiTags('bonsai')
 @Controller('users')
 export class UserController {
-  constructor(private usersService: UsersService) {}
+  constructor() {}
 
   @Get(':id')
   @ApiResponse({
@@ -31,7 +29,7 @@ export class UserController {
     description: 'User not found',
   })
   findUserById(@Param('id') id: string): UserResponseDto {
-    return this.usersService.findUserById(id);
+    return User.findById(id);
   }
 
   @Post()
@@ -58,19 +56,17 @@ export class UserController {
     status: 400,
     description: 'Invalid request data',
   })
-  create(@Body() userCreationDto: UserCreationDto): Promise<UserResponseDto> {
-    return this.usersService.createUser(userCreationDto);
+  create(
+    @Body(ValidationPipe) userCreationDto: UserCreationDto
+  ): Promise<UserResponseDto> {
+    return User.create(userCreationDto);
   }
 
-  @ApiResponse({
-    status: 404,
-    description: 'User not found',
-  })
   @Patch(':id')
   updateUser(
     @Param('id') id: string,
     @Body() userUpdateDto: UserUpdateDto
   ): Promise<UserResponseDto> {
-    return this.usersService.updateUser(id, userUpdateDto);
+    return User.updateUser(id, userUpdateDto);
   }
 }

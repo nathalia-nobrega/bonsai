@@ -28,6 +28,7 @@ export default function Index() {
   const { width, height } = useWindowDimensions();
 
   const { userId } = useLocalSearchParams();
+  console.log("userId recebido:", userId);
   const [name, setName] = useState("");
   const host =
     Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
@@ -75,7 +76,7 @@ export default function Index() {
 
     try {
       const response = await fetch(
-        `http://192.168.15.16:3000/api/users/${userId}`,
+        `http://192.168.15.13:3000/api/users/${userId}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -100,7 +101,7 @@ export default function Index() {
 
       Toast.show({
         type: "success",
-        text1: "Hello {name}!",
+        text1: "Hello!",
         text2: "Welcome to Bonsai!",
         position: "top",
       });
