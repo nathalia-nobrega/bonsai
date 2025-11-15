@@ -5,164 +5,123 @@ export const s = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
-    justifyContent: "flex-start",
-    alignItems: "center",
   },
 
   overlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 0,
   },
-    halfWhiteBackground: {
+
+  halfWhiteBackground: {
     width: "100%",
-    height: "70%",
-    marginTop: "auto",
+    minHeight: "70%",
     backgroundColor: "white",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingHorizontal: 24,
-    paddingTop: 18,
-    justifyContent: "flex-start",
     zIndex: 2,
+    paddingHorizontal: 24,
   },
 
+  // TÍTULO — removido position absolute
   title: {
-  position: "absolute",
-  left: 20,
-  fontSize: 16,
-  color: "#5C9F60",
-  fontFamily: "Nunito-ExtraBold",
-  paddingTop: 35,
-  zIndex: 5,
-},
-blur: {
-  position: "absolute",
-  top: 0,
-  bottom: 0,
-  left: 0,
-  right: 0,
-  borderBottomLeftRadius: 22,
-  borderBottomRightRadius: 22,
-  zIndex: 1,
-},
-namesci: {
-  position: "absolute",
+    fontSize: 16,
+    color: "#5C9F60",
+    fontFamily: "Nunito-ExtraBold",
+    marginBottom: 35,
+    marginTop: 30,
+  },
+
+  blur: {
+    ...StyleSheet.absoluteFillObject,
+    borderBottomLeftRadius: 22,
+    borderBottomRightRadius: 22,
+    zIndex: 1,
+  },
+
+  // nomes dentro do card — OK usar absolute aqui (dentro do card)
+  namesci: {
+    position: "absolute",
     bottom: 10,
-    fontFamily: "Poppins-Regular",
     left: 10,
+    fontFamily: "Poppins-Regular",
     color: "#FFFFFF",
-    zIndex: 10,
     fontSize: 11,
-},
-name: {
+  },
+  name: {
     position: "absolute",
     bottom: 25,
-    fontFamily: "Poppins-Bold",
     left: 10,
+    fontFamily: "Poppins-Bold",
     color: "#FFFFFF",
-    zIndex: 10,
     fontSize: 11,
-},
-second_title: {
-  position: "absolute",
-  top: 160,
-  left: 20,
-  fontSize: 16,
-  color: "#5C9F60",
-  fontFamily: "Nunito-ExtraBold",
-  paddingTop: 135,
-  marginBottom: 1,
-  zIndex: 5,
-},
-container2: {
-  top: 25,
-  width: "100%",
-  height: 77,
-  backgroundColor: "transparent",
-  borderWidth: 1,
-  borderColor: "#8F8F8F",
-  borderRadius: 25,
-  left: 0,
-  marginTop: 10,
-},
-textcontainer: {
-  position: "absolute",
-  top: 11,
-    bottom: 35,
-    fontFamily: "Nunito-SemiBold",
-    left: 15,
-    color: "#3C3C3C",
-    zIndex: 10,
-    fontSize: 15,
-    justifyContent: "flex-start",
-},
-secondtext: {
-  position: "absolute",
-  top: 15, 
-    bottom: 25,
+  },
+
+  second_title: {
+    fontSize: 16,
+    color: "#5C9F60",
     fontFamily: "Nunito-ExtraBold",
-    left: 10,
+    marginTop: -20,
+    marginBottom: 10,
+    left: 1,
+  },
+
+  // CARD DAS MISSÕES — removido 'position absolute' e 'top', 'left'
+  container2: {
+    width: "100%",
+    height: 77,
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: "#8F8F8F",
+    borderRadius: 25,
+    marginTop: 10,
+    paddingHorizontal: 15,
+    justifyContent: "center",
+  },
+
+  textcontainer: {
+    fontFamily: "Nunito-SemiBold",
     color: "#3C3C3C",
-    zIndex: 10,
     fontSize: 15,
-    justifyContent: "flex-start",
-},
-desctext: {
-  position: "absolute",
-    bottom: 15,
+  },
+
+  secondtext: {
+    fontFamily: "Nunito-ExtraBold",
+    color: "#3C3C3C",
+    fontSize: 15,
+  },
+
+  desctext: {
     fontFamily: "Poppins-Regular",
-    left: 15,
     color: "#3C3C3C",
-    zIndex: 10,
     fontSize: 11,
-},
-desctextname: {
-  position: "absolute",
-    bottom: 15,
+  },
+  
+  desctextname: {
     fontFamily: "Poppins-Bold",
-    left: 15,
     color: "#3C3C3C",
-    zIndex: 10,
     fontSize: 11,
-},
-circleButton: {
-  width: 40,
-  height:40,
-  borderRadius: 40,
-  backgroundColor: "transparent",
-  borderWidth: 8,
-  borderColor: "#5C9F60",
-  left: 310,
-  top: 15,
-},
-scrollView: {
-  maxHeight: 500,
-},
-scrollViewContent: {
-  paddingBottom: 100,
-},
-fadeTop: {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  height: 30,
-  backgroundColor: 'transparent',
-  backgroundImage: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)',
-},
-plantsSection: {
-  height: 200,
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: 20,
-  marginBottom: 20,
-},
-missionsSection: {
-  height: 150,
-  justifyContent: 'center',
-  alignItems: 'center',
-  marginTop: 40,
-},
+  },
 
+  circleButton: {
+    position: "absolute",
+    right: 20,
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    backgroundColor: "transparent",
+    borderWidth: 8,
+    borderColor: "#5C9F60",
+  },
 
+  scrollView: {
+    width: "100%",
+  },
+
+  scrollViewContent: {
+    paddingBottom: 60,
+  },
+
+  fadeTop: {
+    height: 10,
+  },
 });
