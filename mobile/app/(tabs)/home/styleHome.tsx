@@ -21,8 +21,6 @@ export const s = StyleSheet.create({
     zIndex: 2,
     paddingHorizontal: 24,
   },
-
-  // TÍTULO — removido position absolute
   title: {
     fontSize: 16,
     color: "#5C9F60",
@@ -38,7 +36,6 @@ export const s = StyleSheet.create({
     zIndex: 1,
   },
 
-  // nomes dentro do card — OK usar absolute aqui (dentro do card)
   namesci: {
     position: "absolute",
     bottom: 10,
@@ -65,7 +62,6 @@ export const s = StyleSheet.create({
     left: 1,
   },
 
-  // CARD DAS MISSÕES — removido 'position absolute' e 'top', 'left'
   container2: {
     width: "100%",
     height: 77,
