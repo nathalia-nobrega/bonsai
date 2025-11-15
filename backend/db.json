@@ -354,6 +354,66 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "ccc2409e-3548-4599-a99d-eed134be2eaf",
+      "createdAt": "2025-11-15T18:59:18.776Z",
+      "name": "jes",
+      "email": "ndjs@gmail.com",
+      "password": "$2b$10$rB.U7YpfMXsECEYWwcdFZetBkKqxULV.HBhtln8bdIu1RP0G7dnRm",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "eede5242-d7ea-41a1-91ad-72468564000c",
+      "createdAt": "2025-11-15T19:20:39.259Z",
+      "name": "jes",
+      "email": "baha@gmail.com",
+      "password": "$2b$10$Lb0nhkf9zFTNScoTJoZZPewL5BU91UpMtwotwbKhPwco0yMs7YQrG",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "88874229-61a0-4a85-bab5-b0e7be57bde4",
+      "createdAt": "2025-11-15T19:38:05.189Z",
+      "name": "jes",
+      "email": "hzbs@gmail.com",
+      "password": "$2b$10$NBGY1reBMbjN5seeC08rrevi9VD943.D3my.lhqvZHSkD15hJNZZC",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "9170e47e-1676-4164-b081-c59a3a7a7ff9",
+      "createdAt": "2025-11-15T19:47:12.860Z",
+      "name": "nes",
+      "email": "hjzs@gmail.com",
+      "password": "$2b$10$JMLInWBiQZzTjt8qjMelZee8ZfuMP5yw0yMbPif3S32Nq1PmElO8a",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "1afd5ba8-cadc-4768-9f66-8164fe21bb62",
+      "createdAt": "2025-11-15T19:58:23.724Z",
+      "name": "jes",
+      "email": "vzbznz@gmail.com",
+      "password": "$2b$10$n5d/ruzZ5IRQTZcvVI2MdOyfpkXKsAHWC5Hlg6WT34YIyjffEyWji",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "a22fec7a-46c6-4293-9619-511f21e184da",
+      "createdAt": "2025-11-15T19:59:57.921Z",
+      "name": "jes",
+      "email": "nsns@gmail.com",
+      "password": "$2b$10$qPsBOwZ9283mBCS9FB.2.eb3ONIc0a/EdWH..mZGVKQPux40ARaM6",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ],
   "plants": [

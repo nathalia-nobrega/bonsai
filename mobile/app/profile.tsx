@@ -16,25 +16,39 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import * as ImagePicker from "expo-image-picker";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { useLocalSearchParams } from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import Constants from "expo-constants";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
   const router = useRouter();
+  const { width } = useWindowDimensions();
+  const { userId } = useLocalSearchParams();
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [hasPermission, setHasPermission] = useState(null);
-  const { width, height } = useWindowDimensions();
-
-  const { userId } = useLocalSearchParams();
-  console.log("userId recebido:", userId);
   const [name, setName] = useState("");
+  const [storedId, setStoredId] = useState(null);
+
   const host =
     Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
     Constants?.expoConfig?.hostUri?.split(":")[0];
 
+  console.log("userId recebido:", userId);
+
+  // -----------------------------------------------------
+  // Load userId do AsyncStorage + pedir permissão de galeria
+  // -----------------------------------------------------
   useEffect(() => {
+    async function loadId() {
+      const id = await AsyncStorage.getItem("userId");
+      console.log("Adicionando id:", id);
+      setStoredId(id);
+    }
+
+    loadId();
+
     (async () => {
       const { status } =
         await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -42,6 +56,9 @@ export default function Index() {
     })();
   }, []);
 
+  // -----------------------------------------------------
+  // Selecionar imagem
+  // -----------------------------------------------------
   const handlePickImage = async () => {
     if (!hasPermission) {
       Alert.alert(
@@ -58,11 +75,14 @@ export default function Index() {
       quality: 1,
     });
 
-    if (!result.canceled && result.assets && result.assets.length > 0) {
+    if (!result.canceled && result.assets?.length > 0) {
       setSelectedImage(result.assets[0].uri);
     }
   };
 
+  // -----------------------------------------------------
+  // Criar/atualizar usuário
+  // -----------------------------------------------------
   const handleCreateUser = async () => {
     if (!name.trim()) {
       Toast.show({
@@ -74,15 +94,22 @@ export default function Index() {
       return;
     }
 
+    if (!storedId) {
+      console.log("Erro: storedId é null");
+      return;
+    }
+
     try {
       const response = await fetch(
-        `http://192.168.15.13:3000/api/users/${userId}`,
+        `http://192.168.15.13:3000/api/users/${storedId}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             name: name.trim(),
-            photoUrl: "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+            photoUrl:
+              selectedImage ||
+              "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
           }),
         }
       );
@@ -112,6 +139,9 @@ export default function Index() {
     }
   };
 
+  // -----------------------------------------------------
+  // UI
+  // -----------------------------------------------------
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -127,7 +157,6 @@ export default function Index() {
           style={styles.background}
           resizeMode="cover"
         >
-          {/* blur */}
           <LinearGradient
             colors={["rgba(0,0,0,0.0)", "rgba(33,57,35,0.5)"]}
             start={{ x: 0.5, y: 0 }}
@@ -135,23 +164,18 @@ export default function Index() {
             style={styles.overlay}
           />
 
-          {/* Círculo */}
+          {/* Avatar */}
           <View style={styles.circle}>
-            {selectedImage ? (
-              <Image
-                source={{ uri: selectedImage }}
-                style={styles.circleImage}
-                resizeMode="cover"
-              />
-            ) : (
-              <Image
-                source={require("../assets/images/default.png")}
-                style={styles.circleImage}
-                resizeMode="cover"
-              />
-            )}
+            <Image
+              source={
+                selectedImage
+                  ? { uri: selectedImage }
+                  : require("../assets/images/default.png")
+              }
+              style={styles.circleImage}
+              resizeMode="cover"
+            />
 
-            {/* Botão de edição */}
             <TouchableOpacity
               style={styles.editButton}
               onPress={handlePickImage}
@@ -160,6 +184,7 @@ export default function Index() {
             </TouchableOpacity>
           </View>
 
+          {/* Nome */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Your Name</Text>
             <TextInput
@@ -169,15 +194,13 @@ export default function Index() {
               onChangeText={setName}
             />
           </View>
+
+          {/* Botão */}
           <TouchableOpacity
-            style={[styles.button, { width: width * 0.55, height: 50 }]} //rebecca
+            style={[styles.button, { width: width * 0.55, height: 50 }]}
             onPress={handleCreateUser}
           >
-            <Text
-              style={styles.buttonText}
-              numberOfLines={1}
-              ellipsizeMode="clip"
-            >
+            <Text style={styles.buttonText} numberOfLines={1}>
               Next
             </Text>
           </TouchableOpacity>
@@ -195,11 +218,45 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+
   overlay: {
     ...StyleSheet.absoluteFillObject,
     zIndex: 0,
   },
 
+  // Avatar
+  circle: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "rgba(255,255,255,0.1)",
+    borderWidth: 2,
+    borderColor: "rgba(255,255,255,0.4)",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "visible",
+    zIndex: 1,
+  },
+
+  circleImage: {
+    width: "80%",
+    height: "80%",
+    borderRadius: 100,
+  },
+
+  editButton: {
+    position: "absolute",
+    bottom: 13,
+    right: 10,
+    padding: 9,
+    backgroundColor: "rgba(253, 249, 249, 0.5)",
+    borderRadius: 20,
+    borderColor: "rgba(255, 255, 255, 0.9)",
+    zIndex: 5,
+    elevation: 5,
+  },
+
+  // Input
   inputContainer: {
     width: "80%",
     marginTop: 20,
@@ -208,7 +265,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: "600",
-    color: "#ffffffff",
+    color: "#fff",
     marginBottom: 8,
   },
 
@@ -225,35 +282,7 @@ const styles = StyleSheet.create({
     textAlignVertical: "center",
   },
 
-  circle: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderWidth: 2,
-    borderColor: "rgba(255, 255, 255, 0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-    overflow: "visible",
-    zIndex: 1,
-  },
-  circleImage: {
-    borderRadius: 100,
-    width: "80%",
-    height: "80%",
-    zIndex: 1,
-  },
-  editButton: {
-    position: "absolute",
-    bottom: 13,
-    right: 10,
-    backgroundColor: "rgba(253, 249, 249, 0.5)",
-    borderColor: "rgba(255, 255, 255, 0.9)",
-    borderRadius: 20,
-    padding: 9,
-    zIndex: 5,
-    elevation: 5,
-  },
+  // Botão
   button: {
     position: "absolute",
     bottom: 40,
@@ -262,14 +291,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 60,
     borderRadius: 50,
   },
+
   buttonText: {
     color: "#5C9F60",
     fontWeight: "700",
     fontSize: 20,
-    left: 1,
     marginTop: 10,
     textAlign: "center",
-    textAlignVertical: "center",
     flexShrink: 1,
   },
 });

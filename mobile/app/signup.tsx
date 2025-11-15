@@ -18,6 +18,7 @@ import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Signup() {
   const router = useRouter();
@@ -58,6 +59,12 @@ export default function Signup() {
 
       const data = await response.json();
       console.log("User created:", data);
+
+      await AsyncStorage.setItem("userId", data._id);
+
+      //checagem
+      const id = await AsyncStorage.getItem("userId");
+      console.log("Adicionando id:", id);
 
       router.push(`/profile?userId=${data._id}`);
     } catch (err) {

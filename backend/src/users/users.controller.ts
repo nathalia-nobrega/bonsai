@@ -59,7 +59,14 @@ export class UserController {
   create(
     @Body(ValidationPipe) userCreationDto: UserCreationDto
   ): Promise<UserResponseDto> {
-    return User.create(userCreationDto);
+    const user = new User({
+      name: userCreationDto.name,
+      email: userCreationDto.email,
+      password: userCreationDto.password,
+      photoUrl: userCreationDto.photoUrl,
+    });
+
+    return user.create();
   }
 
   @Patch(':id')

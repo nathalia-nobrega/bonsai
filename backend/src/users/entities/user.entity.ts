@@ -17,8 +17,8 @@ export class User {
     this.db = db;
   }
 
-  private readonly _id: string;
-  private readonly _createdAt: Date;
+  private _id: string;
+  private _createdAt: Date;
   private _name: string;
   private _email: string;
   @Exclude({ toPlainOnly: true })
@@ -57,47 +57,36 @@ export class User {
     }
     console.log(plainToInstance(UserResponseDto, user));
 
-    return plainToInstance(UserResponseDto, user);
+    return plainToInstance(UserResponseDto, user, {
+      excludeExtraneousValues: true,
+    });
   }
 
-  public static async create(dto: UserCreationDto): Promise<UserResponseDto> {
-    const emailExists = this.db.data.users.some((u) => u.email === dto.email);
+  public async create(): Promise<UserResponseDto> {
+    const emailExists = User.db.data.users.some((u) => u.email === this._email);
 
     if (emailExists) {
-      throw new ResourceAlreadyExists('User', dto.email);
+      throw new ResourceAlreadyExists('User', this._email);
     }
+    this._password = await bcrypt.hash(this._password, 10);
 
-    const hashedPassword = await bcrypt.hash(dto.password, 10);
+    User.db.data.users.push(this.toJSON());
+    await User.db.write();
 
-    const newUser = new User({
-      id: randomUUID(),
-      createdAt: new Date(),
-      name: dto.name,
-      email: dto.email,
-      password: hashedPassword,
-      photoUrl:
-        dto.photoUrl || 'https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg',
-      level: Number(dto.level) || 1,
-      pointsGained: Number(dto.pointsGained) || 0,
-    });
-
-    this.db.data.users.push(newUser);
-    await this.db.write();
-
-    return plainToInstance(UserResponseDto, newUser);
+    return plainToInstance(UserResponseDto, this.toJSON());
   }
 
-  static async updateUser(
+  public async updateUser(
     id: string,
     userUpdateDto: UserUpdateDto
   ): Promise<UserResponseDto> {
-    const userIndex = this.db.data.users.findIndex((user) => user.id === id);
+    const userIndex = User.db.data.users.findIndex((user) => user.id === id);
 
     if (userIndex === -1) {
       throw new ResourceNotFoundException('User', id);
     }
 
-    const user = this.db.data.users[userIndex];
+    const user = User.db.data.users[userIndex];
 
     if (userUpdateDto.name !== undefined) {
       user.name = userUpdateDto.name;
@@ -107,15 +96,15 @@ export class User {
       user.photoUrl = userUpdateDto.photoUrl;
     }
 
-    this.db.data.users[userIndex] = user;
-    await this.db.write();
+    User.db.data.users[userIndex] = user;
+    await User.db.write();
 
     return plainToInstance(UserResponseDto, user);
   }
 
   toJSON() {
     return {
-      id: this._id,
+      id: this.id,
       createdAt: this._createdAt,
       name: this._name,
       email: this._email,
