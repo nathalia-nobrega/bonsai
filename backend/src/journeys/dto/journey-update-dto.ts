@@ -7,6 +7,8 @@ import {
   IsString,
   IsUUID,
   ArrayNotEmpty,
+  IsEnum,
+  IsBoolean,
 } from 'class-validator';
 
 @Expose()
@@ -87,4 +89,22 @@ export class JourneyUpdateDto {
   @IsUUID('all', { each: true })
   @IsOptional()
   relatedPlants?: string[];
+
+  @ApiProperty({
+    description: 'Journey completion status',
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  isFinished?: boolean;
+
+  @ApiProperty({
+    description: 'Journey type',
+    enum: ['garden', 'activities'],
+    example: 'garden',
+  })
+  @IsString()
+  @IsOptional()
+  @IsEnum(['garden', 'activities'])
+  type?: 'garden' | 'activities';
 }

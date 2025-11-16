@@ -60,13 +60,13 @@ export default function Signup() {
       const data = await response.json();
       console.log("User created:", data);
 
-      await AsyncStorage.setItem("userId", data._id);
+      await AsyncStorage.setItem("userId", data.id);
 
       //checagem
       const id = await AsyncStorage.getItem("userId");
       console.log("Adicionando id:", id);
 
-      router.push(`/profile?userId=${data._id}`);
+      router.push(`/profile?userId=${data.id}`);
     } catch (err) {
       console.error("Network error:", err);
 

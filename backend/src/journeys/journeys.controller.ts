@@ -14,7 +14,7 @@ import {
   import { JourneyResponseDto } from './dto/journey-response-dto';
   import { JourneyUpdateDto } from './dto/journey-update-dto';
   
-  @ApiTags('bonsai')
+  @ApiTags('journeys')
   @Controller('journeys')
   export class JourneyController {
     constructor() {}
@@ -84,89 +84,6 @@ import {
       });
   
       return journey.create();
-    }
-    
-    @Post()
-    @ApiResponse({
-      status: 201,
-      description: 'Default journeys created for user',
-      type: [JourneyResponseDto],
-    })
-    static async createDefaultJourneys(
-      @Param('userId') userId: string,
-    ): Promise<JourneyResponseDto[]> {
-      const defaultJourneys = [
-        {
-          userId,
-          name: 'First Sprout',
-          description: 'plant a new plant on your garden',
-          pointsEarned: 0,
-          finalPoints: 10,
-          activitiesCompleted: 0,
-          activitiesFinal: 1,
-          plantCount: 1,
-          order: 1,
-          relatedPlants: [],
-        },
-        {
-          userId,
-          name: 'New Life',
-          description: 'complete every daily mission of a plant',
-          pointsEarned: 0,
-          finalPoints: 30,
-          activitiesCompleted: 0,
-          activitiesFinal: 7,
-          plantCount: 0,
-          order: 2,
-          relatedPlants: [],
-        },
-        {
-          userId,
-          name: 'Triple Threat',
-          description: 'plant three more plants in your garden',
-          pointsEarned: 0,
-          finalPoints: 50,
-          activitiesCompleted: 0,
-          activitiesFinal: 3,
-          plantCount: 3,
-          order: 3,
-          relatedPlants: [],
-        },
-        {
-          userId,
-          name: 'Rain Season',
-          description: 'water your plants everyday for a week',
-          pointsEarned: 0,
-          finalPoints: 50,
-          activitiesCompleted: 0,
-          activitiesFinal: 7,
-          plantCount: 0,
-          order: 4,
-          relatedPlants: [],
-        },
-        {
-          userId,
-          name: 'Trimming Time',
-          description: 'Complete a trim',
-          pointsEarned: 0,
-          finalPoints: 20,
-          activitiesCompleted: 0,
-          activitiesFinal: 1,
-          plantCount: 0,
-          order: 5,
-          relatedPlants: [],
-        },
-      ];
-
-      const createdJourneys: JourneyResponseDto[] = [];
-
-      for (const journeyData of defaultJourneys) {
-        const journey = new Journey(journeyData);
-        const created = await journey.create();
-        createdJourneys.push(created);
-      }
-
-      return createdJourneys;
     }
 
     @Patch(':id')

@@ -80,4 +80,19 @@ export class JourneyResponseDto {
     isArray: true,
   })
   relatedPlants: string[];
+
+  @Expose()
+  @ApiProperty({
+    description: 'Journey completion status',
+    example: false,
+  })
+  isFinished: boolean;
+
+  @Expose()
+  @ApiProperty({
+    description: 'Journey type',
+    enum: ['garden', 'activities'],
+    example: 'activities',
+  })
+  type: 'garden' | 'activities';
 }

@@ -10,11 +10,7 @@ import { Journey } from './entities/journey.entity';
 export class JourneysModule implements OnModuleInit {
   constructor(private readonly db: LowdbService) {}
 
-  async onModuleInit() {
-    await this.db.start();
-
+  onModuleInit() {
     Journey.injectDb(this.db);
-
-    console.log('Journey DB injected:', this.db.data.journeys.length);
   }
 }

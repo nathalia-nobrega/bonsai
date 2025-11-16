@@ -434,6 +434,50 @@
       "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "dd89f793-5630-4772-a582-f866275af2a3",
+      "createdAt": "2025-11-16T06:35:49.235Z",
+      "email": "damianwayne@gmail.com",
+      "password": "$2b$10$X1XrQCK9sG70Y11wZqWLRu9QbgKjIQvjYtlCf0GS9zjGuBBYdlVpC",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "73fcb33d-10ea-4f4c-9bc7-678e4408008d",
+      "createdAt": "2025-11-16T06:36:19.823Z",
+      "email": "jaaka@gmail.com",
+      "password": "$2b$10$PrYihNEcUNM.3VhPQNlZ5ubs9JNPIi8S2BG6tWiwsc9Ko2osKJwmy",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "44b7900f-56a5-46e5-9a33-5bb5b0837a58",
+      "createdAt": "2025-11-16T06:36:30.640Z",
+      "email": "jaakavg@gmail.com",
+      "password": "$2b$10$l9YbByxv9z3GqP8wsTTxAOyBHOpYMZV5JU1h3rie8xn8qJgRPnZwe",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "46444adf-ab3d-4d2d-a19c-d87bd54dafaa",
+      "createdAt": "2025-11-16T06:37:33.531Z",
+      "name": "jes",
+      "email": "frf@gmail.com",
+      "password": "$2b$10$N2DX1G3HtSf7A8/eOKyRs.0IXZRWboduwcMuiXyoMbM0.CipVKdQC",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "8514b971-dd5a-4344-8da7-c2f67266c455",
+      "createdAt": "2025-11-16T06:40:11.048Z",
+      "name": "jes",
+      "email": "ussdf@gmail.com",
+      "password": "$2b$10$dsWDX3vC/xohnmG//fr8SO5cqzONi7L4bvNanJRPXCMQ7/hrVu3MC",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ],
   "plants": [
@@ -496,6 +540,88 @@
       "wasWatered": true,
       "gotSunlight": false,
       "wasTrimmed": false
+    }
+  ],
+  "journeys": [
+    {
+      "id": "3aaa65e6-39d2-4435-b258-c51272196223",
+      "userId": "2cb40c70-92f0-434a-b586-02e6b1536b7d",
+      "createdAt": "2025-11-16T07:15:54.368Z",
+      "name": "First Sprout",
+      "description": "plant a new plant on your garden",
+      "pointsEarned": 0,
+      "finalPoints": 10,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 1,
+      "plantCount": 1,
+      "order": 1,
+      "relatedPlants": [],
+      "status": "unfinished",
+      "type": "activities"
+    },
+    {
+      "id": "a564c9bd-cf4a-4bc4-b215-b988f1af4696",
+      "userId": "2cb40c70-92f0-434a-b586-02e6b1536b7d",
+      "createdAt": "2025-11-16T07:15:54.368Z",
+      "name": "New Life",
+      "description": "complete every daily mission of a plant",
+      "pointsEarned": 0,
+      "finalPoints": 30,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 2,
+      "relatedPlants": [],
+      "status": "unfinished",
+      "type": "activities"
+    },
+    {
+      "id": "61206d59-3029-48d2-884e-4290f6419d14",
+      "userId": "2cb40c70-92f0-434a-b586-02e6b1536b7d",
+      "createdAt": "2025-11-16T07:15:54.369Z",
+      "name": "Triple Threat",
+      "description": "plant three more plants in your garden",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 3,
+      "plantCount": 3,
+      "order": 3,
+      "relatedPlants": [],
+      "status": "unfinished",
+      "type": "activities"
+    },
+    {
+      "id": "fcd31b4b-20b4-4c38-87ae-8652c67da631",
+      "userId": "2cb40c70-92f0-434a-b586-02e6b1536b7d",
+      "createdAt": "2025-11-16T07:15:54.369Z",
+      "name": "Rain Season",
+      "description": "water your plants everyday for a week",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 4,
+      "relatedPlants": [],
+      "status": "unfinished",
+      "type": "activities"
+    },
+    {
+      "id": "87390086-b77f-4257-a679-160f91ac8b49",
+      "userId": "2cb40c70-92f0-434a-b586-02e6b1536b7d",
+      "createdAt": "2025-11-16T07:15:54.370Z",
+      "name": "Trimming Time",
+      "description": "Complete a trim",
+      "pointsEarned": 0,
+      "finalPoints": 20,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 1,
+      "plantCount": 0,
+      "order": 5,
+      "relatedPlants": [],
+      "status": "unfinished",
+      "type": "activities"
     }
   ]
 }

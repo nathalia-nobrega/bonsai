@@ -2,34 +2,6 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 
-interface Plant {
-  id: string;
-  userId: string;          
-  name: string;
-  species: string;
-  createdAt: Date;
-
-
-  waterDays: number;
-  sunDays: number;
-  pruneCount: number;
-}
-
-interface Journey {
-  id: string;
-  userId: string;
-  createdAt: Date;
-  name: string;
-  description: string;
-  pointsEarned: number;
-  finalPoints: number;
-  activitiesCompleted: number;
-  activitiesFinal: number;
-  plantCount: number;
-  order: number;
-  relatedPlants: string[];
-}
-
 interface Database {
   users: Array<{
     id: string;
@@ -41,7 +13,7 @@ interface Database {
     level: number;
     pointsGained: number;
   }>;
-<<<<<<< HEAD
+
   plants: Array<{
     id: string;
     createdAt: Date;
@@ -69,12 +41,23 @@ interface Database {
     gotSunlight: boolean;
     wasTrimmed: boolean;
   }>;
-=======
 
-  plants: Plant[];
-
-  journeys: Journey[];
->>>>>>> 40527f2 (jornadas)
+  journeys: Array<{
+    id: string;
+    userId: string;
+    createdAt: Date;
+    name: string;
+    description: string;
+    pointsEarned: number;
+    finalPoints: number;
+    activitiesCompleted: number;
+    activitiesFinal: number;
+    plantCount: number;
+    order: number;
+    relatedPlants: string[];
+    isFinished: boolean;
+    type: 'garden' | 'activities';
+  }>;
 }
 
 @Injectable()
@@ -89,29 +72,19 @@ export class LowdbService implements OnModuleInit {
     if (this.db) return this.db;
 
     const adapter = new JSONFile<Database>('db.json');
-<<<<<<< HEAD
-    this.db = new Low<Database>(adapter, { users: [], plants: [] });
-    await this.db.read();
-
-    // Ensure both arrays exist, even if file has partial data
-    if (!this.db.data) {
-      this.db.data = { users: [], plants: [] };
-    } else {
-      this.db.data.users ||= [];
-      this.db.data.plants ||= [];
-    }
-=======
     this.db = new Low<Database>(adapter, {
       users: [],
       plants: [],
       journeys: [],
-    });
+    } as Database);
 
     await this.db.read();
 
+    this.db.data ||= { users: [], plants: [], journeys: [] } as Database;
+    this.db.data.users ||= [];
+    this.db.data.plants ||= [];
+    this.db.data.journeys ||= [];
 
-    this.db.data ||= { users: [], plants: [], journeys: [] };
->>>>>>> 40527f2 (jornadas)
 
     return this.db;
   }

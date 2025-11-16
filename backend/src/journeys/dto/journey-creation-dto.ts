@@ -9,6 +9,8 @@ import {
   ArrayNotEmpty,
   IsUUID,
   MinLength,
+  IsEnum,
+  IsBoolean,
 } from 'class-validator';
 
 @Expose()
@@ -95,4 +97,22 @@ export class JourneyCreationDto {
   @ArrayNotEmpty()
   @IsUUID('all', { each: true })
   relatedPlants: string[];
+
+  @ApiProperty({
+    description: 'Journey completion status',
+    example: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  isFinished?: boolean;
+
+  @ApiProperty({
+    description: 'Journey type',
+    enum: ['garden', 'activities'],
+    example: 'activities',
+  })
+  @IsString()
+  @IsOptional()
+  @IsEnum(['garden', 'activities'])
+  type?: 'garden' | 'activities';
 }

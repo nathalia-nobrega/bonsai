@@ -75,7 +75,9 @@ export class UserController {
 
     // Criar jornadas padrão para o novo usuário
     try {
-      await Journey.createDefaultForUser(createdUser.id);
+      console.log('Creating default journeys for user:', createdUser.id);
+      const journeys = await Journey.createDefaultForUser(createdUser.id);
+      console.log('Default journeys created successfully:', journeys.length, 'journeys');
     } catch (error) {
       // Log do erro mas não falha a criação do usuário
       console.error('Error creating default journeys:', error);
