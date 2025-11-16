@@ -16,7 +16,7 @@ export default function JornadaScreen() {
     { id: "2", title: "New Life" },
     { id: "3", title: "Triple Threat" },
     { id: "4", title: "Rainy Season" },
-    { id: "5", title: "Rainy Season" },
+    { id: "5", title: "Trimming Time" },
   ];
 
   useEffect(() => {

@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
 import CrownIcon from "../assets/images/crown.svg";
 import { LinearGradient } from "expo-linear-gradient";
+import { BlurView } from "expo-blur";
+
 
 export default function ProfileHeader({ user }) {
   return (
@@ -18,25 +20,52 @@ export default function ProfileHeader({ user }) {
           style={styles.overlay}
         />
 
-        <View style={styles.circle}>
+        <BlurView
+          intensity={40}
+          tint="light"
+          style={{
+            width: 150,
+            height: 150,
+            borderRadius: 100,
+            borderWidth: 2,
+            borderColor: "rgba(255,255,255,0.4)",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "hidden",
+          }}
+        >
           <Image
             source={{ uri: user.photoUrl }}
             style={styles.circleImage}
             resizeMode="cover"
           />
-        </View>
+        </BlurView>
 
         <Text style={styles.name}>{user.name}</Text>
       </ImageBackground>
 
-      <View style={styles.transparentBox}>
+      <BlurView
+        intensity={40}
+        tint="light"
+        style={{
+          position: "absolute",
+          bottom: -50,
+          width: 300,
+          borderRadius: 20,
+          borderWidth: 2,
+          borderColor: "rgba(207,207,207,0.4)",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 6,
+          overflow: "hidden",
+        }}
+      >
         <View style={styles.statsContainer}>
           <View style={styles.levelBox}>
             <CrownIcon width={28} height={28} />
             <Text style={styles.levelText}>lv.{user.level}</Text>
           </View>
 
-          {/* divisória */}
           <View style={styles.divider} />
 
           <View style={styles.statsTextBox}>
@@ -48,7 +77,8 @@ export default function ProfileHeader({ user }) {
             </Text>
           </View>
         </View>
-      </View>
+      </BlurView>
+
     </View>
   );
 }
@@ -75,7 +105,6 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 100,
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
     borderWidth: 2,
     borderColor: "rgba(255, 255, 255, 0.4)",
     justifyContent: "center",
@@ -99,7 +128,6 @@ const styles = StyleSheet.create({
     bottom: -50,
     width: 300,
     borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.23)", 
     borderWidth: 2,
     borderColor: "rgba(207, 207, 207, 0.4)",
     alignItems: "center",

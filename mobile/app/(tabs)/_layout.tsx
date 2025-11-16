@@ -3,6 +3,8 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { View } from 'react-native';
 import { BlurView } from 'expo-blur';
+import { usePathname } from "expo-router";
+
 
 import PerfilIconGray from '../../assets/images/perfil-icon-gray.svg';
 import PerfilIconGreen from '../../assets/images/perfil-icon-green.svg';
@@ -16,6 +18,11 @@ import PlantaIconGreen from '../../assets/images/planta-icon-green.svg';
 const ICON_SIZE = 45;
 
 export default function TabLayout() {
+  const pathname = usePathname();
+
+  // está na tela jornada?
+  const onJornada = pathname === "/jornada";
+  
   return (
     <Tabs
       screenOptions={{
@@ -36,7 +43,7 @@ export default function TabLayout() {
         tabBarBackground: () => (
           <BlurView
             intensity={70}
-            tint="light"
+            tint= {onJornada ? "dark" : "light"}
             style={{
               flex: 1,
               overflow: 'hidden',

@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
+import { BlurView } from 'expo-blur';
+import { router } from "expo-router";
 
 // IMPORTAR SVGs COMO COMPONENTES
 import SeedIcon from "../assets/images/mission #1 icon.svg";
@@ -35,37 +37,44 @@ export default function MissionItem({ id, title, active }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View
-        style={[
-          styles.circle,
-          {
-            width: CIRCLE_SIZE,
-            height: CIRCLE_SIZE,
-            borderRadius: 100,
-            borderWidth: 1,
-          },
-        ]}
+    <Pressable 
+      style={styles.container}
+      onPress={() => 
+        router.push({
+        pathname: "/(tabs)/jornada/missao",
+        params: { id: missionId } })
+      } 
+    >
+      <BlurView 
+        intensity={50} 
+        tint="light" 
+        style={{
+          borderRadius: 100,
+          overflow: "hidden", 
+          borderColor: "rgba(255, 255, 255, 0.5)",
+          justifyContent: "center",
+          alignItems: "center",
+          width: CIRCLE_SIZE,
+          height: CIRCLE_SIZE,
+          borderWidth: 1,
+        }}
       >
         {getIcon()}
-      </View>
+      </BlurView>
 
       <Text style={styles.title}>{title}</Text>
-    </View>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    marginBottom: 50, // espaçamento para alinhar com a trilha
+    marginBottom: 50, 
   },
 
   circle: {
-    backgroundColor: "rgba(255, 255, 255, 0.15)",
-    borderColor: "rgba(255, 255, 255, 0.5)",
-    justifyContent: "center",
-    alignItems: "center",
+    
   },
 
   title: {
