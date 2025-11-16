@@ -45,7 +45,6 @@ export class JourneyCreationDto {
     example: 0,
   })
   @IsNumber()
-  @IsOptional()
   pointsEarned: number;
 
   @ApiProperty({
@@ -61,7 +60,6 @@ export class JourneyCreationDto {
     example: 0,
   })
   @IsNumber()
-  @IsOptional()
   activitiesCompleted: number;
 
   @ApiProperty({
@@ -77,16 +75,14 @@ export class JourneyCreationDto {
     example: 3,
   })
   @IsNumber()
-  @IsOptional()
-  plantCount?: number;
+  plantCount: number;
 
   @ApiProperty({
     description: 'Order of the journey (for sorting)',
     example: 1,
   })
   @IsNumber()
-  @IsOptional()
-  order?: number;
+  order: number;
 
   @ApiProperty({
     description: 'IDs of the plants related to this mission',
@@ -107,12 +103,18 @@ export class JourneyCreationDto {
   isFinished?: boolean;
 
   @ApiProperty({
+    description: 'Journey active status',
+    example: true,
+  })
+  @IsBoolean()
+  isActive: boolean;
+
+  @ApiProperty({
     description: 'Journey type',
     enum: ['garden', 'activities'],
     example: 'activities',
   })
   @IsString()
-  @IsOptional()
   @IsEnum(['garden', 'activities'])
-  type?: 'garden' | 'activities';
+  type: 'garden' | 'activities';
 }

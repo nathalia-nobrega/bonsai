@@ -36,6 +36,7 @@ export class Journey {
   private _relatedPlants: string[];
 
   private _isFinished: boolean;
+  private _isActive: boolean;
   private _type: 'garden' | 'activities';
 
   constructor(params: {
@@ -56,6 +57,7 @@ export class Journey {
     relatedPlants: string[];
 
     isFinished?: boolean;
+    isActive?: boolean;
     type?: 'garden' | 'activities';
 
     id?: string;
@@ -80,18 +82,35 @@ export class Journey {
 
     this._relatedPlants = params.relatedPlants;
     this._isFinished = params.isFinished ?? false;
+    this._isActive = params.isActive ?? true;
     this._type = params.type ?? 'activities';
   }
 
   public static async findById(id: string): Promise<JourneyResponseDto> {
     if (!this.db || !this.db.data) {
-        throw new Error('Database not initialized');
+      throw new Error('Database not initialized');
     }
-    
-    const j = Journey.db.data.plants.find((p) => p.id === id);
+
+    const j = Journey.db.data.journeys.find((p) => p.id === id);
 
     if (!j) {
       throw new ResourceNotFoundException('Journey', id);
+    }
+
+    return plainToInstance(JourneyResponseDto, j, {
+      excludeExtraneousValues: true,
+    });
+  }
+
+  public static async findByState(finishedStatus: boolean): Promise<JourneyResponseDto> {
+    if (!this.db || !this.db.data) {
+      throw new Error('Database not initialized');
+    }
+
+    const j = Journey.db.data.journeys.find((p) => p.isActive === finishedStatus);
+
+    if (!j) {
+      throw new ResourceNotFoundException('Journey', 'state');
     }
 
     return plainToInstance(JourneyResponseDto, j, {
@@ -103,11 +122,11 @@ export class Journey {
     userId: string
   ): Promise<JourneyResponseDto[]> {
     if (!Journey.db || !Journey.db.data) {
-        throw new Error('Database not initialized');
+      throw new Error('Database not initialized');
     }
-    
+
     const journeys = Journey.db.data.journeys
-      .filter((journey) => journey.userId === userId)
+      .filter((journey: any) => journey.userId === userId)
       .sort((a, b) => (a.order || 0) - (b.order || 0));
 
     return journeys.map((j) =>
@@ -143,9 +162,9 @@ export class Journey {
     dto: JourneyUpdateDto
   ): Promise<JourneyResponseDto> {
     if (!this.db || !this.db.data) {
-        throw new Error('Database not initialized');
+      throw new Error('Database not initialized');
     }
-    
+
     const index = Journey.db.data.journeys.findIndex((j) => j.id === id);
 
     if (index === -1) {
@@ -167,6 +186,7 @@ export class Journey {
     if (dto.relatedPlants !== undefined)
       journey.relatedPlants = dto.relatedPlants;
     if (dto.isFinished !== undefined) journey.isFinished = dto.isFinished;
+    if (dto.isActive !== undefined) journey.isActive = dto.isActive;
     if (dto.type !== undefined) journey.type = dto.type;
 
     Journey.db.data.journeys[index] = journey;
@@ -181,9 +201,9 @@ export class Journey {
 
   public static async createDefaultForUser(userId: string): Promise<JourneyResponseDto[]> {
     if (!this.db || !this.db.data) {
-        throw new Error('Database not initialized');
+      throw new Error('Database not initialized');
     }
-    
+
     const defaultJourneys = [
       {
         userId,
@@ -191,11 +211,12 @@ export class Journey {
         description: 'plant a new plant on your garden',
         finalPoints: 10,
         activitiesFinal: 1,
-        plantCount: 1,
+        plantCount: 0,
         order: 1,
         relatedPlants: [],
         isFinished: false,
-        type: 'activities' as const,
+        isActive: true,
+        type: 'garden' as const,
       },
       {
         userId,
@@ -207,6 +228,7 @@ export class Journey {
         order: 2,
         relatedPlants: [],
         isFinished: false,
+        isActive: false,
         type: 'activities' as const,
       },
       {
@@ -219,7 +241,8 @@ export class Journey {
         order: 3,
         relatedPlants: [],
         isFinished: false,
-        type: 'activities' as const,
+        isActive: false,
+        type: 'garden' as const,
       },
       {
         userId,
@@ -231,6 +254,7 @@ export class Journey {
         order: 4,
         relatedPlants: [],
         isFinished: false,
+        isActive: false,
         type: 'activities' as const,
       },
       {
@@ -243,21 +267,22 @@ export class Journey {
         order: 5,
         relatedPlants: [],
         isFinished: false,
+        isActive: false,
         type: 'activities' as const,
       },
     ];
-  
+
     const results: JourneyResponseDto[] = [];
-  
+
     for (const data of defaultJourneys) {
       const j = new Journey(data);
       const created = await j.create();
       results.push(created);
     }
-  
+
     return results;
   }
-  
+
 
   toJSON() {
     return {
@@ -280,6 +305,7 @@ export class Journey {
 
       relatedPlants: this._relatedPlants,
       isFinished: this._isFinished,
+      isActive: this._isActive,
       type: this._type,
     };
   }
@@ -334,6 +360,10 @@ export class Journey {
 
   get isFinished(): boolean {
     return this._isFinished;
+  }
+
+  get isActive(): boolean {
+    return this._isActive;
   }
 
   get type(): 'garden' | 'activities' {
@@ -394,6 +424,13 @@ export class Journey {
       throw new Error('Invalid isFinished value');
     }
     this._isFinished = value;
+  }
+
+  set isActive(value: boolean) {
+    if (typeof value !== 'boolean') {
+      throw new Error('Invalid isActive value');
+    }
+    this._isActive = value;
   }
 
   set type(value: 'garden' | 'activities') {

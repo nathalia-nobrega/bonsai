@@ -5,6 +5,8 @@ import { PlantCreationDto } from './dto/plant-creation-dto';
 import { PlantResponseDto } from './dto/plant-response-dto';
 import { PlantStateUpdateDto } from './dto/plant-state-update-dto';
 import { PlantSummaryDto } from './dto/plant-summary-dto';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 /**
  * Plants controller following MPS architecture
@@ -13,6 +15,8 @@ import { PlantSummaryDto } from './dto/plant-summary-dto';
 @ApiTags('plants')
 @Controller('plants')
 export class PlantsController {
+    constructor(private readonly httpService: HttpService) { }
+
     /**
      * Get all plants for a user (summary view)
      * @param userId - User ID
@@ -36,8 +40,27 @@ export class PlantsController {
     @ApiOperation({ summary: 'Create a new plant' })
     @ApiResponse({ status: 201, description: 'Plant created successfully', type: PlantResponseDto })
     @ApiResponse({ status: 400, description: 'Bad request - invalid data' })
-    create(@Body() dto: PlantCreationDto): PlantResponseDto {
-        return Plant.create(dto);
+    create(@Body() dto: PlantCreationDto): Promise<PlantResponseDto> {
+        const createdPlant = Plant.create(dto);
+        this.notifyJourneySystem(dto.userId, createdPlant.id).catch(err => {
+            console.error('Failed to notify journey system:', err.message);
+        });
+
+        return Promise.resolve(createdPlant);
+    }
+
+    private async notifyJourneySystem(userId: string, plantId: string): Promise<void> {
+        try {
+            await firstValueFrom(
+                this.httpService.post(`/api/journeys/user/${userId}/plant-added`, {
+                    plantId
+                })
+            );
+            console.log('Journey system notified successfully');
+        } catch (error) {
+            console.error('Failed to notify journey system:', error.message);
+            throw error;
+        }
     }
 
     /**

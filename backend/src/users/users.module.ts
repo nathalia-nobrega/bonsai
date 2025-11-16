@@ -3,9 +3,10 @@ import { UserController } from './users.controller';
 import { LowdbModule } from 'src/database/lowdb.module';
 import { LowdbService } from 'src/database/lowdb.service';
 import { User } from './entities/user.entity';
+import { JourneysModule } from '../journeys/journeys.module';
 
 @Module({
-  imports: [LowdbModule],
+  imports: [LowdbModule, JourneysModule],
   controllers: [UserController],
   providers: [],
 })

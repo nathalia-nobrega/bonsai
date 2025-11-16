@@ -99,6 +99,14 @@ export class JourneyUpdateDto {
   isFinished?: boolean;
 
   @ApiProperty({
+    description: 'Journey active status',
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  isActive?: boolean;
+
+  @ApiProperty({
     description: 'Journey type',
     enum: ['garden', 'activities'],
     example: 'garden',

@@ -90,6 +90,13 @@ export class JourneyResponseDto {
 
   @Expose()
   @ApiProperty({
+    description: 'Journey active status',
+    example: true,
+  })
+  isActive: boolean;
+
+  @Expose()
+  @ApiProperty({
     description: 'Journey type',
     enum: ['garden', 'activities'],
     example: 'activities',

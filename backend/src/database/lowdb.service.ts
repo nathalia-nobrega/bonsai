@@ -56,6 +56,7 @@ interface Database {
     order: number;
     relatedPlants: string[];
     isFinished: boolean;
+    isActive: boolean;
     type: 'garden' | 'activities';
   }>;
 }
