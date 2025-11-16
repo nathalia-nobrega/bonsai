@@ -76,7 +76,7 @@ export class User {
     return plainToInstance(UserResponseDto, this.toJSON());
   }
 
-  public async updateUser(
+  static async updateUser(
     id: string,
     userUpdateDto: UserUpdateDto
   ): Promise<UserResponseDto> {

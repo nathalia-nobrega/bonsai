@@ -414,6 +414,26 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "00986110-068a-4a38-9c77-a8636ca4e946",
+      "createdAt": "2025-11-15T21:50:31.624Z",
+      "name": "jes",
+      "email": "hdhd@gmail.com",
+      "password": "$2b$10$EDUwGcLUuHU2TMVDXWOct.6xQc2Pbw8em4JzeRDqC2u.XNox6mFM6",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "ad7a1db7-a609-4d48-8e56-b78c2a31a1f8",
+      "createdAt": "2025-11-16T03:01:55.949Z",
+      "name": "EIGHT NINE",
+      "email": "concorkajskajde@will.fly",
+      "password": "$2b$10$ezbhuwlgbyIFnFtKKe8hauIZJYDrfAFc1EN5z4gjzs02hWo2oqKxu",
+      "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ],
   "plants": [

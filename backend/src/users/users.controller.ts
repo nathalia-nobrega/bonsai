@@ -12,11 +12,15 @@ import { UserResponseDto } from './dto/user-response-dto';
 import { UserCreationDto } from './dto/user-creation-dto';
 import { User } from './entities/user.entity';
 import { UserUpdateDto } from './dto/user-update-dto';
+import { Journey } from '../journeys/entities/journey.entity';
+import { LowdbService } from '../database/lowdb.service';
 
 @ApiTags('bonsai')
 @Controller('users')
 export class UserController {
-  constructor() {}
+  constructor(private readonly db: LowdbService) {
+    Journey.injectDb(this.db);
+  }
 
   @Get(':id')
   @ApiResponse({
@@ -56,7 +60,8 @@ export class UserController {
     status: 400,
     description: 'Invalid request data',
   })
-  create(
+
+  async create(
     @Body(ValidationPipe) userCreationDto: UserCreationDto
   ): Promise<UserResponseDto> {
     const user = new User({
@@ -66,7 +71,17 @@ export class UserController {
       photoUrl: userCreationDto.photoUrl,
     });
 
-    return user.create();
+    const createdUser = await user.create();
+
+    // Criar jornadas padrão para o novo usuário
+    try {
+      await Journey.createDefaultForUser(createdUser.id);
+    } catch (error) {
+      // Log do erro mas não falha a criação do usuário
+      console.error('Error creating default journeys:', error);
+    }
+
+    return createdUser;
   }
 
   @Patch(':id')
