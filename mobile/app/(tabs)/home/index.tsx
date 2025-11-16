@@ -58,6 +58,15 @@ const missionCarousel = [
   },
 ]
 
+// Array de imagens circulares
+const circularImages = [
+  require("../../../assets/images/mission1icon.png"),
+  require("../../../assets/images/mission2icon.png"),
+  require("../../../assets/images/mission3icon.png"),
+  require("../../../assets/images/mission4icon.png"),
+  require("../../../assets/images/mission5icon.png"),
+];
+
 export default function Index() {
   const router = useRouter();
   const { width, height } = useWindowDimensions();
@@ -68,10 +77,8 @@ export default function Index() {
   const VISIBLE_ITEMS = 2.3;
   const ITEM_WIDTH = (width - GAP * (VISIBLE_ITEMS + 1)) / VISIBLE_ITEMS;
 
-
   const initialWhiteHeight = height * 0.75;
   
-  // calculo de altura
   const calculateMaxHeight = () => {
     const titleHeight = 20;
     const carouselHeight = ITEM_WIDTH * 1.6;
@@ -161,6 +168,42 @@ export default function Index() {
             )}
           >
             <View style={{ height: height * 0.3 }} />
+            
+            {/* Container das imagens circulares */}
+            <View style={s.circularImagesContainer}>
+              {circularImages.map((image, index) => (
+                <View
+                  key={index}
+                  style={[
+                    s.circularImageWrapper,
+                    index === 1 && s.secondImageWrapper
+                  ]}
+                >
+                  <View style={s.missionContainer}>
+                    <Image
+                      source={image}
+                      style={[
+                        s.circularImage,
+                        index === 1 && s.secondImage
+                      ]}
+                      resizeMode="cover"
+                    />
+                    {index === 1 && (
+                    <View style={{ marginTop: 5, alignItems: "center", marginBottom: -55 }}>
+                      <Text style={s.current }>
+                        Current Mission:
+                      </Text>
+
+                      <Text style={s.mission}>
+                        {missionCarousel[1].mission}
+                      </Text>
+                    </View>
+                  )}
+                </View>
+                </View>
+              ))}
+            </View>
+
             {/* faz a animação certinha para o hwb subir tranquilamente */}
             <Animated.View
               style={[

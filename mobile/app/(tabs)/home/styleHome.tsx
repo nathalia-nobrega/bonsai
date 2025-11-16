@@ -120,4 +120,40 @@ export const s = StyleSheet.create({
   fadeTop: {
     height: 10,
   },
+  circularImagesContainer: {
+    position:  "absolute",
+    top: 80,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 60,
+    marginHorizontal: -50,
+    height: 120,
+  },
+  circularImageWrapper: {
+    marginHorizontal: 15,
+  },
+  secondImageWrapper: {
+    marginHorizontal: 15,
+  },
+  circularImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 25,
+  },
+  secondImage: {
+    width: 108,
+    height: 108,
+    borderRadius: 35,
+  },
+missionContainer: {
+    alignItems: 'center',
+  },
+current: {
+  fontSize: 15, fontFamily:"Nunito-Medium" , color: "#fff", left: 5,
+},
+mission: {
+  fontSize: 15, color: "#fff", fontFamily: "Nunito-ExtraBold", left: 5,
+},
 });
