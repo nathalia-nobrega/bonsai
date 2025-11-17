@@ -19,6 +19,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constants from "expo-constants";
 
 export default function Signup() {
   const router = useRouter();
@@ -26,11 +27,14 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const host = Constants?.expoGoConfig?.hostUri?.split(':')[0]
+    || Constants?.expoConfig?.hostUri?.split(':')[0];
+
   //HANDLE CREATE ACCOUNT MODIFICADO PARA USAR VALIDACAO DO BACK + CHAMAR O TOAST
 
   const handleCreateAccount = async () => {
     try {
-      const response = await fetch("http://192.168.15.13:3000/api/users", {
+      const response = await fetch(`http://${host}:3000/api/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

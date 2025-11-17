@@ -101,7 +101,7 @@ export default function Index() {
 
     try {
       const response = await fetch(
-        `http://192.168.15.13:3000/api/users/${storedId}`,
+        `http://${host}:3000/api/users/${storedId}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
