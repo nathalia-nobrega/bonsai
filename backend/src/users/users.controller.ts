@@ -18,9 +18,7 @@ import { LowdbService } from '../database/lowdb.service';
 @ApiTags('bonsai')
 @Controller('users')
 export class UserController {
-  constructor(private readonly db: LowdbService) {
-    Journey.injectDb(this.db);
-  }
+  constructor(private readonly db: LowdbService) {}
 
   @Get(':id')
   @ApiResponse({

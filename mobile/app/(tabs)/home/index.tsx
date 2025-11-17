@@ -1,13 +1,13 @@
-import { 
-  View, 
-  Text, 
-  Image, 
-  ImageBackground, 
-  TouchableOpacity, 
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
   StyleSheet,
   useWindowDimensions,
   Animated,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
@@ -16,6 +16,15 @@ import Carousel from "react-native-reanimated-carousel";
 import * as React from "react";
 import { BlurView } from "expo-blur";
 import Noplants from "@/components/Noplants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import Constants from "expo-constants";
+
+interface Journey {
+  name: string;
+  status: string;
+  order: number;
+}
 
 const carouselData = [
   {
@@ -35,29 +44,6 @@ const carouselData = [
   },
 ];
 
-const missionCarousel = [
-  {
-    mission: "First Sprout!",
-    image: require("../../../assets/images/mission1icon.png"),
-  },
-  {
-    mission: "New Life!",
-    image: require("../../../assets/images/mission2icon.png"),
-  },
-  {
-    mission: "Triple Threat!",
-    image: require("../../../assets/images/mission3icon.png"),
-  },
-  {
-    mission: "Raining Season!",
-    image: require("../../../assets/images/mission4icon.png"),
-  },
-  {
-    mission: "Its time to trim!",
-    image: require("../../../assets/images/mission5icon.png")
-  },
-]
-
 // Array de imagens circulares
 const circularImages = [
   require("../../../assets/images/mission1icon.png"),
@@ -67,7 +53,50 @@ const circularImages = [
   require("../../../assets/images/mission5icon.png"),
 ];
 
+const host =
+  Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+  Constants?.expoConfig?.hostUri?.split(":")[0];
+
+interface Journey {
+  name: string;
+  status: string;
+}
+
 export default function Index() {
+  const [journeys, setJourneys] = useState<Journey[]>([]);
+  const [activeJourney, setActiveJourney] = useState<Journey | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const loadJourneys = async () => {
+      const userId = await AsyncStorage.getItem("userId");
+      console.log("ID do user no home:", userId);
+      if (!userId) return;
+
+      try {
+        const resAll = await fetch(
+          `http://${host}:3000/api/journeys/user/${userId}`
+        );
+        const dataAll = await resAll.json();
+
+        const resActive = await fetch(
+          `http://${host}:3000/api/journeys/user/${userId}/active`
+        );
+        const active = await resActive.json();
+
+        setJourneys(dataAll);
+        setActiveJourney(active);
+      } catch (err) {
+        console.log("Erro ao carregar journeys", err);
+      }
+    };
+
+    loadJourneys();
+  }, []);
+
+  const hasNoPlants = !carouselData || carouselData.length === 0;
+  const hasNoMissions = !journeys || journeys.length === 0;
+
   const router = useRouter();
   const { width, height } = useWindowDimensions();
 
@@ -78,16 +107,21 @@ export default function Index() {
   const ITEM_WIDTH = (width - GAP * (VISIBLE_ITEMS + 1)) / VISIBLE_ITEMS;
 
   const initialWhiteHeight = height * 0.75;
-  
+
   const calculateMaxHeight = () => {
     const titleHeight = 20;
     const carouselHeight = ITEM_WIDTH * 1.6;
     const secondTitleHeight = 30;
-    const missionsHeight = (4 * 77) + (3 * 10);
+    const missionsHeight = 4 * 77 + 3 * 10;
     const paddingExtra = 100;
-    
-    const totalContentHeight = titleHeight + carouselHeight + secondTitleHeight + missionsHeight + paddingExtra;
-    
+
+    const totalContentHeight =
+      titleHeight +
+      carouselHeight +
+      secondTitleHeight +
+      missionsHeight +
+      paddingExtra;
+
     return Math.min(totalContentHeight, height * 1);
   };
 
@@ -128,7 +162,12 @@ export default function Index() {
           end={{ x: 0.5, y: 4 }}
           style={s.overlay}
         />
-        <BlurView intensity={10} tint="dark" pointerEvents="none" style={s.blur} />
+        <BlurView
+          intensity={10}
+          tint="dark"
+          pointerEvents="none"
+          style={s.blur}
+        />
       </View>
 
       <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
@@ -138,28 +177,25 @@ export default function Index() {
     </View>
   );
 
-  const hasNoPlants = !carouselData || carouselData.length === 0;
-  const hasNoMissions = !missionCarousel || missionCarousel.length === 0;
-
   return (
-  <ImageBackground
-    source={require("../../../assets/images/image.png")}
-    style={s.background}
-    resizeMode="cover"
-  >
-    <Noplants carouselData={carouselData} />
+    <ImageBackground
+      source={require("../../../assets/images/image.png")}
+      style={s.background}
+      resizeMode="cover"
+    >
+      <Noplants carouselData={carouselData} />
 
-    {carouselData && carouselData.length > 0 && (
-      <>
-        <LinearGradient
-          colors={["rgba(0,0,0,0.1)", "rgba(33, 57, 35, 1)"]}
-          start={{ x: 0.5, y: 0.1 }}
-          end={{ x: 0.5, y: 0.9 }}
-          style={s.overlay}
-        />
+      {carouselData && carouselData.length > 0 && (
+        <>
+          <LinearGradient
+            colors={["rgba(0,0,0,0.1)", "rgba(33, 57, 35, 1)"]}
+            start={{ x: 0.5, y: 0.1 }}
+            end={{ x: 0.5, y: 0.9 }}
+            style={s.overlay}
+          />
           <ScrollView
             style={{ flex: 1 }}
-            contentContainerStyle={{ flexGrow: 1, paddingBottom: 80, }}
+            contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
             onScroll={Animated.event(
@@ -168,41 +204,97 @@ export default function Index() {
             )}
           >
             <View style={{ height: height * 0.3 }} />
-            
+
             {/* Container das imagens circulares */}
-            <View style={s.circularImagesContainer}>
+            {/* <View style={s.circularImagesContainer}>
               {circularImages.map((image, index) => (
                 <View
                   key={index}
                   style={[
                     s.circularImageWrapper,
-                    index === 1 && s.secondImageWrapper
+                    index === (activeJourney?.order ?? 1) - 1 && s.secondImageWrapper,
                   ]}
                 >
                   <View style={s.missionContainer}>
                     <Image
                       source={image}
-                      style={[
-                        s.circularImage,
-                        index === 1 && s.secondImage
-                      ]}
+                      style={[s.circularImage, index === (activeJourney?.order ?? 1) - 1 && s.secondImage]}
                       resizeMode="cover"
                     />
-                    {index === 1 && (
-                    <View style={{ marginTop: 5, alignItems: "center", marginBottom: -55 }}>
-                      <Text style={s.current }>
-                        Current Mission:
-                      </Text>
+                    {index === (activeJourney?.order ?? 1) - 1 && (
+                      <View
+                        style={{
+                          marginTop: 5,
+                          alignItems: "center",
+                          marginBottom: -55,
+                        }}
+                      >
+                        <Text style={s.current}>Current Mission:</Text>
 
-                      <Text style={s.mission}>
-                        {missionCarousel[1].mission}
-                      </Text>
-                    </View>
-                  )}
-                </View>
+                        <Text style={s.mission}>
+                          {activeJourney?.name}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
                 </View>
               ))}
-            </View>
+            </View> */}
+
+            <Carousel
+              width={100}
+              height={140}
+              data={circularImages}
+              defaultIndex={activeJourney?.order ? activeJourney.order - 1 : 0}
+              loop={false}
+              mode="parallax"
+              scrollAnimationDuration={300}
+              modeConfig={{
+                parallaxScrollingScale: 0.8,
+                parallaxScrollingOffset: 60,
+              }}
+              onSnapToItem={setActiveIndex}
+              renderItem={({ item, index, animationValue }) => {
+                const scale = animationValue.interpolate({
+                  inputRange: [-1, 0, 1],
+                  outputRange: [0.7, 1.2, 0.7],
+                });
+
+                const opacity = animationValue.interpolate({
+                  inputRange: [-1, 0, 1],
+                  outputRange: [0.5, 1, 0.5],
+                });
+
+                const isActive = index === activeIndex;
+
+                return (
+                  <Animated.View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      transform: [{ scale }],
+                      opacity,
+                    }}
+                  >
+                    <Image
+                      source={item}
+                      style={{
+                        width: isActive ? 90 : 70,
+                        height: isActive ? 90 : 70,
+                        borderRadius: 50,
+                      }}
+                    />
+
+                    {isActive && (
+                      <View style={{ marginTop: 10, alignItems: "center" }}>
+                        <Text style={s.current}>Current Mission:</Text>
+                        <Text style={s.mission}>{activeJourney?.name}</Text>
+                      </View>
+                    )}
+                  </Animated.View>
+                );
+              }}
+            />
 
             {/* faz a animação certinha para o hwb subir tranquilamente */}
             <Animated.View
@@ -212,15 +304,15 @@ export default function Index() {
                   height: scrollY.interpolate({
                     inputRange: [0, SCROLL_LIMIT],
                     outputRange: [initialWhiteHeight, MAX_HEIGHT],
-                    extrapolate: 'clamp',
-                }),
-                transform: [
-                {
-              translateY: scrollY.interpolate({
-                inputRange: [0, SCROLL_LIMIT],
-                outputRange: [0, 30],
-                extrapolate: 'clamp',
-              }),
+                    extrapolate: "clamp",
+                  }),
+                  transform: [
+                    {
+                      translateY: scrollY.interpolate({
+                        inputRange: [0, SCROLL_LIMIT],
+                        outputRange: [0, 30],
+                        extrapolate: "clamp",
+                      }),
                     },
                   ],
                 },
@@ -266,7 +358,8 @@ export default function Index() {
               <View>
                 <View style={s.container2}>
                   <Text style={s.textcontainer}>
-                    Water <Text style={s.secondtext}>{carouselData[0].name}</Text>
+                    Water{" "}
+                    <Text style={s.secondtext}>{carouselData[0].name}</Text>
                   </Text>
                   <Text style={s.desctextname}>
                     {carouselData[0].species}{" "}
@@ -277,7 +370,8 @@ export default function Index() {
 
                 <View style={s.container2}>
                   <Text style={s.textcontainer}>
-                    Water <Text style={s.secondtext}>{carouselData[1].name}</Text>
+                    Water{" "}
+                    <Text style={s.secondtext}>{carouselData[1].name}</Text>
                   </Text>
                   <Text style={s.desctextname}>
                     {carouselData[1].species}{" "}
@@ -288,39 +382,45 @@ export default function Index() {
 
                 <View style={s.container2}>
                   <Text style={s.textcontainer}>
-                    Trim <Text style={s.secondtext}>{carouselData[2].name}</Text>
+                    Trim{" "}
+                    <Text style={s.secondtext}>{carouselData[2].name}</Text>
                   </Text>
                   <Text style={s.desctextname}>
                     {carouselData[2].species}{" "}
-                    <Text style={s.desctext}>needs to be trimmed every week!</Text>
+                    <Text style={s.desctext}>
+                      needs to be trimmed every week!
+                    </Text>
                   </Text>
                   <TouchableOpacity style={s.circleButton}></TouchableOpacity>
                 </View>
 
                 <View style={s.container2}>
                   <Text style={s.textcontainer}>
-                    Trim <Text style={s.secondtext}>{carouselData[2].name}</Text>
+                    Trim{" "}
+                    <Text style={s.secondtext}>{carouselData[2].name}</Text>
                   </Text>
                   <Text style={s.desctextname}>
                     {carouselData[2].species}{" "}
-                    <Text style={s.desctext}>needs to be trimmed every week!</Text>
+                    <Text style={s.desctext}>
+                      needs to be trimmed every week!
+                    </Text>
                   </Text>
                   <TouchableOpacity style={s.circleButton}></TouchableOpacity>
                 </View>
-              </View>    
+              </View>
               <LinearGradient
                 colors={["rgba(255,255,255,0)", "rgba(255,255,255,0)"]}
                 style={s.fadeTop}
               />
               {/* cobre o que restava do branco! */}
-              <View 
+              <View
                 style={{
-                  position: 'absolute',
+                  position: "absolute",
                   bottom: -100,
                   left: 0,
                   right: 0,
                   height: 100,
-                  backgroundColor: 'white',
+                  backgroundColor: "white",
                 }}
               />
             </Animated.View>
