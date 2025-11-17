@@ -1,4 +1,4 @@
-\import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
 
@@ -84,7 +84,6 @@ export class LowdbService implements OnModuleInit {
     this.db.data.users ||= [];
     this.db.data.plants ||= [];
     this.db.data.journeys ||= [];
-
 
     return this.db;
   }

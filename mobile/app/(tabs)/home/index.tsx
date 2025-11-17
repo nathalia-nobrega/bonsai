@@ -206,19 +206,24 @@ export default function Index() {
             <View style={{ height: height * 0.3 }} />
 
             {/* Container das imagens circulares */}
-            {/* <View style={s.circularImagesContainer}>
+            <View style={s.circularImagesContainer}>
               {circularImages.map((image, index) => (
                 <View
                   key={index}
                   style={[
                     s.circularImageWrapper,
-                    index === (activeJourney?.order ?? 1) - 1 && s.secondImageWrapper,
+                    index === (activeJourney?.order ?? 1) - 1 &&
+                      s.secondImageWrapper,
                   ]}
                 >
                   <View style={s.missionContainer}>
                     <Image
                       source={image}
-                      style={[s.circularImage, index === (activeJourney?.order ?? 1) - 1 && s.secondImage]}
+                      style={[
+                        s.circularImage,
+                        index === (activeJourney?.order ?? 1) - 1 &&
+                          s.secondImage,
+                      ]}
                       resizeMode="cover"
                     />
                     {index === (activeJourney?.order ?? 1) - 1 && (
@@ -231,70 +236,13 @@ export default function Index() {
                       >
                         <Text style={s.current}>Current Mission:</Text>
 
-                        <Text style={s.mission}>
-                          {activeJourney?.name}
-                        </Text>
+                        <Text style={s.mission}>{activeJourney?.name}</Text>
                       </View>
                     )}
                   </View>
                 </View>
               ))}
-            </View> */}
-
-            <Carousel
-              width={100}
-              height={140}
-              data={circularImages}
-              defaultIndex={activeJourney?.order ? activeJourney.order - 1 : 0}
-              loop={false}
-              mode="parallax"
-              scrollAnimationDuration={300}
-              modeConfig={{
-                parallaxScrollingScale: 0.8,
-                parallaxScrollingOffset: 60,
-              }}
-              onSnapToItem={setActiveIndex}
-              renderItem={({ item, index, animationValue }) => {
-                const scale = animationValue.interpolate({
-                  inputRange: [-1, 0, 1],
-                  outputRange: [0.7, 1.2, 0.7],
-                });
-
-                const opacity = animationValue.interpolate({
-                  inputRange: [-1, 0, 1],
-                  outputRange: [0.5, 1, 0.5],
-                });
-
-                const isActive = index === activeIndex;
-
-                return (
-                  <Animated.View
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      transform: [{ scale }],
-                      opacity,
-                    }}
-                  >
-                    <Image
-                      source={item}
-                      style={{
-                        width: isActive ? 90 : 70,
-                        height: isActive ? 90 : 70,
-                        borderRadius: 50,
-                      }}
-                    />
-
-                    {isActive && (
-                      <View style={{ marginTop: 10, alignItems: "center" }}>
-                        <Text style={s.current}>Current Mission:</Text>
-                        <Text style={s.mission}>{activeJourney?.name}</Text>
-                      </View>
-                    )}
-                  </Animated.View>
-                );
-              }}
-            />
+            </View>
 
             {/* faz a animação certinha para o hwb subir tranquilamente */}
             <Animated.View
