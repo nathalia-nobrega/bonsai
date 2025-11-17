@@ -6,6 +6,8 @@ import {
   Body,
   ValidationPipe,
   Patch,
+  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserResponseDto } from './dto/user-response-dto';
@@ -18,7 +20,9 @@ import { LowdbService } from '../database/lowdb.service';
 @ApiTags('bonsai')
 @Controller('users')
 export class UserController {
-  constructor(private readonly db: LowdbService) {}
+  constructor(private readonly db: LowdbService) {
+    Journey.injectDb(this.db);
+  }
 
   @Get(':id')
   @ApiResponse({
@@ -58,7 +62,6 @@ export class UserController {
     status: 400,
     description: 'Invalid request data',
   })
-
   async create(
     @Body(ValidationPipe) userCreationDto: UserCreationDto
   ): Promise<UserResponseDto> {
@@ -71,11 +74,14 @@ export class UserController {
 
     const createdUser = await user.create();
 
-    
     try {
       console.log('Creating default journeys for user:', createdUser.id);
       const journeys = await Journey.createDefaultForUser(createdUser.id);
-      console.log('Default journeys created successfully:', journeys.length, 'journeys');
+      console.log(
+        'Default journeys created successfully:',
+        journeys.length,
+        'journeys'
+      );
     } catch (error) {
       console.error('Error creating default journeys:', error);
     }

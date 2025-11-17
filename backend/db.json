@@ -96,6 +96,88 @@
       "relatedPlants": [],
       "status": "locked",
       "type": "activities"
+    },
+    {
+      "id": "16a0c599-bfe6-4266-b2e0-c2829e113d2f",
+      "userId": "a0a543f1-2bbf-4c20-a9b9-71b24266779f",
+      "createdAt": "2025-11-17T09:01:04.808Z",
+      "name": "First Sprout",
+      "description": "plant a new plant on your garden",
+      "pointsEarned": 10,
+      "finalPoints": 10,
+      "activitiesCompleted": 1,
+      "activitiesFinal": 1,
+      "plantCount": 1,
+      "order": 1,
+      "relatedPlants": [
+        "1c7a2b6e-01be-4443-bc97-dd372682ede3"
+      ],
+      "status": "finished",
+      "type": "garden"
+    },
+    {
+      "id": "11e8c98b-6553-4d0d-be29-6f525ece7dad",
+      "userId": "a0a543f1-2bbf-4c20-a9b9-71b24266779f",
+      "createdAt": "2025-11-17T09:01:04.809Z",
+      "name": "New Life",
+      "description": "complete every daily mission of a plant",
+      "pointsEarned": 0,
+      "finalPoints": 30,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 2,
+      "relatedPlants": [],
+      "status": "active",
+      "type": "activities"
+    },
+    {
+      "id": "bc1948df-0d2b-40de-968f-70a33522f74d",
+      "userId": "a0a543f1-2bbf-4c20-a9b9-71b24266779f",
+      "createdAt": "2025-11-17T09:01:04.810Z",
+      "name": "Triple Threat",
+      "description": "plant three more plants in your garden",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 3,
+      "plantCount": 3,
+      "order": 3,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "garden"
+    },
+    {
+      "id": "6626493c-64ff-48dd-9247-9694fe342e8a",
+      "userId": "a0a543f1-2bbf-4c20-a9b9-71b24266779f",
+      "createdAt": "2025-11-17T09:01:04.810Z",
+      "name": "Rain Season",
+      "description": "water your plants everyday for a week",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 4,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
+    },
+    {
+      "id": "7bc18027-1a53-4081-b229-c697f2638c34",
+      "userId": "a0a543f1-2bbf-4c20-a9b9-71b24266779f",
+      "createdAt": "2025-11-17T09:01:04.811Z",
+      "name": "Trimming Time",
+      "description": "Complete a trim",
+      "pointsEarned": 0,
+      "finalPoints": 20,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 1,
+      "plantCount": 0,
+      "order": 5,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
     }
   ]
 }

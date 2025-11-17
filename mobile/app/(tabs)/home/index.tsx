@@ -19,6 +19,7 @@ import Noplants from "@/components/Noplants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import Constants from "expo-constants";
+import { useFocusEffect } from "@react-navigation/native";
 
 interface Journey {
   name: string;
@@ -65,34 +66,40 @@ interface Journey {
 export default function Index() {
   const [journeys, setJourneys] = useState<Journey[]>([]);
   const [activeJourney, setActiveJourney] = useState<Journey | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+
+  //busca as jtodas as jornadas + ativa
+  const loadJourneys = React.useCallback(async () => {
+    const userId = await AsyncStorage.getItem("userId");
+    console.log("ID do user no home:", userId);
+    if (!userId) return;
+
+    try {
+      const resAll = await fetch(
+        `http://${host}:3000/api/journeys/user/${userId}`
+      );
+      const dataAll = await resAll.json();
+
+      const resActive = await fetch(
+        `http://${host}:3000/api/journeys/user/${userId}/active`
+      );
+      const active = await resActive.json();
+
+      setJourneys(dataAll);
+      setActiveJourney(active);
+    } catch (err) {
+      console.log("Erro ao carregar journeys", err);
+    }
+  }, []);
 
   useEffect(() => {
-    const loadJourneys = async () => {
-      const userId = await AsyncStorage.getItem("userId");
-      console.log("ID do user no home:", userId);
-      if (!userId) return;
-
-      try {
-        const resAll = await fetch(
-          `http://${host}:3000/api/journeys/user/${userId}`
-        );
-        const dataAll = await resAll.json();
-
-        const resActive = await fetch(
-          `http://${host}:3000/api/journeys/user/${userId}/active`
-        );
-        const active = await resActive.json();
-
-        setJourneys(dataAll);
-        setActiveJourney(active);
-      } catch (err) {
-        console.log("Erro ao carregar journeys", err);
-      }
-    };
-
     loadJourneys();
-  }, []);
+  }, [loadJourneys]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadJourneys();
+    }, [loadJourneys])
+  );
 
   const hasNoPlants = !carouselData || carouselData.length === 0;
   const hasNoMissions = !journeys || journeys.length === 0;
