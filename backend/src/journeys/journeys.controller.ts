@@ -61,7 +61,7 @@ export class JourneyController {
     @Param('userId') userId: string,
   ): Promise<JourneyResponseDto | null> {
     const journeys = await Journey.findByUserId(userId);
-    const activeJourney = journeys.find((j) => !j.isFinished);
+    const activeJourney = journeys.find((j) => j.status === 'active');
     return activeJourney || null;
   }
 
@@ -135,7 +135,7 @@ export class JourneyController {
     @Body() body: { plantId: string },
   ): Promise<JourneyResponseDto | null> {
     const journeys = await Journey.findByUserId(userId);
-    const activeJourney = journeys.find((j) => !j.isFinished);
+    const activeJourney = journeys.find((j) => j.status === 'active');
 
     if (!activeJourney) {
       return null;
@@ -161,7 +161,7 @@ export class JourneyController {
         if (newPlantCount >= activeJourney.activitiesFinal) {
           console.log(`🎉 Journey "${activeJourney.name}" completed! Plants: ${newPlantCount}/${activeJourney.activitiesFinal}`);
           
-          updates.isFinished = true;
+          updates.status = 'finished';
           updates.pointsEarned = activeJourney.finalPoints;
 
           await Journey.updateJourney(activeJourney.id, updates);
@@ -198,8 +198,8 @@ export class JourneyController {
     const journeys = await Journey.findByUserId(userId);
     const nextJourney = journeys.find((j) => j.order === currentOrder + 1);
 
-    if (nextJourney && !nextJourney.isActive) {
-      await Journey.updateJourney(nextJourney.id, { isActive: true });
+    if (nextJourney && nextJourney.status === 'locked') {
+      await Journey.updateJourney(nextJourney.id, { status: 'active' });
       console.log(
         `Next journey activated for user ${userId}: ${nextJourney.name}`,
       );

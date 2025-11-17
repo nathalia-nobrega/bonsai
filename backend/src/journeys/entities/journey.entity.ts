@@ -35,8 +35,7 @@ export class Journey {
 
   private _relatedPlants: string[];
 
-  private _isFinished: boolean;
-  private _isActive: boolean;
+  private _status: 'finished' | 'active' | 'locked';
   private _type: 'garden' | 'activities';
 
   constructor(params: {
@@ -56,8 +55,7 @@ export class Journey {
 
     relatedPlants: string[];
 
-    isFinished?: boolean;
-    isActive?: boolean;
+    status?: 'finished' | 'active' | 'locked';
     type?: 'garden' | 'activities';
 
     id?: string;
@@ -81,8 +79,7 @@ export class Journey {
     this._order = params.order ?? 0;
 
     this._relatedPlants = params.relatedPlants;
-    this._isFinished = params.isFinished ?? false;
-    this._isActive = params.isActive ?? true;
+    this._status = params.status ?? 'locked';
     this._type = params.type ?? 'activities';
   }
 
@@ -102,12 +99,12 @@ export class Journey {
     });
   }
 
-  public static async findByState(finishedStatus: boolean): Promise<JourneyResponseDto> {
+  public static async findByState(status: 'active' | 'locked'): Promise<JourneyResponseDto> {
     if (!this.db || !this.db.data) {
       throw new Error('Database not initialized');
     }
 
-    const j = Journey.db.data.journeys.find((p) => p.isActive === finishedStatus);
+    const j = Journey.db.data.journeys.find((p) => p.status === status);
 
     if (!j) {
       throw new ResourceNotFoundException('Journey', 'state');
@@ -185,8 +182,7 @@ export class Journey {
     if (dto.order !== undefined) journey.order = dto.order;
     if (dto.relatedPlants !== undefined)
       journey.relatedPlants = dto.relatedPlants;
-    if (dto.isFinished !== undefined) journey.isFinished = dto.isFinished;
-    if (dto.isActive !== undefined) journey.isActive = dto.isActive;
+    if (dto.status !== undefined) journey.status = dto.status;
     if (dto.type !== undefined) journey.type = dto.type;
 
     Journey.db.data.journeys[index] = journey;
@@ -214,8 +210,7 @@ export class Journey {
         plantCount: 0,
         order: 1,
         relatedPlants: [],
-        isFinished: false,
-        isActive: true,
+        status: 'active' as const,
         type: 'garden' as const,
       },
       {
@@ -227,8 +222,7 @@ export class Journey {
         plantCount: 0,
         order: 2,
         relatedPlants: [],
-        isFinished: false,
-        isActive: false,
+        status: 'locked' as const,
         type: 'activities' as const,
       },
       {
@@ -240,8 +234,7 @@ export class Journey {
         plantCount: 3,
         order: 3,
         relatedPlants: [],
-        isFinished: false,
-        isActive: false,
+        status: 'locked' as const,
         type: 'garden' as const,
       },
       {
@@ -253,8 +246,7 @@ export class Journey {
         plantCount: 0,
         order: 4,
         relatedPlants: [],
-        isFinished: false,
-        isActive: false,
+        status: 'locked' as const,
         type: 'activities' as const,
       },
       {
@@ -266,8 +258,7 @@ export class Journey {
         plantCount: 0,
         order: 5,
         relatedPlants: [],
-        isFinished: false,
-        isActive: false,
+        status: 'locked' as const,
         type: 'activities' as const,
       },
     ];
@@ -304,8 +295,7 @@ export class Journey {
       order: this._order,
 
       relatedPlants: this._relatedPlants,
-      isFinished: this._isFinished,
-      isActive: this._isActive,
+      status: this._status,
       type: this._type,
     };
   }
@@ -358,12 +348,8 @@ export class Journey {
     return this._relatedPlants;
   }
 
-  get isFinished(): boolean {
-    return this._isFinished;
-  }
-
-  get isActive(): boolean {
-    return this._isActive;
+  get status(): 'finished' | 'active' | 'locked' {
+    return this._status;
   }
 
   get type(): 'garden' | 'activities' {
@@ -419,18 +405,11 @@ export class Journey {
     this._relatedPlants = value;
   }
 
-  set isFinished(value: boolean) {
-    if (typeof value !== 'boolean') {
-      throw new Error('Invalid isFinished value');
+  set status(value: 'finished' | 'active' | 'locked') {
+    if (!['finished', 'active', 'locked'].includes(value)) {
+      throw new Error('Invalid status value');
     }
-    this._isFinished = value;
-  }
-
-  set isActive(value: boolean) {
-    if (typeof value !== 'boolean') {
-      throw new Error('Invalid isActive value');
-    }
-    this._isActive = value;
+    this._status = value;
   }
 
   set type(value: 'garden' | 'activities') {

@@ -55,8 +55,7 @@ interface Database {
     plantCount: number;
     order: number;
     relatedPlants: string[];
-    isFinished: boolean;
-    isActive: boolean;
+    status: 'finished' | 'active' | 'locked';
     type: 'garden' | 'activities';
   }>;
 }

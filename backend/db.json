@@ -39,6 +39,16 @@
       "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "e09c5dd4-5f59-46f5-92f5-6928664121f0",
+      "createdAt": "2025-11-17T01:34:31.079Z",
+      "name": "jes",
+      "email": "nanss@gmail.com",
+      "password": "$2b$10$5rW.XjlgJM3uQ9b7RtLQRe0GeFBzWGhbd9HWbXCG9rud4XvvlzOvu",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ],
   "plants": [

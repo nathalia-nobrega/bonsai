@@ -95,19 +95,13 @@ export class JourneyCreationDto {
   relatedPlants: string[];
 
   @ApiProperty({
-    description: 'Journey completion status',
-    example: false,
+    description: 'Status of the journey',
+    enum: ['finished', 'active', 'locked'],
+    example: 'locked',
   })
-  @IsBoolean()
+  @IsEnum(['finished', 'active', 'locked'])
   @IsOptional()
-  isFinished?: boolean;
-
-  @ApiProperty({
-    description: 'Journey active status',
-    example: true,
-  })
-  @IsBoolean()
-  isActive: boolean;
+  status?: 'finished' | 'active' | 'locked';
 
   @ApiProperty({
     description: 'Journey type',

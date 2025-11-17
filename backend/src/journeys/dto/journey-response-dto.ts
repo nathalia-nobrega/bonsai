@@ -83,17 +83,11 @@ export class JourneyResponseDto {
 
   @Expose()
   @ApiProperty({
-    description: 'Journey completion status',
-    example: false,
+    description: 'Status of the journey',
+    enum: ['finished', 'active', 'locked'],
+    example: 'active',
   })
-  isFinished: boolean;
-
-  @Expose()
-  @ApiProperty({
-    description: 'Journey active status',
-    example: true,
-  })
-  isActive: boolean;
+  status: 'finished' | 'active' | 'locked';
 
   @Expose()
   @ApiProperty({
