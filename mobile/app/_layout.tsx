@@ -3,7 +3,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Stack } from "expo-router";
+import { Stack} from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import * as SplashScreen from "expo-splash-screen";
@@ -11,16 +11,10 @@ import * as Font from "expo-font";
 import Toast from "react-native-toast-message";
 import toastConfig from "./toastConfig";
 import { View } from "react-native";
-
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useEffect, useState } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
-
-export const unstable_settings = {
-  anchor: "index",
-};
 
 export default function RootLayout() {
   const [fontsLoaded, setFontsLoaded] = useState(false);

@@ -70,7 +70,7 @@ export default function Signup() {
       const id = await AsyncStorage.getItem("userId");
       console.log("Adicionando id:", id);
 
-      router.push(`/profile?userId=${data.id}`);
+      router.replace(`/profile?userId=${data.id}`);
     } catch (err) {
       console.error("Network error:", err);
 

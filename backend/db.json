@@ -89,6 +89,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "c7f87f92-d82b-4536-b292-4e64f80f2653",
+      "createdAt": "2025-11-19T15:02:50.431Z",
+      "name": "Felix",
+      "email": "akfm@gmail.com",
+      "password": "$2b$10$s6rvISOi2cBlfwzqesAVK.jpJ36A/hCTcvveNR7nmSVB2xEDodKwO",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ],
   "plants": [

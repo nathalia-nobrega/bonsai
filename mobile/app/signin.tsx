@@ -79,7 +79,7 @@ export default function Signin() {
 
             <TouchableOpacity
               style={[styles.button, { width: width * 0.9 }]}
-              onPress={() => router.push("/(tabs)/home")}
+              onPress={() => router.replace("/(tabs)/home")}
             >
               <Text style={styles.buttonText}>Enter</Text>
             </TouchableOpacity>
