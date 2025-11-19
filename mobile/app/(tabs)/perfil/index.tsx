@@ -11,7 +11,7 @@ import LeafIcon from "../../../assets/images/fifth mission.svg";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SvgProps } from "react-native-svg";
-
+import Constants from "expo-constants";
 
 //tirar tudo isso depois -> só pra impedir erros 
 interface User {
@@ -31,6 +31,10 @@ export default function ProfileScreen() {
   const [user, setUser] = useState<User | null>(null);
   const [achievements, setAchievements] = useState<Achievement[]>([]);
 
+  const host =
+    Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+    Constants?.expoConfig?.hostUri?.split(":")[0];
+  
   useEffect(() => {
     async function loadUser() {
       try {
@@ -42,7 +46,7 @@ export default function ProfileScreen() {
           return;
         }
         const response = await fetch(
-          `http://192.168.15.13:3000/api/users/${id}`
+          `http://${host}:3000/api/users/${id}`
         );
 
         if (response.ok) {

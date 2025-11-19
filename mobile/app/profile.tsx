@@ -131,7 +131,7 @@ export default function Index() {
         position: "top",
       });
 
-      router.push("/home");
+      router.replace("/home");
     } catch (err) {
       console.error("Network error:", err);
     }
