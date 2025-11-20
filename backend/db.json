@@ -9,6 +9,56 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "bb8d9aae-706a-48fb-b8f7-3f400825c22c",
+      "createdAt": "2025-11-17T15:09:04.757Z",
+      "name": "jes",
+      "email": "jes@gmail.com",
+      "password": "$2b$10$YCxgT6wyNSD71F3f1se.K.n5ch9/zYH3TTRSgqJQn6jz4KOXtHFYi",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "bf83cd9d-2951-4001-ad43-e2b8df08f7c8",
+      "createdAt": "2025-11-17T15:14:55.370Z",
+      "name": "jes",
+      "email": "lukefox@gmail.com",
+      "password": "$2b$10$m5aoKCRMx0d9b3YiuOI03OzSdXZSCdi4XaypUzDm2n8duLmAZy/4.",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "4818d464-fa71-4666-86e6-fc7ba199b266",
+      "createdAt": "2025-11-17T15:17:29.802Z",
+      "name": "erica",
+      "email": "tamfox@gmail.com",
+      "password": "$2b$10$X0e4KnYWBBaGDvXRny9lGOPRyUAWdzII90gTSVBiUWqMsGPilKYhy",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "8743ae9c-9f55-4a97-8281-c1841f0afedc",
+      "createdAt": "2025-11-17T15:18:33.946Z",
+      "name": "selina",
+      "email": "selinakyle@gmail.con",
+      "password": "$2b$10$PW2JphhjC8idTB561OIUt.JNPWKv.HHOqeEtpolS52/FQ26V1W0Ze",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
+    },
+    {
+      "id": "c7f87f92-d82b-4536-b292-4e64f80f2653",
+      "createdAt": "2025-11-19T15:02:50.431Z",
+      "name": "Felix",
+      "email": "akfm@gmail.com",
+      "password": "$2b$10$s6rvISOi2cBlfwzqesAVK.jpJ36A/hCTcvveNR7nmSVB2xEDodKwO",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 1,
+      "pointsGained": 0
     }
   ],
   "plants": [],

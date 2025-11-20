@@ -35,6 +35,10 @@ export default function ProfileScreen() {
   const [user, setUser] = useState<User | null>(null);
   const [achievements, setAchievements] = useState<Achievement[]>([]);
 
+  const host =
+    Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+    Constants?.expoConfig?.hostUri?.split(":")[0];
+  
   useEffect(() => {
     async function loadUser() {
       try {

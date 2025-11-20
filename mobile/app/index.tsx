@@ -1,20 +1,28 @@
-import React from "react";
-import { Button } from "react-native";
-import Toast from "react-native-toast-message";
-// import toastConfig from './toastConfig';
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
-import { LinearGradient } from "expo-linear-gradient"; // ✅ import correto
-import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, ImageBackground, TouchableOpacity, StyleSheet } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter, Redirect } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Index() {
   const router = useRouter();
+  const [logged, setLogged] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    async function check() {
+      const userId = await AsyncStorage.getItem("userId");
+      setLogged(!!userId);
+    }
+    check();
+  }, []);
+
+
+  if (logged === null) return null; // carregando
+
+  // Se estiver logado, manda direto pro app
+  if (logged) return <Redirect href="(tabs)/home" />;
+
+  // Se NÃO estiver logado, exibe a landing page normalmente
   return (
     <ImageBackground
       source={require("../assets/images/image.png")}
@@ -37,11 +45,13 @@ export default function Index() {
           />
         </View>
 
-        <Text style={styles.title}>Grow your Garden.{"\n"}Grow Yourself.</Text>
+        <Text style={styles.title}>
+          Grow your Garden.{"\n"}Grow Yourself.
+        </Text>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push("/signup")}
+          onPress={() => router.replace("/signup")}
         >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
@@ -50,7 +60,7 @@ export default function Index() {
           Already have an account?{" "}
           <Text
             style={styles.signInText}
-            onPress={() => router.push("/signin")}
+            onPress={() => router.replace("/signin")}
           >
             Sign In
           </Text>
@@ -109,7 +119,7 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     paddingVertical: 15,
     paddingHorizontal: 115,
-    right: -155, //rebecca
+    right: -155,
   },
   buttonText: {
     color: "#5C9F60",

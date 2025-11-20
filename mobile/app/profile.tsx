@@ -107,9 +107,7 @@ export default function Index() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             name: name.trim(),
-            photoUrl:
-              selectedImage ||
-              "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+            photoUrl: "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
           }),
         }
       );
@@ -133,7 +131,7 @@ export default function Index() {
         position: "top",
       });
 
-      router.push("/home");
+      router.replace("/home");
     } catch (err) {
       console.error("Network error:", err);
     }
