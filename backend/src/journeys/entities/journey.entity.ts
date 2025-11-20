@@ -99,7 +99,9 @@ export class Journey {
     });
   }
 
-  public static async findByState(status: 'active' | 'locked'): Promise<JourneyResponseDto> {
+  public static async findByState(
+    status: 'active' | 'locked'
+  ): Promise<JourneyResponseDto> {
     if (!this.db || !this.db.data) {
       throw new Error('Database not initialized');
     }
@@ -139,7 +141,9 @@ export class Journey {
     }
 
     const exists = Journey.db.data.journeys.some(
-      (j) => j.name.toLowerCase() === this._name.toLowerCase() && j.userId === this._userId
+      (j) =>
+        j.name.toLowerCase() === this._name.toLowerCase() &&
+        j.userId === this._userId
     );
 
     if (exists) {
@@ -193,9 +197,10 @@ export class Journey {
     });
   }
 
-  //salvar defaults 
-
-  public static async createDefaultForUser(userId: string): Promise<JourneyResponseDto[]> {
+  //salvar defaults
+  public static async createDefaultForUser(
+    userId: string
+  ): Promise<JourneyResponseDto[]> {
     if (!this.db || !this.db.data) {
       throw new Error('Database not initialized');
     }
@@ -266,14 +271,15 @@ export class Journey {
     const results: JourneyResponseDto[] = [];
 
     for (const data of defaultJourneys) {
-      const j = new Journey(data);
-      const created = await j.create();
+      const journey = new Journey(data);
+
+      const created = await journey.create();
+
       results.push(created);
     }
 
     return results;
   }
-
 
   toJSON() {
     return {

@@ -1,9 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { BlurView } from 'expo-blur';
+import { BlurView } from "expo-blur";
 import { router } from "expo-router";
 
-// IMPORTAR SVGs COMO COMPONENTES
 import SeedIcon from "../assets/images/mission #1 icon.svg";
 import SproutIcon from "../assets/images/misson #2 icon.svg";
 import BloomIcon from "../assets/images/misson #3 icon.svg";
@@ -11,8 +10,6 @@ import WaterIcon from "../assets/images/mission #4 icon.svg";
 import LeafIcon from "../assets/images/mission #5 icon.svg";
 
 export default function MissionItem({ id, title, active }) {
-  
-  // garantir que o id seja número
   const missionId = Number(id);
 
   const ICON_SIZE = active ? 80 : 90;
@@ -37,20 +34,21 @@ export default function MissionItem({ id, title, active }) {
   };
 
   return (
-    <Pressable 
+    <Pressable
       style={styles.container}
-      onPress={() => 
+      onPress={() =>
         router.push({
-        pathname: "/(tabs)/jornada/missao",
-        params: { id: missionId } })
-      } 
+          pathname: "/(tabs)/jornada/missao",
+          params: { id: missionId },
+        })
+      }
     >
-      <BlurView 
-        intensity={50} 
-        tint="light" 
+      <BlurView
+        intensity={50}
+        tint="light"
         style={{
           borderRadius: 100,
-          overflow: "hidden", 
+          overflow: "hidden",
           borderColor: "rgba(255, 255, 255, 0.5)",
           justifyContent: "center",
           alignItems: "center",
@@ -70,12 +68,10 @@ export default function MissionItem({ id, title, active }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    marginBottom: 50, 
+    marginBottom: 50,
   },
 
-  circle: {
-    
-  },
+  circle: {},
 
   title: {
     marginTop: 8,

@@ -85,7 +85,6 @@ export class LowdbService implements OnModuleInit {
     this.db.data.plants ||= [];
     this.db.data.journeys ||= [];
 
-
     return this.db;
   }
 

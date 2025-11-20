@@ -61,7 +61,6 @@ export class User {
       excludeExtraneousValues: true,
     });
   }
-
   public async create(): Promise<UserResponseDto> {
     const emailExists = User.db.data.users.some((u) => u.email === this._email);
 

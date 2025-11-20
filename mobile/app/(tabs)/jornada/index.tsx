@@ -41,9 +41,9 @@ export default function JornadaScreen() {
                 height={260}
                 style={{
                   position: "absolute",
-                  top: index * 190, 
+                  top: index * 190,
                   left: index % 2 === 0 ? 10 : 110,
-                  transform: [{ scaleX: index % 2 === 0 ? 1 : -1 }], 
+                  transform: [{ scaleX: index % 2 === 0 ? 1 : -1 }],
                 }}
               />
             ))}
@@ -78,9 +78,8 @@ const styles = StyleSheet.create({
 
   trailContainer: {
     position: "absolute",
-    top: 30,   // ajuste fino para alinhar com a primeira missão
-    left: 20,  // shift horizontal para bater certinho no centro
+    top: 30, // ajuste fino para alinhar com a primeira missão
+    left: 20, // shift horizontal para bater certinho no centro
     zIndex: -1,
   },
-
 });

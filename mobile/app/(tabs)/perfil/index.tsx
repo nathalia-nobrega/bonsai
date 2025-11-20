@@ -13,7 +13,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SvgProps } from "react-native-svg";
 import Constants from "expo-constants";
 
-//tirar tudo isso depois -> só pra impedir erros 
+const host =
+  Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+  Constants?.expoConfig?.hostUri?.split(":")[0];
+
+//tirar tudo isso depois -> só pra impedir erros
 interface User {
   name: string;
   photoUrl: string;
@@ -45,9 +49,7 @@ export default function ProfileScreen() {
           console.log("Nenhum userId encontrado");
           return;
         }
-        const response = await fetch(
-          `http://${host}:3000/api/users/${id}`
-        );
+        const response = await fetch(`http://${host}:3000/api/users/${id}`);
 
         if (response.ok) {
           const data = await response.json();
@@ -57,10 +59,10 @@ export default function ProfileScreen() {
             photoUrl: data._photoUrl || data.photoUrl,
             level: data._level || data.level || 1,
             points: data._pointsGained || data.pointsGained || 0,
-            plants: 0, 
+            plants: 0,
           };
           setUser(user);
-          
+
           const defaultAchievements = [
             { id: 1, icon: SeedIcon },
             { id: 2, icon: SproutIcon },
