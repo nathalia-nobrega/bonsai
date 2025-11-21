@@ -9,15 +9,14 @@ import BloomIcon from "../assets/images/misson #3 icon.svg";
 import WaterIcon from "../assets/images/mission #4 icon.svg";
 import LeafIcon from "../assets/images/mission #5 icon.svg";
 
-export default function MissionItem({ id, title, active }) {
-  const missionId = Number(id);
+export default function MissionItem({ id, title, status, order }) {
+  const isActive = status === "active";
 
-  const ICON_SIZE = active ? 80 : 90;
-  const CIRCLE_SIZE = active ? 125 : 110;
+  const ICON_SIZE = isActive ? 80 : 90;
+  const CIRCLE_SIZE = isActive ? 125 : 110;
 
-  // Escolher ícone baseado no id
   const getIcon = () => {
-    switch (missionId) {
+    switch (order) {
       case 1:
         return <SeedIcon width={ICON_SIZE} height={ICON_SIZE} />;
       case 2:
@@ -35,13 +34,8 @@ export default function MissionItem({ id, title, active }) {
 
   return (
     <Pressable
-      style={styles.container}
-      onPress={() =>
-        router.push({
-          pathname: "/(tabs)/jornada/missao",
-          params: { id: missionId },
-        })
-      }
+      style={[styles.container]}
+      onPress={() => router.push({ pathname: "/(tabs)/jornada/missao", params: { id: id }, }) }
     >
       <BlurView
         intensity={50}
@@ -49,12 +43,14 @@ export default function MissionItem({ id, title, active }) {
         style={{
           borderRadius: 100,
           overflow: "hidden",
-          borderColor: "rgba(255, 255, 255, 0.5)",
           justifyContent: "center",
           alignItems: "center",
           width: CIRCLE_SIZE,
           height: CIRCLE_SIZE,
           borderWidth: 1,
+          borderColor: isActive
+            ? "rgba(255,255,255,0.9)"
+            : "rgba(255,255,255,0.5)",
         }}
       >
         {getIcon()}
@@ -70,7 +66,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 50,
   },
-
+  
   circle: {},
 
   title: {

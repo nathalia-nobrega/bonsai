@@ -62,19 +62,46 @@ export default function Index() {
   const [activeJourney, setActiveJourney] = useState<Journey | null>(null);
 
   const loadJourneys = React.useCallback(async () => {
-    const userId = await AsyncStorage.getItem("userId");
-    if (!userId) return;
+    let userId = await AsyncStorage.getItem("userId");
+
+    console.log("ID do user no home:", userId);
+
+    // Se ID inválido → limpar e sair
+    if (!userId || userId.trim() === "" || userId.length < 10) {
+      await AsyncStorage.removeItem("userId");
+      return;
+    }
 
     try {
+      // Função que tenta dar parse SEM quebrar
+      async function safeJSON(res: Response) {
+        const text = await res.text();
+        if (!text) return null;
+        try {
+          return JSON.parse(text);
+        } catch {
+          console.log("JSON inválido recebido, limpando userId");
+          await AsyncStorage.removeItem("userId");
+          return null;
+        }
+      }
+
       const resAll = await fetch(
         `http://${host}:3000/api/journeys/user/${userId}`
       );
-      const dataAll = await resAll.json();
+      const dataAll = await safeJSON(resAll);
 
       const resActive = await fetch(
         `http://${host}:3000/api/journeys/user/${userId}/active`
       );
-      const active = await resActive.json();
+      const active = await safeJSON(resActive);
+
+      // Se backend retornou nada → user não existe mais
+      if (!dataAll) {
+        console.log("Usuário não existe mais. Limpando storage...");
+        await AsyncStorage.removeItem("userId");
+        return;
+      }
 
       setJourneys(dataAll);
       setActiveJourney(active);
@@ -83,15 +110,6 @@ export default function Index() {
     }
   }, []);
 
-  useEffect(() => {
-    loadJourneys();
-  }, [loadJourneys]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      loadJourneys();
-    }, [loadJourneys])
-  );
 
   const hasNoPlants = !plants || plants.length === 0;
   const hasNoMissions = !journeys || journeys.length === 0;

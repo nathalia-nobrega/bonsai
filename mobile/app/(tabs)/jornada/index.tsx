@@ -3,24 +3,49 @@ import { View, ScrollView, StyleSheet } from "react-native";
 
 import BackgroundSVG from "../../../assets/images/path.svg";
 import PathwaySVG from "../../../assets/images/pathway.svg";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import MissionList from "../../../components/MissionList";
+import Constants from "expo-constants";
 
 export default function JornadaScreen() {
   const scrollRef = useRef(null);
 
   const [missions, setMissions] = useState([]);
 
-  const missionsMock = [
-    { id: "1", title: "First Sprout" },
-    { id: "2", title: "New Life" },
-    { id: "3", title: "Triple Threat" },
-    { id: "4", title: "Rainy Season" },
-    { id: "5", title: "Trimming Time" },
-  ];
+  const host =
+    Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+    Constants?.expoConfig?.hostUri?.split(":")[0];
+
+  const API_URL = `http://${host}:3000/api/journeys/user/`;
 
   useEffect(() => {
-    setTimeout(() => setMissions(missionsMock), 200);
+    async function load() {
+      try {
+        const id = await AsyncStorage.getItem("userId");
+        console.log("User ID carregado:", id);
+
+        if (!id) {
+          console.log("Nenhum userId encontrado");
+          return;
+        }
+
+        const response = await fetch(API_URL + id);
+        
+        if (!response.ok) {
+          console.log("Erro ao buscar jornadas", response.status);
+          return;
+        }
+
+        const data = await response.json();
+        console.log("Jornadas carregadas:", data);
+
+        setMissions(data || []); 
+      } catch (err) {
+        console.log("Erro ao carregar missões:", err);
+      }
+    }
+
+    load();
   }, []);
 
   return (
@@ -49,7 +74,7 @@ export default function JornadaScreen() {
             ))}
           </View>
 
-          <MissionList missions={missions} activeMission="2" />
+          <MissionList missions={missions} />
         </ScrollView>
       </View>
     </View>
@@ -78,8 +103,8 @@ const styles = StyleSheet.create({
 
   trailContainer: {
     position: "absolute",
-    top: 30, // ajuste fino para alinhar com a primeira missão
-    left: 20, // shift horizontal para bater certinho no centro
+    top: 30,
+    left: 20,
     zIndex: -1,
   },
 });

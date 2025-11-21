@@ -13,10 +13,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SvgProps } from "react-native-svg";
 import Constants from "expo-constants";
 
-const host =
-  Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
-  Constants?.expoConfig?.hostUri?.split(":")[0];
-
 //tirar tudo isso depois -> só pra impedir erros
 interface User {
   name: string;
