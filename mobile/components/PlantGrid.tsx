@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, FlatList } from "react-native";
+import { View, Text, Image, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 
@@ -11,29 +11,32 @@ export default function PlantGrid() {
 
   const plants = [
     { id: 1, 
-    name: "Cassandra", 
-    species: "aloe vera", 
-    image: require("../assets/images/Jason.jpeg"), 
-    mood: "sad" 
-  },
+      name: "Cassandra", 
+      species: "aloe vera", 
+      image: require("../assets/images/Jason.jpeg"), 
+      mood: "sad" 
+    },
     { id: 2, 
-    name: "Timothy", 
-    species: "pothos", 
-    image: require("../assets/images/Tim.jpeg"), 
-    mood: "medium" 
-  },
+      name: "Timothy", 
+      species: "pothos", 
+      image: require("../assets/images/Tim.jpeg"), 
+      mood: "medium" 
+    },
     { id: 3, 
-    name: "Damian", 
-    species: "bambu", 
-    image: require("../assets/images/Damian.jpeg"), 
-    mood: "good" 
-  },
+      name: "Damian", 
+      species: "bambu", 
+      image: require("../assets/images/Damian.jpeg"), 
+      mood: "good" 
+    },
   ];
 
   const moods = {
     sad: SadFace,
     medium: MediumFace,
     good: GoodFace
+  };
+
+  const handleButtonPress = (plantId) => {
   };
 
   const renderItem = ({ item }) => {
@@ -52,6 +55,16 @@ export default function PlantGrid() {
           />
 
           <BlurView intensity={10} tint="dark" style={styles.blur} />
+
+          <TouchableOpacity 
+            style={styles.glassmorphismButton}
+            onPress={() => handleButtonPress(item.id)}
+            activeOpacity={0.7}
+          >
+            <View style={styles.glassButtonContent}>
+              <View style={styles.innerCircle} />
+            </View>
+          </TouchableOpacity>
         </View>
 
         <Text style={styles.name}>{item.name}</Text>
@@ -139,5 +152,45 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 55,
     right: 8,
-  }
+  },
+
+  glassmorphismButton: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 9,
+  },
+
+  glassButtonContent: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  },
+
+  innerCircle: {
+    width: 20,
+    height: 20,
+    borderRadius: 15,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.6)",
+  },
 });
