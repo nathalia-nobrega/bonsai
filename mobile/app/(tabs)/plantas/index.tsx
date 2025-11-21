@@ -1,10 +1,49 @@
-import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import Toast from "react-native-toast-message";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { s } from "./stylePlants";
+import PlantGrid from "@/components/PlantGrid";
+import {useRouter} from "expo-router"
+
+import SunFilter from "../../../assets/images/sunfilter.svg";
+import SunNoFilter from "../../../assets/images/sunnofilter.svg";
+import GotaFilter from "../../../assets/images/gotafilter.svg";
+import GotaNoFilter from "../../../assets/images/gotanofilter.svg";
+import TrimFilter from "../../../assets/images/trimfilter.svg";
+import TrimNoFilter from "../../../assets/images/trimnofilter.svg";
 
 export default function PlantasScreen() {
+  const [selectedFilters, setSelectedFilters] = useState([]);
+  const router = useRouter();
+
+  function toggleFilter(filter) {
+    if (selectedFilters.includes(filter)) {
+      setSelectedFilters(selectedFilters.filter((f) => f !== filter));
+    } else {
+      setSelectedFilters([...selectedFilters, filter]);
+    }
+  }
+
+  const filtros = ["water", "sunlight", "trim"];
+
+  // ÍCONES POR FILTRO
+  const filtrosIcons = {
+    sunlight: {
+      active: <SunNoFilter width={15} height={15} />,
+      inactive: <SunFilter width={15} height={15} />,
+    },
+    water: {
+      active: <GotaNoFilter width={15} height={15} />,
+      inactive: <GotaFilter width={15} height={15} />,
+    },
+    trim: {
+      active: <TrimNoFilter width={15} height={15} />,
+      inactive: <TrimFilter width={15} height={15} />,
+    },
+  };
+
   const host =
     Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
     Constants?.expoConfig?.hostUri?.split(":")[0] ||
@@ -17,9 +56,7 @@ export default function PlantasScreen() {
     try {
       const response = await fetch(`http://${host}:3000/api/plants`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chosenName: "My Beautiful Fern",
           userId: id,
@@ -46,14 +83,12 @@ export default function PlantasScreen() {
 
       if (!response.ok) {
         const errorData = await response.json();
-
         Toast.show({
           type: "error",
           text1: "Error",
           text2: errorData?.message || "Tente novamente mais tarde.",
           position: "bottom",
         });
-
         return;
       }
 
@@ -66,9 +101,9 @@ export default function PlantasScreen() {
         text2: "A planta de teste foi adicionada com sucesso.",
         position: "bottom",
       });
+
     } catch (err) {
       console.error(err);
-
       Toast.show({
         type: "error",
         text1: "Erro de conexão",
@@ -79,28 +114,51 @@ export default function PlantasScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Minhas Plantas</Text>
-      <Text>Veja sua coleção de plantas!</Text>
+    <View style={s.container}>
 
-      <View style={{ marginTop: 20 }}>
-        <Button title="Adicionar Planta Teste" onPress={criarPlantaTeste} />
+      <View style={s.topRow}>
+        <Text style={s.title}>Your Garden</Text>
+
+        <TouchableOpacity style={s.circle} onPress={() => router.push("/plantas/search")} >
+          <View style={s.horizontal} />
+          <View style={s.vertical} />
+        </TouchableOpacity>
       </View>
+
+
+      <View style={s.filterRow}>
+        {filtros.map((item) => {
+          const isActive = selectedFilters.includes(item);
+
+          return (
+            <TouchableOpacity
+              key={item}
+              style={[
+                s.filterButton,
+                isActive && s.activeFilter,
+              ]}
+              onPress={() => toggleFilter(item)}
+            >
+              <View style={s.filterContent}>
+                {isActive
+                  ? filtrosIcons[item].active
+                  : filtrosIcons[item].inactive}
+
+                <Text
+                  style={[
+                    s.filterText,
+                    isActive && s.activeFilterText,
+                  ]}
+                >
+                  {item}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <PlantGrid />
+
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#5C9F60",
-    marginBottom: 10,
-  },
-});
