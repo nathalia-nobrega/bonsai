@@ -10,9 +10,24 @@ import GoodFace from "../assets/images/goodface.svg";
 export default function PlantGrid() {
 
   const plants = [
-    { id: 1, name: "Cassandra", species: "aloe vera", image: require("../assets/images/Jason.jpeg"), mood: "sad" },
-    { id: 2, name: "Timothy", species: "pothos", image: require("../assets/images/Tim.jpeg"), mood: "medium" },
-    { id: 3, name: "Damian", species: "bambu", image: require("../assets/images/Damian.jpeg"), mood: "good" },
+    { id: 1, 
+    name: "Cassandra", 
+    species: "aloe vera", 
+    image: require("../assets/images/Jason.jpeg"), 
+    mood: "sad" 
+  },
+    { id: 2, 
+    name: "Timothy", 
+    species: "pothos", 
+    image: require("../assets/images/Tim.jpeg"), 
+    mood: "medium" 
+  },
+    { id: 3, 
+    name: "Damian", 
+    species: "bambu", 
+    image: require("../assets/images/Damian.jpeg"), 
+    mood: "good" 
+  },
   ];
 
   const moods = {

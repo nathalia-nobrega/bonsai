@@ -20,7 +20,6 @@ import Constants from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
 import PlantsHome from "@/components/PlantsHome";
 
-
 const plants = [
   { 
     id: 1, 
@@ -42,7 +41,6 @@ const plants = [
   },
 ];
 
-
 interface Journey {
   name: string;
   status: string;
@@ -53,8 +51,6 @@ const circularImages = [
   require("../../../assets/images/mission1icon.png"),
   require("../../../assets/images/mission2icon.png"),
   require("../../../assets/images/mission3icon.png"),
-  require("../../../assets/images/mission4icon.png"),
-  require("../../../assets/images/mission5icon.png"),
 ];
 
 const host =
@@ -155,7 +151,7 @@ export default function Index() {
             <View style={{ height: height * 0.3 }} />
 
             <View style={s.circularImagesContainer}>
-              {circularImages.map((image, index) => (
+              {circularImages.slice(0, 3).map((image, index) => (
                 <View
                   key={index}
                   style={[

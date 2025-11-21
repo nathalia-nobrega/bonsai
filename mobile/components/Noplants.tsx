@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
+import PlantsHome from "./PlantsHome";
 
-export default function Noplants({ carouselData }) {
-  if (!carouselData || carouselData.length === 0) {
+export default function Noplants({ plants }) {
+  if (!plants || plants.length === 0) {
     return (
       <View style={styles.emptyContainer}>
         <Image 
-          source={require('../assets/images/noplant.png')} // Altere para o caminho da sua imagem
+          source={require('../assets/images/noplant.png')}
           style={styles.emptyImage}
         />
         <Text style={styles.emptyText}>No plants in your garden...</Text>

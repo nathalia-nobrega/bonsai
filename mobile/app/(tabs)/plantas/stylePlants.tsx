@@ -8,7 +8,6 @@ export const s = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  /* TOPO: título + botão */
   topRow: {
     width: "100%",
     flexDirection: "row",

@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, Image, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
 
 export default function Noplants({ missionsCarousel }) {
-  // Se não tiver plantas, mostra a tela vazia
   if (!missionsCarousel || missionsCarousel.length === 0) {
     return (
       <View style={styles.emptyContainer}>
@@ -25,7 +24,6 @@ export default function Noplants({ missionsCarousel }) {
   
   return null;
 }
-
 const styles = StyleSheet.create({
   emptyContainer: {
     flex: 1,
