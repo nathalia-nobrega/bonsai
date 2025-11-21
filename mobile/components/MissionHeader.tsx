@@ -1,46 +1,100 @@
-import React from "react";
-import { View, Text, StyleSheet, ImageBackground } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ImageBackground, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
+import Constants from "expo-constants";
 
-import Stars from "../assets/images/stars.svg"
-
+import Stars from "../assets/images/stars.svg";
 import SeedIcon from "../assets/images/mission #1 icon.svg";
 import SproutIcon from "../assets/images/misson #2 icon.svg";
 import BloomIcon from "../assets/images/misson #3 icon.svg";
 import WaterIcon from "../assets/images/mission #4 icon.svg";
 import LeafIcon from "../assets/images/mission #5 icon.svg";
 
-export default function MissionHeader({ id_mission }) {
+export default function MissionHeader({ missionId }) {
+  const [mission, setMission] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
-  const mission = {
-    id: id_mission,
-    title: "Raining Season",
-    progress: 100,
-  };
+  const host =
+    Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+    Constants?.expoConfig?.hostUri?.split(":")[0];
+
+  const API_URL = `http://${host}:3000/api/journeys/`;
+
+  // ----------- CARREGAR MISSÃO -------------
+  useEffect(() => {
+    async function loadMission() {
+      try {
+        if (!missionId) {
+          console.log("Nenhum missionId recebido.");
+          setLoaded(true);
+          return;
+        }
+
+        console.log("Buscando missão:", missionId);
+
+        const response = await fetch(API_URL + missionId);
+        const data = await response.json();
+
+        console.log("RESPOSTA DO BACKEND:", data);
+
+        // Se o backend retorna { mission: { ... } }
+        if (data?.mission) {
+          setMission(data.mission);
+        } else {
+          setMission(data);
+        }
+
+      } catch (err) {
+        console.log("Erro ao carregar missão:", err);
+      } finally {
+        setLoaded(true);
+      }
+    }
+
+    loadMission();
+  }, [missionId]);
+
+  // ----------- LOADING -------------
+  if (!loaded) {
+    return (
+      <View style={{ marginTop: 100 }}>
+        <ActivityIndicator size="large" color="#3F7642" />
+      </View>
+    );
+  }
+
+  // ----------- MISSÃO NÃO ENCONTRADA -------------
+  if (!mission) {
+    return (
+      <View style={{ padding: 40 }}>
+        <Text style={{ color: "#333", fontSize: 16 }}>
+          Missão não encontrada.
+        </Text>
+      </View>
+    );
+  }
+
+  // ----------- CÁLCULO DE PROGRESSO -------------
+  const progress = mission.activitiesFinal > 0
+    ? Math.round((mission.activitiesCompleted / mission.activitiesFinal) * 100)
+    : 0;
 
   const ICON_SIZE = 120;
 
-  // Escolher ícone baseado no ID
   const getIcon = () => {
-    switch (id_mission) {
-      case 1:
-        return <SeedIcon width={ICON_SIZE} height={ICON_SIZE} />;
-      case 2:
-        return <SproutIcon width={ICON_SIZE} height={ICON_SIZE} />;
-      case 3:
-        return <BloomIcon width={ICON_SIZE} height={ICON_SIZE} />;
-      case 4:
-        return <WaterIcon width={ICON_SIZE} height={ICON_SIZE} />;
-      case 5:
-        return <LeafIcon width={ICON_SIZE} height={ICON_SIZE} />;
-      default:
-        return <SeedIcon width={ICON_SIZE} height={ICON_SIZE} />;
+    switch (mission.order) {
+      case 1: return <SeedIcon width={ICON_SIZE} height={ICON_SIZE} />;
+      case 2: return <SproutIcon width={ICON_SIZE} height={ICON_SIZE} />;
+      case 3: return <BloomIcon width={ICON_SIZE} height={ICON_SIZE} />;
+      case 4: return <WaterIcon width={ICON_SIZE} height={ICON_SIZE} />;
+      case 5: return <LeafIcon width={ICON_SIZE} height={ICON_SIZE} />;
+      default: return <SeedIcon width={ICON_SIZE} height={ICON_SIZE} />;
     }
   };
 
   const renderStars = () => {
-    if (mission.progress === 100) {
+    if (progress === 100) {
       return (
         <View style={styles.starsContainer}>
           <Stars width={150} height={150} />
@@ -50,13 +104,14 @@ export default function MissionHeader({ id_mission }) {
     return null;
   };
 
+  // ----------- UI PRINCIPAL -------------
   return (
     <View style={styles.container}>
-        <ImageBackground
-          source={require("../assets/images/image.png")}
-          style={styles.header}
-          resizeMode="cover"
-        >
+      <ImageBackground
+        source={require("../assets/images/image.png")}
+        style={styles.header}
+        resizeMode="cover"
+      >
         <LinearGradient
           colors={["rgba(0,0,0,0.0)", "rgba(33,57,35,0.5)"]}
           start={{ x: 0.5, y: 0 }}
@@ -64,57 +119,35 @@ export default function MissionHeader({ id_mission }) {
           style={styles.overlay}
         />
 
-      {/* CÍRCULO COM BLUR */}
-      {renderStars()}
-      <BlurView
-        intensity={40}
-        tint="light"
-        style={styles.blurCircle}
-      >
-        {getIcon()}
-      </BlurView>
+        {renderStars()}
+
+        <BlurView intensity={40} tint="light" style={styles.blurCircle}>
+          {getIcon()}
+        </BlurView>
       </ImageBackground>
 
-      {/* CAIXA BRANCA */}
-      <BlurView
-        intensity={40}
-        tint="light"
-        style={{
-        position: "absolute",
-        bottom: -50,
-        width: 300,
-        borderRadius: 20,
-        borderWidth: 2,
-        borderColor: "rgba(207,207,207,0.4)",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 6,
-        overflow: "hidden",
-        }}
-    >
+      <BlurView intensity={40} tint="light" style={styles.infoBox}>
         <View style={styles.box}>
-            <Text style={styles.title}>{mission.title}</Text>
+          <Text style={styles.title}>{mission.name}</Text>
 
-            <View style={styles.row}>
-                <Text style={styles.level}>Lv.{mission.id}</Text>
+          <View style={styles.row}>
+            <Text style={styles.level}>Lv.{mission.order}</Text>
 
-                <View style={styles.barBackground}>
-                <View style={[styles.barFill, { width: `${mission.progress}%` }]} />
-                </View>
-
-                <Text style={styles.percent}>{mission.progress}%</Text>
+            <View style={styles.barBackground}>
+              <View style={[styles.barFill, { width: `${progress}%` }]} />
             </View>
-            </View>
-        </BlurView>
+
+            <Text style={styles.percent}>{progress}%</Text>
+          </View>
+        </View>
+      </BlurView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    marginBottom: 70,
-  },
+  container: { alignItems: "center", marginBottom: 70 },
+
   header: {
     width: "100%",
     height: 320,
@@ -124,10 +157,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 30,
     overflow: "hidden",
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    zIndex: 0,
-  },
+
+  overlay: { ...StyleSheet.absoluteFillObject },
 
   blurCircle: {
     borderRadius: 100,
@@ -140,23 +171,36 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 40,
   },
+
+  infoBox: {
+    position: "absolute",
+    bottom: -50,
+    width: 300,
+    borderRadius: 20,
+    borderWidth: 2,
+    borderColor: "rgba(207,207,207,0.4)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 6,
+    overflow: "hidden",
+  },
+
   box: {
     backgroundColor: "#fff",
     borderRadius: 18,
-    flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
     width: "100%",
     paddingVertical: 14,
     paddingHorizontal: 20,
   },
 
   title: {
-    fontFamily: "Poppins-SemiBold",
     fontSize: 18,
+    fontFamily: "Poppins-SemiBold",
     color: "#3C3C3C",
     marginBottom: 8,
   },
+
   row: {
     width: "100%",
     flexDirection: "row",
@@ -165,21 +209,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
 
-  level: {
-    fontFamily: "Poppins-Medium",
-    fontSize: 12,
-    color: "#3C3C3C",
-    width: 27,
-    textAlign: "left",
-  },
+  level: { fontSize: 12, fontFamily: "Poppins-Medium", color: "#3C3C3C" },
 
-  percent: {
-    fontFamily: "Poppins-Medium",
-    fontSize: 12,
-    color: "#3C3C3C",
-    width: 30,
-    textAlign: "right",
-  },
+  percent: { fontSize: 12, fontFamily: "Poppins-Medium", color: "#3C3C3C" },
 
   barBackground: {
     flex: 1,
@@ -192,10 +224,7 @@ const styles = StyleSheet.create({
   barFill: {
     height: "100%",
     backgroundColor: "#3F7642",
-    borderRadius: 20,
   },
-  starsContainer: {
-    position: "absolute",
-    top: 10,
-  },
+
+  starsContainer: { position: "absolute", top: 10 },
 });
