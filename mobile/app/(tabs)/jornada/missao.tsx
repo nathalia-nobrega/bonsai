@@ -83,7 +83,7 @@ export default function MissaoScreen() {
         </View>
       </View>
 
-      <PlantsScroll id_mission={missionId} />
+      <PlantsScroll plantIds={mission.relatedPlants} />
     </ScrollView>
   );
 }

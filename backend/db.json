@@ -91,13 +91,13 @@
       "sunlightType": "Indirect",
       "sunlightDuration": "4-6 hours",
       "floweringHasFlowering": false,
-      "floweringSeason": "N/A",
+      "floweringSeason": "Spring",
       "trimmingCount": 2,
       "trimmingMonths": [
-        "Spring",
-        "Fall"
+        "March",
+        "April"
       ],
-      "photoUrl": "https://example.com/plant.jpg",
+      "photoUrl": "https://cdn.awsli.com.br/800x800/1520/1520689/produto/269865260/sam--americana-w61916pi01.jpg",
       "wasWatered": false,
       "gotSunlight": false,
       "wasTrimmed": false
@@ -282,7 +282,9 @@
       "activitiesFinal": 1,
       "plantCount": 0,
       "order": 1,
-      "relatedPlants": [],
+      "relatedPlants": [
+        "dc94e83e-fd3d-4edc-bb2b-9b23c0330fa6"
+      ],
       "status": "active",
       "type": "garden"
     },
