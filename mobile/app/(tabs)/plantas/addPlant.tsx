@@ -6,11 +6,21 @@ import {
   ScrollView,
   Image,
   ActivityIndicator,
-  Pressable
+  Pressable,
+  TextInput,
+  TouchableOpacity
 } from "react-native";
 import { BlurView } from "expo-blur";
 import { useLocalSearchParams } from "expo-router";
 import Constants from "expo-constants";
+import { usePlants } from "@/hooks/usePlants";
+import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
+import { useRouter } from "expo-router";
+
+
 
 {/* ICONS */}
 import EditIcon from "../../../assets/images/editgreen.svg";
@@ -29,13 +39,88 @@ import TimeIcon from "../../../assets/images/time.svg";
 import WorldIcon from "../../../assets/images/world.svg";
 import CalendarIcon from "../../../assets/images/calendar.svg";
 
-export default function PlantScreen() {
-  const params = useLocalSearchParams();
-  const plantId = params?.id;
+export default function AddPlantScreen() {
+    const params = useLocalSearchParams();
+    const plantId = params?.id;
+    const [plant, setPlant] = useState(null);
+    const { details, loading, loadDetails } = usePlants();
+    const [isEditing, setIsEditing] = useState(false);
+    const [name, setName] = useState("");
+    const [photo, setPhoto] = useState(null);
+    const router = useRouter();
 
-  const [plant, setPlant] = useState(null);
-  const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        if (plantId) {
+            loadDetails(Number(plantId));
+        }
+    }, [plantId]);
 
+
+    useEffect(() => {
+    if (details) {
+        const img = details.default_image;
+
+       setPlant({
+            chosenName: details.common_name,
+            commonName: details.common_name,
+            scientificName: Array.isArray(details.scientific_name)
+                ? details.scientific_name[0]
+                : details.scientific_name,
+
+            otherName: details.other_name?.[0] || "Not provided",
+            family: details.family || "Unknown",
+
+            type: "Unknown",
+            cycle: "Perennial",
+
+            wateringPeriod: details.watering || "Morning, Evening",
+            wateringBasedTemperature: "Moderate",
+
+            sunlightType: details.sunlight?.[0] || "Indirect",
+            sunlightDuration: "4-6 hours",
+
+            growthRate: "Medium",
+            careLevel: "Easy",
+            maintenance: "Low",
+
+            floweringHasFlowering: true,
+            floweringSeason: "Spring",
+
+            trimmingCount: 0,
+            trimmingMonths: ["April, May"],
+
+            photoUrl:
+                img?.regular_url ||
+                img?.medium_url ||
+                img?.small_url ||
+                img?.thumbnail ||
+                "https://via.placeholder.com/400.png?text=🌱",
+            });
+
+            setName(details.common_name);
+            setPhoto(
+            img?.regular_url ||
+                img?.medium_url ||
+                img?.small_url ||
+                img?.thumbnail ||
+                null
+            );
+        }
+        }, [details]);
+
+    async function handlePickImage() {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 5],
+            quality: 0.8,
+        });
+
+        if (!result.canceled) {
+            setPhoto(result.assets[0].uri);
+        }
+    }
+
+ 
   const host =
     Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
     Constants?.expoConfig?.hostUri?.split(":")[0];
@@ -50,16 +135,9 @@ export default function PlantScreen() {
           return;
         }
 
-        const res = await fetch(API_URL + plantId);
-        const data = await res.json();
-
-        console.log("Planta carregada:", data);
-
-        setPlant(data);
       } catch (err) {
         console.log("Erro ao carregar planta:", err);
       } finally {
-        setLoading(false);
       }
     }
 
@@ -80,24 +158,146 @@ export default function PlantScreen() {
       </View>
     );
 
+    async function handleAddPlant() {
+        try {
+            let userId = await AsyncStorage.getItem("userId");
+
+            if (!userId) {
+                Toast.show({
+                    type: "error",
+                    text1: "User not found",
+                    text2: "Please log in again.",
+                    position: "bottom",
+                 });
+                return;
+            }
+            const body = {
+                userId: userId,
+                chosenName: name || plant.commonName,
+
+                commonName: plant.commonName,
+                scientificName: plant.scientificName,
+                otherName: plant.otherName || "Not provided",
+                family: plant.family || "Unknown",
+
+                type: "Unknown",
+                cycle: "Perennial",
+
+                wateringPeriod: plant.wateringPeriod || "Morning, Evening",   
+
+                wateringBasedTemperature: "Moderate",
+                growthRate: "Medium",
+                careLevel: "Easy",
+                maintenance: "Low",
+
+                sunlightType: plant.sunlightType || "Indirect",
+                sunlightDuration: "4-6 hours",
+
+                floweringHasFlowering: true,
+                floweringSeason: "Spring",
+
+                trimmingCount: 0,
+                trimmingMonths: ["April", "May"],
+
+                photoUrl: photo || plant.photoUrl,
+            };
+
+            console.log("Enviando ao backend:", body);
+
+            const response = await fetch(`${API_URL}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+            });
+
+            if (!response.ok) {
+            throw new Error("Erro ao salvar planta");
+            }
+
+            Toast.show({
+                type: "success",
+                text1: "Plant added!",
+                text2: "Your new plant has been saved successfully.",
+                position: "bottom",
+            });
+
+            router.replace({
+              pathname: "/(tabs)/plantas", 
+              params: { reload: String(Date.now()) },
+            });
+
+        } catch (error) {
+            console.log("Erro ao adicionar:", error);
+            Toast.show({
+                type: "error",
+                text1: "Failed to add plant",
+                text2: error?.message || "Unexpected error occurred.",
+                position: "bottom",
+            });
+        }
+    }
 
   return (
     <ScrollView style={styles.container}>
+
+      <View style={styles.options}>
+      <Pressable style={styles.iconButton} onPress={() => setIsEditing(!isEditing)}>
+        <BlurView intensity={40} tint="light" style={styles.blurButton}>
+            <EditIcon width={36} height={36} />
+        </BlurView>
+        </Pressable>
+
+      <Pressable style={styles.iconButton} onPress={handleAddPlant}>
+        <BlurView intensity={40} tint="light" style={styles.blurButton}>
+            <AddIcon width={36} height={36} />
+        </BlurView>
+        </Pressable>
+    </View>
+
 
       {/* CARD PRINCIPAL */}
       <BlurView intensity={40} tint="light" style={styles.mainCard}>
 
         <BlurView style={styles.blurImage}>
-          <Image
-            source={{ uri: plant.photoUrl }}
-            style={styles.plantImage}
-            resizeMode="cover"
-          />
+            <Image
+                source={{ uri: photo || plant.photoUrl }}
+                style={styles.plantImage}
+                resizeMode="cover"
+            />
+
+            {isEditing && (
+                <TouchableOpacity
+                style={styles.editButton}
+                onPress={handlePickImage}
+                >
+                <Ionicons name="pencil-outline" size={22} color="#68B36D" />
+                </TouchableOpacity>
+            )}
         </BlurView>
+        
 
         {/* NOMES */}
-        <Text style={styles.namePlant}>{plant.chosenName}</Text>
-        <Text style={styles.nameScientPlant}>{plant.commonName}</Text>
+        {isEditing ? (
+        <TextInput 
+            value={name}
+            onChangeText={setName}
+            style={{
+            fontSize: 22,
+            fontFamily: "Nunito-ExtraBold",
+            color: "#555",
+            marginTop: 12,
+            borderBottomWidth: 1,
+            borderColor: "#68B36D",
+            paddingVertical: 4,
+            width: "80%",
+            textAlign: "center"
+            }}
+        />
+        ) : (
+        <Text style={styles.namePlant}>{name}</Text>
+        )}
+
+        <Text style={styles.nameScientPlant}>{plant.scientificName}</Text>
 
         {/* CARDS COM ÍCONES */}
         <ScrollView
@@ -216,8 +416,46 @@ const styles = StyleSheet.create({
     backgroundColor: "#f1f1f1ff",
   },
 
+  options: {
+    height: 60,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    marginTop: 40,
+  },
+
+  iconButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    overflow: "hidden",
+  },
+
+  editButton: {
+    position: "absolute",
+    bottom: 13,
+    right: 10,
+    padding: 9,
+    backgroundColor: "rgba(253, 249, 249, 0.5)",
+    borderRadius: 20,
+    borderColor: "rgba(255, 255, 255, 0.9)",
+    zIndex: 5,
+    elevation: 5,
+    },
+
+  blurButton: {
+    flex: 1,
+    borderRadius: 25,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.3)",
+    backgroundColor: "rgba(255,255,255,0.15)", 
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
   mainCard: {
-    marginTop: 60,
+    marginTop: 10,
     borderRadius: 30,
     paddingBottom: 40,
     alignItems: "center",

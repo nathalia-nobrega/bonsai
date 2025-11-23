@@ -20,9 +20,7 @@ export default function PlantCard({ plant }: { plant: PlantListItem }) {
       : plant.scientific_name || "Sem nome científico";
 
   return (
-    <View
-      style={s.card}
-    >
+    <View style={s.card}>
       <Image source={{ uri: imageUri }} style={s.image} />
 
       <View style={s.textContainer}>
@@ -30,17 +28,24 @@ export default function PlantCard({ plant }: { plant: PlantListItem }) {
           <Text style={s.common} numberOfLines={1} ellipsizeMode="tail">
             {plant.common_name || "Nome desconhecido"}
           </Text>
-          <TouchableOpacity style={s.circle}
-            onPress={() => router.push(`/plants/${plant.id}`)}
-            >
+
+          <TouchableOpacity
+            style={s.circle}
+            onPress={() =>
+              router.push({
+                pathname: "/(tabs)/plantas/addPlant",
+                params: { id: plant.id },
+              })
+            }
+          >
             <View style={s.horizontal} />
             <View style={s.vertical} />
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
 
         <Text style={s.scientific}>{scientific}</Text>
       </View>
-      </View>
+    </View>
   );
 }
 
