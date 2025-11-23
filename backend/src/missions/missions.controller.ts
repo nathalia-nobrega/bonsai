@@ -15,6 +15,7 @@ import { MissionUpdateDto } from './dto/mission-update-dto';
 import { PlantResponseDto } from 'src/plants/dto/plant-response-dto';
 import { MissionType } from './mission.types';
 import { CreateMissionsForPlantRequest } from './dto/mission-creationByPlant-dto';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @ApiTags('missions')
 @Controller('missions')
@@ -267,7 +268,7 @@ export class MissionsController {
           title: `Water ${plant.chosenName}`,
           description: `Water your ${plant.commonName} (${plant.scientificName})`,
           type: MissionType.Water,
-          hourlyFrequency: hourlyFrequency,
+          hourlyFrequency: 0.1,
           points: 10,
           isAvailable: true,
         });
@@ -304,5 +305,41 @@ export class MissionsController {
     }
 
     return missions;
+  }
+
+  //reactivation
+
+  @Cron(CronExpression.EVERY_5_MINUTES)
+  async handleMissionReactivation() {
+    console.log('Checking missions for reactivation...');
+
+    try {
+      const missions = await Mission.findAll();
+      const now = new Date();
+      let reactivatedCount = 0;
+
+      for (const mission of missions) {
+        if (!mission.isAvailable && mission.nextAvailableAt) {
+          const nextAvailable = new Date(mission.nextAvailableAt);
+
+          if (now >= nextAvailable) {
+            await Mission.updatePlant(mission.id, {
+              isAvailable: true,
+            });
+
+            reactivatedCount++;
+            console.log(
+              `Mission "${mission.title}" (${mission.id}) reactivated`
+            );
+          }
+        }
+      }
+
+      console.log(
+        `Mission reactivation check completed. ${reactivatedCount} missions reactivated.`
+      );
+    } catch (error) {
+      console.error('Error during mission reactivation:', error.message);
+    }
   }
 }

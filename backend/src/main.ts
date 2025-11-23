@@ -8,17 +8,14 @@ import { ValidationPipe, BadRequestException } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  /* Init Swagger */
   const documentFactory = () =>
     SwaggerModule.createDocument(app, swaggerConfig, documentOptions);
   SwaggerModule.setup('api/docs', app, documentFactory);
 
-  /* Exception filters */
   app.useGlobalFilters(new GlobalExceptionFilter());
 
   app.setGlobalPrefix('api');
 
-  // Configuração global do ValidationPipe
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
