@@ -97,6 +97,14 @@ export class User {
       user.photoUrl = userUpdateDto.photoUrl;
     }
 
+    if (userUpdateDto.pointsGained !== undefined) {
+      user.pointsGained = userUpdateDto.pointsGained;
+    }
+
+    if (userUpdateDto.level !== undefined) {
+      user.level = userUpdateDto.level;
+    }
+
     User.db.data.users[userIndex] = user;
     await User.db.write();
 

@@ -99,7 +99,7 @@ export class UserController {
     return User.updateUser(id, userUpdateDto);
   }
 
-  //atualizar a partir de missao
+  //atualizar a partir de jornada
   @Post(':userId/journey-completed')
   @ApiResponse({
     status: 200,

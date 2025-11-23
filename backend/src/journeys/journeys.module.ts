@@ -7,7 +7,11 @@ import { MissionModule } from 'src/missions/missions.module';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [HttpModule],
+  imports: [
+    HttpModule.register({
+      baseURL: 'http://localhost:3000',
+    }),
+  ],
   controllers: [JourneyController],
 })
 export class JourneysModule implements OnModuleInit {

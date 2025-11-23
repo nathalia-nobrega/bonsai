@@ -1,22 +1,22 @@
 {
   "users": [
     {
-      "id": "686d692c-5a89-4609-8345-cd6a4721708d",
-      "createdAt": "2025-11-23T08:15:30.083Z",
-      "name": "tim drake",
+      "id": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "createdAt": "2025-11-23T20:42:51.817Z",
+      "name": "cassandra cain",
       "email": "concorde@will.fly",
-      "password": "$2b$10$oFg29RS4f3gVLsNce.8XcurhbRLHJUL9/o.dNjhKl7xEqRo2eGCKm",
+      "password": "$2b$10$ghBuHSMcVJGMAbnacctdq.2eiSYQRsY0ar2Ns191JxL6TaJLeWhHq",
       "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
-      "level": 1,
-      "pointsGained": 0
+      "level": 2,
+      "pointsGained": 30
     }
   ],
   "plants": [
     {
-      "id": "bff2b53e-f80a-4b45-9795-729fd2e51077",
-      "createdAt": "2025-11-23T08:15:51.607Z",
+      "id": "b8cda89a-2250-4297-b671-1010257ddb9f",
+      "createdAt": "2025-11-23T20:43:17.449Z",
       "chosenName": "My Beautiful Fern",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
       "commonName": "Boston Fern",
       "scientificName": "Nephrolepis exaltata",
       "otherName": "Sword Fern",
@@ -45,9 +45,9 @@
   ],
   "journeys": [
     {
-      "id": "c8012259-496e-4fed-8fa4-3c91ac74e60e",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
-      "createdAt": "2025-11-23T08:15:30.164Z",
+      "id": "c107d719-721d-42dd-9ca8-63286a79fa7e",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "createdAt": "2025-11-23T20:42:51.886Z",
       "name": "First Sprout",
       "description": "plant a new plant on your garden",
       "pointsEarned": 10,
@@ -57,31 +57,31 @@
       "plantCount": 1,
       "order": 1,
       "relatedPlants": [
-        "bff2b53e-f80a-4b45-9795-729fd2e51077"
+        "b8cda89a-2250-4297-b671-1010257ddb9f"
       ],
       "status": "finished",
       "type": "garden"
     },
     {
-      "id": "93f5caee-997e-4090-846e-a1cfd7d21630",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
-      "createdAt": "2025-11-23T08:15:30.165Z",
+      "id": "abaa250f-b4ab-4765-bc68-a2dd90bd7a46",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "createdAt": "2025-11-23T20:42:51.887Z",
       "name": "New Life",
       "description": "complete every daily mission of a plant",
-      "pointsEarned": 0,
+      "pointsEarned": 30,
       "finalPoints": 30,
-      "activitiesCompleted": 0,
+      "activitiesCompleted": 3,
       "activitiesFinal": 3,
       "plantCount": 0,
       "order": 2,
       "relatedPlants": [],
-      "status": "active",
+      "status": "finished",
       "type": "activities"
     },
     {
-      "id": "bea94f66-f546-4bb4-b3d6-79204a8337d5",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
-      "createdAt": "2025-11-23T08:15:30.165Z",
+      "id": "cc90517a-0395-45ad-b2a1-2a3d2246bb80",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "createdAt": "2025-11-23T20:42:51.887Z",
       "name": "Triple Threat",
       "description": "plant three more plants in your garden",
       "pointsEarned": 0,
@@ -91,13 +91,13 @@
       "plantCount": 3,
       "order": 3,
       "relatedPlants": [],
-      "status": "locked",
+      "status": "active",
       "type": "garden"
     },
     {
-      "id": "366c59f9-f349-4925-9687-8f3d52d06b47",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
-      "createdAt": "2025-11-23T08:15:30.166Z",
+      "id": "5f3729ff-620c-4be8-bbcd-152849610dac",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "createdAt": "2025-11-23T20:42:51.888Z",
       "name": "Rain Season",
       "description": "water your plants everyday for a week",
       "pointsEarned": 0,
@@ -111,9 +111,9 @@
       "type": "activities"
     },
     {
-      "id": "c1f4167c-cd15-48f1-966a-67f17150fc40",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
-      "createdAt": "2025-11-23T08:15:30.166Z",
+      "id": "fb9455ae-a824-4aa6-b08a-7756fef9d586",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "createdAt": "2025-11-23T20:42:51.888Z",
       "name": "Trimming Time",
       "description": "Complete a trim",
       "pointsEarned": 0,
@@ -129,42 +129,42 @@
   ],
   "missions": [
     {
-      "id": "b1961c23-6c28-4c0b-b10a-cdcf8ae054fb",
-      "idPlant": "bff2b53e-f80a-4b45-9795-729fd2e51077",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
+      "id": "98d4ea5f-c741-4b8b-a886-a9dca3e3ffba",
+      "idPlant": "b8cda89a-2250-4297-b671-1010257ddb9f",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
       "title": "Water My Beautiful Fern",
       "description": "Water your Boston Fern (Nephrolepis exaltata)",
       "type": "water",
       "hourlyFrequency": 0.3,
       "points": 10,
-      "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-23T08:15:51.653Z",
-      "isAvailable": true
+      "lastCompletedAt": "2025-11-23T20:48:49.357Z",
+      "nextAvailableAt": "2025-11-23T20:48:49.357Z",
+      "isAvailable": false
     },
     {
-      "id": "bd76e3b4-3c18-4109-9984-66b6e958ea7c",
-      "idPlant": "bff2b53e-f80a-4b45-9795-729fd2e51077",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
+      "id": "5463c6e4-ac80-4a8d-ac8a-b737bfb9e6cf",
+      "idPlant": "b8cda89a-2250-4297-b671-1010257ddb9f",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
       "title": "Sunlight for My Beautiful Fern",
       "description": "Expose My Beautiful Fern to sunlight for 4-6 hours",
       "type": "sunlight",
       "hourlyFrequency": 14,
       "points": 10,
       "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-23T08:15:51.654Z",
+      "nextAvailableAt": "2025-11-23T20:43:17.489Z",
       "isAvailable": true
     },
     {
-      "id": "bc07ee51-8aad-4b4c-acf3-945909328a4b",
-      "idPlant": "bff2b53e-f80a-4b45-9795-729fd2e51077",
-      "userId": "686d692c-5a89-4609-8345-cd6a4721708d",
+      "id": "15df9acb-2606-4437-90dc-152202b83d43",
+      "idPlant": "b8cda89a-2250-4297-b671-1010257ddb9f",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
       "title": "Trim My Beautiful Fern",
       "description": "Trim your Boston Fern (Nephrolepis exaltata)",
       "type": "trim",
       "hourlyFrequency": 720,
       "points": 10,
       "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-23T08:15:51.654Z",
+      "nextAvailableAt": "2025-11-23T20:43:17.490Z",
       "isAvailable": true
     }
   ]
