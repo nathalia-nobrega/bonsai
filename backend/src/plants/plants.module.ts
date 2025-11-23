@@ -10,16 +10,18 @@ import { HttpModule } from '@nestjs/axios';
  * Follows MPS architecture with controller and entity only (no service layer)
  */
 @Module({
-    imports: [LowdbModule, HttpModule.register({
-        baseURL: 'http://localhost:3000',
-    })],
-    controllers: [PlantsController],
-    providers: [],
+  imports: [
+    HttpModule.register({
+      baseURL: 'http://localhost:3000',
+    }),
+  ],
+  controllers: [PlantsController],
+  providers: [LowdbService],
 })
 export class PlantsModule implements OnModuleInit {
-    constructor(private readonly db: LowdbService) { }
+  constructor(private readonly db: LowdbService) {}
 
-    onModuleInit() {
-        Plant.injectDb(this.db);
-    }
+  onModuleInit() {
+    Plant.injectDb(this.db);
+  }
 }

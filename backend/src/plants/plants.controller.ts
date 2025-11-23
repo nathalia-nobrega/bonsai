@@ -86,6 +86,22 @@ export class PlantsController {
     }
   }
 
+  private async notifyMissionSystem(plantId: string): Promise<void> {
+    const plant = this.findById(plantId);
+
+    try {
+      await firstValueFrom(
+        this.httpService.post(`/api/missions/plant/${plantId}`, {
+          plant,
+        })
+      );
+      console.log('Mission system notified successfully');
+    } catch (error) {
+      console.error('Failed to notify journey system:', error.message);
+      throw error;
+    }
+  }
+
   /**
    * Get plant by ID
    * @param id Plant ID
