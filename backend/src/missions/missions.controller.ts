@@ -77,6 +77,9 @@ export class MissionsController {
       }
 
       const frequencyHours = mission.hourlyFrequency;
+      if (isNaN(frequencyHours)) {
+        throw new Error('Invalid frequency format');
+      }
 
       const updatedMission = await Mission.updatePlant(id, {
         lastCompletedAt: now,
@@ -124,14 +127,22 @@ export class MissionsController {
       throw new BadRequestException(error.message);
     }
   }
-
-  @Get()
-  @ApiOperation({ summary: 'Get all active missions os an user' })
-  @ApiResponse({ status: 200, description: 'List of all missions.' })
-  async findAll() {
+  @Get('user/:userId')
+  @ApiOperation({ summary: 'Get all active missions of a user' })
+  @ApiResponse({ status: 200, description: 'List of all user missions.' })
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  async findAll(@Param('userId') userId: string) {
     try {
-      // @ts-ignore - We'll implement this method in the Mission class
-      return await Mission.findAll();
+      const missions = await Mission.findAll();
+      const userMissions = missions.filter(
+        (mission) => mission.userId === userId
+      );
+
+      const availableMissions = userMissions.filter(
+        (mission) => mission.isAvailable === true
+      );
+
+      return availableMissions;
     } catch (error) {
       throw new BadRequestException(error.message);
     }
@@ -139,7 +150,11 @@ export class MissionsController {
 
   @Post('plant/:plantId')
   @ApiOperation({ summary: 'Create missions for a specific plant' })
-  @ApiResponse({ status: 201, description: 'Missions created successfully' })
+  @ApiResponse({
+    status: 201,
+    description: 'Missions created successfully',
+    type: [Mission],
+  })
   @ApiResponse({ status: 400, description: 'Bad request' })
   @ApiResponse({ status: 404, description: 'Plant not found' })
   async createMissionsForPlant(
@@ -147,6 +162,20 @@ export class MissionsController {
     @Body() body: CreateMissionsForPlantRequest
   ) {
     try {
+      console.log('Received request to create missions for plant:', {
+        plantId,
+        requestBody: body,
+        plantFromBody: body.plant,
+        plantIdFromBody: body.plant?.id,
+        plantIdsMatch: body.plant?.id === plantId,
+      });
+
+      console.log('=== DEBUG: Received request ===');
+      console.log('Plant ID from param:', plantId);
+      console.log('Body received:', JSON.stringify(body, null, 2));
+      console.log('Plant from body:', body.plant);
+      console.log('Plant ID from body:', body.plant?.id);
+
       const plant = body.plant;
 
       if (!plant || plant.id !== plantId) {
@@ -168,7 +197,7 @@ export class MissionsController {
         );
 
         if (missionDTO.isAvailable !== undefined) {
-          // @ts-ignore - We know isAvailable exists on the instance
+          // @ts-ignore
           mission._isAvailable = missionDTO.isAvailable;
         }
 
@@ -176,7 +205,7 @@ export class MissionsController {
         missions.push(createdMission);
       }
 
-      return missions;
+      return missions; // Swagger agora entende que é um array de Mission
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes('not found')) {
@@ -189,7 +218,6 @@ export class MissionsController {
   }
 
   //helpers
-
   private calculateNextAvailableTime(
     currentTime: Date,
     hoursToAdd: number
@@ -200,16 +228,33 @@ export class MissionsController {
   }
 
   private planMissionsForPlant(plant: PlantResponseDto): MissionCreationDto[] {
+    console.log('chegou a ser chamaod');
     const missions: MissionCreationDto[] = [];
     const now = new Date();
 
-    // Watering mission
+    console.log('planta recebida pra missao: ', plant);
+
+    const seasonToMonthMap: Record<string, string> = {
+      Spring: '3',
+      Summer: '6',
+      Fall: '9',
+      Winter: '12',
+    };
+
+    if (plant.trimmingMonths && Array.isArray(plant.trimmingMonths)) {
+      plant.trimmingMonths = plant.trimmingMonths.map((m) => {
+        if (seasonToMonthMap[m]) return seasonToMonthMap[m];
+        if (!isNaN(+m)) return m;
+        return m;
+      });
+    }
+
     if (plant.wateringPeriod) {
       const wateringMap = {
         daily: 24,
-        weekly: 24 * 7,
-        biweekly: 24 * 14,
-        monthly: 24 * 30,
+        weekly: 168,
+        biweekly: 336,
+        monthly: 720,
       };
 
       const wateringPeriod = plant.wateringPeriod.toLowerCase();
@@ -236,13 +281,12 @@ export class MissionsController {
         title: `Sunlight for ${plant.chosenName}`,
         description: `Expose ${plant.chosenName} to sunlight for ${plant.sunlightDuration}`,
         type: MissionType.Sunlight,
-        hourlyFrequency: 24, // Daily
+        hourlyFrequency: 14,
         points: 5,
         isAvailable: true,
       });
     }
 
-    // Trimming mission
     if (plant.trimmingCount > 0 && plant.trimmingMonths?.length > 0) {
       const currentMonth = (now.getMonth() + 1).toString();
       const shouldBeAvailable = plant.trimmingMonths.includes(currentMonth);
@@ -253,7 +297,7 @@ export class MissionsController {
         title: `Trim ${plant.chosenName}`,
         description: `Trim your ${plant.commonName} (${plant.scientificName})`,
         type: MissionType.Trim,
-        hourlyFrequency: 24 * 30,
+        hourlyFrequency: 720, // 24 * 30
         points: 15,
         isAvailable: shouldBeAvailable,
       });

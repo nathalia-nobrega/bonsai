@@ -53,8 +53,8 @@ export class MissionCreationDto {
     example: 'Aloe Vera needs to be watered daily!',
   })
   @IsNumber()
-  @Min(0.1)
-  hourlyFrequency: number; // ex: 24h
+  @IsNotEmpty()
+  hourlyFrequency: number; // ex: '24h'
 
   @ApiProperty({
     description: "The mission's points",

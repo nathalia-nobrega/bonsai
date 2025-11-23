@@ -18,7 +18,7 @@ export class MissionResponseDto {
   idPlant: string;
 
   @ApiProperty({
-    description: "The ID of the user who owns this mission",
+    description: 'The ID of the user who owns this mission',
     example: '123e4567-e89b-12d3-a456-426614174000',
   })
   @Expose()
@@ -61,19 +61,17 @@ export class MissionResponseDto {
 
   @ApiProperty({
     description: "The mission's last update date",
-    example: '20',
+    example: '2024-01-15T10:30:00.000Z',
   })
   @Expose()
-  @Transform(({ value }) => value?.toISOString())
-  lastCompletedAt: Date | null;
+  lastCompletedAt: string | null;
 
   @ApiProperty({
     description: "The mission's next activation date",
-    example: '20',
+    example: '2024-01-16T10:30:00.000Z',
   })
   @Expose()
-  @Transform(({ value }) => value?.toISOString())
-  nextAvailableAt: Date;
+  nextAvailableAt: string;
 
   @ApiProperty({
     description: "The mission's status of availability",

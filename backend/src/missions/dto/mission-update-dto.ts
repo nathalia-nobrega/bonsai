@@ -58,7 +58,6 @@ export class MissionUpdateDto extends PartialType(MissionCreationDto) {
   })
   @IsOptional()
   @IsNumber()
-  @Min(1)
   hourlyFrequency?: number;
 
   @ApiProperty({

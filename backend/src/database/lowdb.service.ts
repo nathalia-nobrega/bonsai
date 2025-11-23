@@ -76,13 +76,14 @@ interface Database {
 @Injectable()
 export class LowdbService implements OnModuleInit {
   private db: Low<Database>;
+  private initialized = false;
 
   async onModuleInit() {
     await this.start();
   }
 
   async start(): Promise<Low<Database>> {
-    if (this.db) return this.db;
+    if (this.initialized) return this.db;
 
     const adapter = new JSONFile<Database>('db.json');
     this.db = new Low<Database>(adapter, {
@@ -93,13 +94,18 @@ export class LowdbService implements OnModuleInit {
     } as Database);
 
     await this.db.read();
-
-    this.db.data ||= { users: [], plants: [], journeys: [], missions: [] } as Database;
+    this.db.data ||= {
+      users: [],
+      plants: [],
+      journeys: [],
+      missions: [],
+    } as Database;
     this.db.data.users ||= [];
     this.db.data.plants ||= [];
     this.db.data.journeys ||= [];
     this.db.data.missions ||= [];
 
+    this.initialized = true;
     return this.db;
   }
 

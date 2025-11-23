@@ -6,9 +6,8 @@ import { Mission } from './entities/mission.entity';
 import { JourneysModule } from '../journeys/journeys.module';
 
 @Module({
-  imports: [LowdbModule, JourneysModule],
+  imports: [JourneysModule],
   controllers: [MissionsController],
-  providers: [LowdbService],
 })
 export class MissionModule implements OnModuleInit {
   constructor(private readonly db: LowdbService) {}

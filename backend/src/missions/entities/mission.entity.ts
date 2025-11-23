@@ -144,6 +144,16 @@ export class Mission {
     });
   }
 
+  public static findAll(): MissionResponseDto[] {
+    const missions = this.db.data.missions;
+
+    return missions.map((mission) =>
+      plainToInstance(MissionResponseDto, mission, {
+        excludeExtraneousValues: true,
+      })
+    );
+  }
+
   // Save method
   public async create(): Promise<MissionResponseDto> {
     Mission.db.data.missions.push(this.toJSON());

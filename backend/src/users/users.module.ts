@@ -7,7 +7,6 @@ import { JourneysModule } from '../journeys/journeys.module';
 
 @Module({
   controllers: [UserController],
-  providers: [LowdbService],
 })
 export class UsersModule implements OnModuleInit {
   constructor(private readonly db: LowdbService) {}

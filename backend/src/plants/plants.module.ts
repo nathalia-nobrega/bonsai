@@ -4,6 +4,8 @@ import { LowdbService } from '../database/lowdb.service';
 import { PlantsController } from './plants.controller';
 import { Plant } from './entities/plant.entity';
 import { HttpModule } from '@nestjs/axios';
+import { JourneysModule } from 'src/journeys/journeys.module';
+import { MissionModule } from 'src/missions/missions.module';
 
 /**
  * Plants module for managing plant entities
@@ -11,12 +13,13 @@ import { HttpModule } from '@nestjs/axios';
  */
 @Module({
   imports: [
+    JourneysModule,
+    MissionModule,
     HttpModule.register({
       baseURL: 'http://localhost:3000',
     }),
   ],
   controllers: [PlantsController],
-  providers: [LowdbService],
 })
 export class PlantsModule implements OnModuleInit {
   constructor(private readonly db: LowdbService) {}
