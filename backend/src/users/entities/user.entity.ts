@@ -72,6 +72,8 @@ export class User {
     User.db.data.users.push(this.toJSON());
     await User.db.write();
 
+    console.log('conseguiu criar');
+
     return plainToInstance(UserResponseDto, this.toJSON());
   }
 

@@ -58,33 +58,54 @@ interface Database {
     status: 'finished' | 'active' | 'locked';
     type: 'garden' | 'activities';
   }>;
+
+  missions: Array<{
+    id: string;
+    idPlant: string;
+    lastCompletedAt: Date | null;
+    title: string;
+    description: string;
+    type: 'water' | 'sunlight' | 'trim';
+    hourlyFrequency: number;
+    points: number;
+    nextAvailableAt: Date;
+    isAvailable: boolean;
+  }>;
 }
 
 @Injectable()
 export class LowdbService implements OnModuleInit {
   private db: Low<Database>;
+  private initialized = false;
 
   async onModuleInit() {
     await this.start();
   }
 
   async start(): Promise<Low<Database>> {
-    if (this.db) return this.db;
+    if (this.initialized) return this.db;
 
     const adapter = new JSONFile<Database>('db.json');
     this.db = new Low<Database>(adapter, {
       users: [],
       plants: [],
       journeys: [],
+      missions: [],
     } as Database);
 
     await this.db.read();
-
-    this.db.data ||= { users: [], plants: [], journeys: [] } as Database;
+    this.db.data ||= {
+      users: [],
+      plants: [],
+      journeys: [],
+      missions: [],
+    } as Database;
     this.db.data.users ||= [];
     this.db.data.plants ||= [];
     this.db.data.journeys ||= [];
+    this.db.data.missions ||= [];
 
+    this.initialized = true;
     return this.db;
   }
 

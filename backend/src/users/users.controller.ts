@@ -74,6 +74,8 @@ export class UserController {
 
     const createdUser = await user.create();
 
+    console.log(createdUser.id);
+
     try {
       console.log('Creating default journeys for user:', createdUser.id);
       const journeys = await Journey.createDefaultForUser(createdUser.id);
