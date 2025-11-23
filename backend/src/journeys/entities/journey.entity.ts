@@ -223,7 +223,7 @@ export class Journey {
         name: 'New Life',
         description: 'complete every daily mission of a plant',
         finalPoints: 30,
-        activitiesFinal: 7,
+        activitiesFinal: 3,
         plantCount: 0,
         order: 2,
         relatedPlants: [],

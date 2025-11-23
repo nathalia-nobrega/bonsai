@@ -21,7 +21,7 @@ import { LowdbService } from '../database/lowdb.service';
 @Controller('users')
 export class UserController {
   constructor(private readonly db: LowdbService) {
-    Journey.injectDb(this.db);
+    User.injectDb(this.db);
   }
 
   @Get(':id')
@@ -97,5 +97,49 @@ export class UserController {
     @Body() userUpdateDto: UserUpdateDto
   ): Promise<UserResponseDto> {
     return User.updateUser(id, userUpdateDto);
+  }
+
+  //atualizar a partir de missao
+  @Post(':userId/journey-completed')
+  @ApiResponse({
+    status: 200,
+    description: 'User points and level updated after journey completion',
+    type: UserResponseDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'User not found',
+  })
+  async onJourneyCompleted(
+    @Param('userId') userId: string,
+    @Body() body: { journeyId: string; points: number }
+  ): Promise<UserResponseDto> {
+    try {
+      const user = User.findById(userId);
+
+      if (!user) {
+        throw new NotFoundException(`User with ID ${userId} not found`);
+      }
+
+      const newPointsGained = user.pointsGained + body.points;
+
+      const newLevel = user.level + 1;
+
+      const updates: UserUpdateDto = {
+        pointsGained: newPointsGained,
+        level: newLevel,
+      };
+
+      console.log(
+        `User ${user.name} completed journey! Earned ${body.points} points! Total: ${newPointsGained} points, Level: ${newLevel}`
+      );
+
+      return await User.updateUser(userId, updates);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new Error(`Failed to update user progress: ${error.message}`);
+    }
   }
 }

@@ -5,9 +5,16 @@ import { LowdbService } from 'src/database/lowdb.service';
 import { Mission } from './entities/mission.entity';
 import { JourneysModule } from '../journeys/journeys.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [JourneysModule, ScheduleModule.forRoot()],
+  imports: [
+    JourneysModule,
+    ScheduleModule.forRoot(),
+    HttpModule.register({
+      baseURL: 'http://localhost:3000',
+    }),
+  ],
   controllers: [MissionsController],
 })
 export class MissionModule implements OnModuleInit {

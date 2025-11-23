@@ -3,8 +3,11 @@ import { JourneyController } from './journeys.controller';
 import { LowdbService } from 'src/database/lowdb.service';
 import { Journey } from './entities/journey.entity';
 import { LowdbModule } from 'src/database/lowdb.module';
+import { MissionModule } from 'src/missions/missions.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
+  imports: [HttpModule],
   controllers: [JourneyController],
 })
 export class JourneysModule implements OnModuleInit {

@@ -16,10 +16,15 @@ import { PlantResponseDto } from 'src/plants/dto/plant-response-dto';
 import { MissionType } from './mission.types';
 import { CreateMissionsForPlantRequest } from './dto/mission-creationByPlant-dto';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { firstValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
 
 @ApiTags('missions')
 @Controller('missions')
 export class MissionsController {
+  constructor(private readonly httpService: HttpService) {}
+
+  //criar
   @Post()
   @ApiOperation({ summary: 'Create a new mission' })
   @ApiResponse({ status: 201, description: 'Mission successfully created.' })
@@ -64,6 +69,7 @@ export class MissionsController {
     }
   }
 
+  //completar
   @Put(':id/complete')
   @ApiOperation({ summary: 'Mark a mission as completed' })
   @ApiResponse({ status: 200, description: 'Mission marked as completed.' })
@@ -88,6 +94,17 @@ export class MissionsController {
         nextAvailableAt: this.calculateNextAvailableTime(now, frequencyHours),
       });
 
+      // Notificar o sistema de jornadas
+      try {
+        await this.notifyJourneySystemOnCompletion(
+          mission.userId,
+          mission.id,
+          mission.points
+        );
+      } catch (err) {
+        console.error('Failed to notify journey system:', err.message);
+      }
+
       return updatedMission;
     } catch (error) {
       if (error instanceof Error && error.message.includes('not found')) {
@@ -97,6 +114,7 @@ export class MissionsController {
     }
   }
 
+  //reativar
   @Put(':id/reactivate')
   @ApiOperation({ summary: 'Reactivate a mission' })
   @ApiResponse({ status: 200, description: 'Mission reactivated.' })
@@ -114,6 +132,7 @@ export class MissionsController {
     }
   }
 
+  //get
   @Get(':id')
   @ApiOperation({ summary: 'Get mission by ID' })
   @ApiResponse({ status: 200, description: 'Mission found.' })
@@ -128,6 +147,8 @@ export class MissionsController {
       throw new BadRequestException(error.message);
     }
   }
+
+  //get
   @Get('user/:userId')
   @ApiOperation({ summary: 'Get all active missions of a user' })
   @ApiResponse({ status: 200, description: 'List of all user missions.' })
@@ -149,6 +170,7 @@ export class MissionsController {
     }
   }
 
+  //pra quando uma planta for adicionada
   @Post('plant/:plantId')
   @ApiOperation({ summary: 'Create missions for a specific plant' })
   @ApiResponse({
@@ -268,7 +290,7 @@ export class MissionsController {
           title: `Water ${plant.chosenName}`,
           description: `Water your ${plant.commonName} (${plant.scientificName})`,
           type: MissionType.Water,
-          hourlyFrequency: 0.1,
+          hourlyFrequency: 0.3,
           points: 10,
           isAvailable: true,
         });
@@ -283,7 +305,7 @@ export class MissionsController {
         description: `Expose ${plant.chosenName} to sunlight for ${plant.sunlightDuration}`,
         type: MissionType.Sunlight,
         hourlyFrequency: 14,
-        points: 5,
+        points: 10,
         isAvailable: true,
       });
     }
@@ -299,7 +321,7 @@ export class MissionsController {
         description: `Trim your ${plant.commonName} (${plant.scientificName})`,
         type: MissionType.Trim,
         hourlyFrequency: 720, // 24 * 30
-        points: 15,
+        points: 10,
         isAvailable: shouldBeAvailable,
       });
     }
@@ -307,7 +329,7 @@ export class MissionsController {
     return missions;
   }
 
-  //reactivation
+  //controle de tempo
 
   @Cron(CronExpression.EVERY_5_MINUTES)
   async handleMissionReactivation() {
@@ -340,6 +362,32 @@ export class MissionsController {
       );
     } catch (error) {
       console.error('Error during mission reactivation:', error.message);
+    }
+  }
+
+  //lida com missao
+  private async notifyJourneySystemOnCompletion(
+    userId: string,
+    missionId: string,
+    points: number
+  ): Promise<void> {
+    try {
+      await firstValueFrom(
+        this.httpService.post(
+          `/api/journeys/user/${userId}/mission-completed`,
+          {
+            missionId,
+            points,
+          }
+        )
+      );
+      console.log('Journey system notified of mission completion');
+    } catch (error) {
+      console.error(
+        'Failed to notify journey system on mission completion:',
+        error.message
+      );
+      throw error;
     }
   }
 }
