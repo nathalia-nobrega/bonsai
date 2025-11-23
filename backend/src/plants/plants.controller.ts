@@ -59,7 +59,7 @@ export class PlantsController {
   })
   @ApiResponse({ status: 400, description: 'Bad request - invalid data' })
   async create(@Body() dto: PlantCreationDto): Promise<PlantResponseDto> {
-    const createdPlant = Plant.create(dto);
+    const createdPlant = await Plant.create(dto);
     try {
       await this.notifyJourneySystem(dto.userId, createdPlant.id);
     } catch (err) {
