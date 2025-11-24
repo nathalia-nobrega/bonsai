@@ -1,5 +1,4 @@
-// app/signin.tsx
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,6 +11,9 @@ import {
   ScrollView,
   useWindowDimensions,
 } from "react-native";
+import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 import Flor from "../assets/images/flower.svg";
 import Balao from "../assets/images/balao bg.svg";
 import { useRouter } from "expo-router";
@@ -20,6 +22,91 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function Signin() {
   const router = useRouter();
   const { width, height } = useWindowDimensions();
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [loading, setLoading] = useState(false);
+
+  // const host = Constants?.expoGoConfig?.hostUri?.split(':')[0] || 
+  //     Constants?.expoConfig?.hostUri?.split(':')[0]
+
+  // const handleLogin = async () => {
+  //   if (!email || !password) {
+  //     Toast.show({
+  //       type: "error",
+  //       text1: "Validation error",
+  //       text2: "Please fill in all fields",
+  //       position: "bottom",
+  //     });
+  //     return;
+  //   }
+
+  //   setLoading(true);
+    
+  //   try {
+  //     const response = await fetch(`http://${host}:3000/api/login`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+
+  //     if (!response.ok) {
+  //       const errorData = await response.json();
+  //       console.log("Login error data:", errorData);
+
+  //       const messageText =
+  //         errorData?.content?.message ||
+  //         (Array.isArray(errorData?.message)
+  //           ? errorData.message.join("\n")
+  //           : errorData?.message) || 
+  //         "Invalid email or password";
+
+  //       Toast.show({
+  //         type: "error",
+  //         text1: "Login failed",
+  //         text2: messageText,
+  //         position: "bottom",
+  //       });
+  //       return;
+  //     }
+
+  //     const data = await response.json();
+  //     console.log("Login successful:", data);
+
+  //     if (data.token) {
+  //       await AsyncStorage.setItem("token", data.token);
+  //       await AsyncStorage.setItem("userId", data.user.id);
+  //       await AsyncStorage.setItem("userData", JSON.stringify(data.user));
+  //     }
+
+  //     const token = await AsyncStorage.getItem("token");
+  //     const userId = await AsyncStorage.getItem("userId");
+  //     console.log("Token stored:", token);
+  //     console.log("User Id stored:", userId);
+
+  //     Toast.show({
+  //       type: "success",
+  //       text1: "Welcome back!",
+  //       text2: "Login successful",
+  //       position: "bottom",
+  //     });
+
+  //     router.replace("/(tabs)/home");
+
+  //   } catch (err) {
+  //     console.error("Network error:", err);
+
+  //     Toast.show({
+  //       type: "error",
+  //       text1: "Connection error",
+  //       text2: "Please check your internet connection and try again.",
+  //       position: "bottom",
+  //     });
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <KeyboardAvoidingView

@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   StyleSheet,
 } from "react-native";
-import { getPlantsByName, PlantListItem } from "../plantas/plantapi";
+import { getPlantsByName, PlantListItem } from "./plantapi";
 import PlantCard from "@/components/PlantCard";
 
 export default function SearchScreen() {
