@@ -1,27 +1,31 @@
 import {
+  Body,
   Controller,
   Get,
-  Param,
-  Post,
-  Body,
-  ValidationPipe,
-  Patch,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
+  Param,
+  Patch,
+  Post,
   UnauthorizedException,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserResponseDto } from './dto/user-response-dto';
-import { UserCreationDto } from './dto/user-creation-dto';
-import { User } from './entities/user.entity';
-import { UserUpdateDto } from './dto/user-update-dto';
-import { Journey } from '../journeys/entities/journey.entity';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LowdbService } from '../database/lowdb.service';
+import { Journey } from '../journeys/entities/journey.entity';
+import { UserCreationDto } from './dto/user-creation-dto';
+import { UserLoginDto } from './dto/user-login-dto';
+import { UserResponseDto } from './dto/user-response-dto';
+import { UserUpdateDto } from './dto/user-update-dto';
+import { User } from './entities/user.entity';
 
-@ApiTags('bonsai')
+@ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(private readonly db: LowdbService) {
-    Journey.injectDb(this.db);
+    User.injectDb(this.db);
   }
 
   @Get(':id')
@@ -74,6 +78,8 @@ export class UserController {
 
     const createdUser = await user.create();
 
+    console.log(createdUser.id);
+
     try {
       console.log('Creating default journeys for user:', createdUser.id);
       const journeys = await Journey.createDefaultForUser(createdUser.id);
@@ -89,6 +95,28 @@ export class UserController {
     return createdUser;
   }
 
+  @Post('login')
+  @ApiOperation({ summary: 'Authenticate user' })
+  @ApiResponse({
+    status: 200,
+    description: 'User authenticated successfully',
+    type: UserResponseDto,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid credentials',
+  })
+  async login(@Body(ValidationPipe) loginDto: UserLoginDto): Promise<UserResponseDto> {
+    try {
+      return await User.validateCredentials(loginDto.email, loginDto.password);
+    } catch (error) {
+      throw new UnauthorizedException({
+        success: false,
+        message: 'Invalid email or password'
+      });
+    }
+  }
+
   @Patch(':id')
   updateUser(
     @Param('id') id: string,
@@ -96,4 +124,52 @@ export class UserController {
   ): Promise<UserResponseDto> {
     return User.updateUser(id, userUpdateDto);
   }
+
+  //atualizar a partir de jornada
+  @Post(':userId/journey-completed')
+  @ApiResponse({
+    status: 200,
+    description: 'User points and level updated after journey completion',
+    type: UserResponseDto,
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'User not found',
+  })
+  async onJourneyCompleted(
+    @Param('userId') userId: string,
+    @Body() body: { journeyId: string; points: number }
+  ): Promise<UserResponseDto> {
+    try {
+      const user = User.findById(userId);
+
+      if (!user) {
+        throw new NotFoundException(`User with ID ${userId} not found`);
+      }
+
+      const newPointsGained = user.pointsGained + body.points;
+
+      const newLevel = user.level + 1;
+
+      const updates: UserUpdateDto = {
+        pointsGained: newPointsGained,
+        level: newLevel,
+      };
+
+      console.log(
+        `User ${user.name} completed journey! Earned ${body.points} points! Total: ${newPointsGained} points, Level: ${newLevel}`
+      );
+
+      return await User.updateUser(userId, updates);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new Error(`Failed to update user progress: ${error.message}`);
+    }
+
+
+  }
+
+
 }

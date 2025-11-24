@@ -8,12 +8,10 @@ import { ValidationPipe, BadRequestException } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  /* Init Swagger */
   const documentFactory = () =>
     SwaggerModule.createDocument(app, swaggerConfig, documentOptions);
   SwaggerModule.setup('api/docs', app, documentFactory);
 
-  /* Exception filters */
   app.useGlobalFilters(new GlobalExceptionFilter());
 
   app.setGlobalPrefix('api');
@@ -22,29 +20,27 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       whitelist: true,
-    }),
-  );
-
-  // Validation Pipes
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: false,
-      transform: true,
+      forbidNonWhitelisted: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
       exceptionFactory: (errors) => {
-        const messages = errors.map((err) => {
-          if (err.constraints) {
-            return Object.values(err.constraints);
-          }
-          return [`Invalid field: ${err.property}`];
+        const result = errors.map((error) => ({
+          property: error.property,
+          message: error.constraints ? error.constraints[Object.keys(error.constraints)[0]] : 'Validation error',
+        }));
+        return new BadRequestException({
+          message: 'Validation failed',
+          errors: result,
+          error: 'Bad Request',
+          statusCode: 400,
         });
-        return new BadRequestException(messages.flat());
       },
     })
   );
 
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(3000);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 bootstrap();

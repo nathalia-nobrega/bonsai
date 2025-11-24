@@ -2,10 +2,17 @@ import { Module, OnModuleInit } from '@nestjs/common';
 import { JourneyController } from './journeys.controller';
 import { LowdbService } from 'src/database/lowdb.service';
 import { Journey } from './entities/journey.entity';
+import { LowdbModule } from 'src/database/lowdb.module';
+import { MissionModule } from 'src/missions/missions.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
+  imports: [
+    HttpModule.register({
+      baseURL: 'http://localhost:3000',
+    }),
+  ],
   controllers: [JourneyController],
-  providers: [LowdbService],
 })
 export class JourneysModule implements OnModuleInit {
   constructor(private readonly db: LowdbService) {}

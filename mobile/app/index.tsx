@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, ImageBackground, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter, Redirect } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -16,10 +23,9 @@ export default function Index() {
     check();
   }, []);
 
-
   if (logged === null) return null; // carregando
 
-  // Se estiver logado, manda direto pro app
+  // // Se estiver logado, manda direto pro app
   if (logged) return <Redirect href="(tabs)/home" />;
 
   // Se NÃO estiver logado, exibe a landing page normalmente
@@ -45,9 +51,7 @@ export default function Index() {
           />
         </View>
 
-        <Text style={styles.title}>
-          Grow your Garden.{"\n"}Grow Yourself.
-        </Text>
+        <Text style={styles.title}>Grow your Garden.{"\n"}Grow Yourself.</Text>
 
         <TouchableOpacity
           style={styles.button}

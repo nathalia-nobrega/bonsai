@@ -61,6 +61,23 @@ export class User {
       excludeExtraneousValues: true,
     });
   }
+
+  public static async validateCredentials(email: string, password: string): Promise<UserResponseDto> {
+    const user = this.db.data.users.find((u) => u.email === email);
+
+    if (!user) {
+      throw new Error('Invalid credentials');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error('Invalid credentials');
+    }
+
+    return plainToInstance(UserResponseDto, user, {
+      excludeExtraneousValues: true,
+    });
+  }
   public async create(): Promise<UserResponseDto> {
     const emailExists = User.db.data.users.some((u) => u.email === this._email);
 
@@ -71,6 +88,8 @@ export class User {
 
     User.db.data.users.push(this.toJSON());
     await User.db.write();
+
+    console.log('conseguiu criar');
 
     return plainToInstance(UserResponseDto, this.toJSON());
   }
@@ -93,6 +112,14 @@ export class User {
 
     if (userUpdateDto.photoUrl !== undefined) {
       user.photoUrl = userUpdateDto.photoUrl;
+    }
+
+    if (userUpdateDto.pointsGained !== undefined) {
+      user.pointsGained = userUpdateDto.pointsGained;
+    }
+
+    if (userUpdateDto.level !== undefined) {
+      user.level = userUpdateDto.level;
     }
 
     User.db.data.users[userIndex] = user;

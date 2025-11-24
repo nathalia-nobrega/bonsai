@@ -60,61 +60,10 @@ const host =
 export default function Index() {
   const [journeys, setJourneys] = useState<Journey[]>([]);
   const [activeJourney, setActiveJourney] = useState<Journey | null>(null);
-
-  const loadJourneys = React.useCallback(async () => {
-    let userId = await AsyncStorage.getItem("userId");
-
-    console.log("ID do user no home:", userId);
-
-    // Se ID inválido → limpar e sair
-    if (!userId || userId.trim() === "" || userId.length < 10) {
-      await AsyncStorage.removeItem("userId");
-      return;
-    }
-
-    try {
-      // Função que tenta dar parse SEM quebrar
-      async function safeJSON(res: Response) {
-        const text = await res.text();
-        if (!text) return null;
-        try {
-          return JSON.parse(text);
-        } catch {
-          console.log("JSON inválido recebido, limpando userId");
-          await AsyncStorage.removeItem("userId");
-          return null;
-        }
-      }
-
-      const resAll = await fetch(
-        `http://${host}:3000/api/journeys/user/${userId}`
-      );
-      const dataAll = await safeJSON(resAll);
-
-      const resActive = await fetch(
-        `http://${host}:3000/api/journeys/user/${userId}/active`
-      );
-      const active = await safeJSON(resActive);
-
-      // Se backend retornou nada → user não existe mais
-      if (!dataAll) {
-        console.log("Usuário não existe mais. Limpando storage...");
-        await AsyncStorage.removeItem("userId");
-        return;
-      }
-
-      setJourneys(dataAll);
-      setActiveJourney(active);
-    } catch (err) {
-      console.log("Erro ao carregar journeys", err);
-    }
-  }, []);
+  const [loadingUser, setLoadingUser] = useState(true);
 
 
-  const hasNoPlants = !plants || plants.length === 0;
-  const hasNoMissions = !journeys || journeys.length === 0;
-
-  const router = useRouter();
+  const router = useRouter(); // moved up so a função pode usar o router diretamente
   const { width, height } = useWindowDimensions();
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
@@ -138,6 +87,87 @@ export default function Index() {
 
   const MAX_HEIGHT = calculateMaxHeight();
   const SCROLL_LIMIT = 200;
+
+  // Função que tenta dar parse SEM quebrar
+  async function safeJSON(res: Response | null) {
+    if (!res) return null;
+    try {
+      // Se status não OK, consideramos que não há usuário
+      if (!res.ok) {
+        return null;
+      }
+      const text = await res.text();
+      if (!text) return null;
+      try {
+        return JSON.parse(text);
+      } catch {
+        console.log("JSON inválido recebido, limpando userId");
+        return null;
+      }
+    } catch (err) {
+      console.log("Erro ao ler resposta:", err);
+      return null;
+    }
+  }
+
+  const loadJourneys = React.useCallback(async () => {
+    setLoadingUser(true);
+
+    let userId = await AsyncStorage.getItem("userId");
+    console.log("ID do user no home:", userId);
+
+    if (!userId || userId.trim() === "" || userId.length < 10) {
+      await AsyncStorage.removeItem("userId");
+      router.replace("/index");
+      return;
+    }
+
+    try {
+      const resAll = await fetch(
+        `http://${host}:3000/api/journeys/user/${userId}`
+      ).catch(() => null);
+
+      const dataAll = await safeJSON(resAll);
+
+      if (!dataAll || (Array.isArray(dataAll) && dataAll.length === 0)) {
+        console.log("Usuário não existe mais. Limpando storage...");
+        await AsyncStorage.removeItem("userId");
+        router.replace("/index");
+        return;
+      }
+
+      const resActive = await fetch(
+        `http://${host}:3000/api/journeys/user/${userId}/active`
+      ).catch(() => null);
+
+      const active = await safeJSON(resActive);
+
+      setJourneys(dataAll);
+      setActiveJourney(active);
+
+    } catch (err) {
+      console.log("Erro ao carregar journeys", err);
+    } finally {
+      setLoadingUser(false);
+    }
+  }, [router]);
+
+
+  // Executa sempre que a tela ganha foco
+  useFocusEffect(
+    React.useCallback(() => {
+      loadJourneys();
+    }, [loadJourneys])
+  );
+
+  const hasNoPlants = !plants || plants.length === 0;
+  const hasNoMissions = !journeys || journeys.length === 0;
+
+  if (loadingUser) return null; // ou uma tela de loading
+
+  if (loadingUser) {
+    return null; // ou <Loading />
+  }
 
   return (
     <ImageBackground

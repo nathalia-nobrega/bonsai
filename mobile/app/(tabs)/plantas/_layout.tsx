@@ -1,12 +1,20 @@
-import { Stack } from 'expo-router';
+// app/(tabs)/plantas/_layout.tsx
+import React from "react";
+import { Stack } from "expo-router";
 
 export default function PlantasLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="search" options={{ headerShown: false }} />
-      <Stack.Screen name="plant" options={{ headerShown: false }} />
-      {/* outras telas da stack */}
+    // unmountOnBlur faz com que a stack seja desmontada quando a aba perde foco
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        unmountOnBlur: true,
+      }}
+    >
+      <Stack.Screen name="index" />
+      <Stack.Screen name="search" />
+      <Stack.Screen name="plant" />
+      <Stack.Screen name="addPlant" />
     </Stack>
   );
 }

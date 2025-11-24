@@ -6,9 +6,7 @@ import { User } from './entities/user.entity';
 import { JourneysModule } from '../journeys/journeys.module';
 
 @Module({
-  imports: [LowdbModule, JourneysModule],
   controllers: [UserController],
-  providers: [],
 })
 export class UsersModule implements OnModuleInit {
   constructor(private readonly db: LowdbService) {}

@@ -59,11 +59,17 @@ export class PlantsController {
   })
   @ApiResponse({ status: 400, description: 'Bad request - invalid data' })
   async create(@Body() dto: PlantCreationDto): Promise<PlantResponseDto> {
-    const createdPlant = Plant.create(dto);
+    const createdPlant = await Plant.create(dto);
     try {
       await this.notifyJourneySystem(dto.userId, createdPlant.id);
     } catch (err) {
       console.error('Failed to notify journey system:', err.message);
+    }
+
+    try {
+      await this.notifyMissionSystem(createdPlant.id);
+    } catch (err) {
+      console.error('Failed to notify mission system:', err.message);
     }
 
     return createdPlant;
@@ -82,6 +88,31 @@ export class PlantsController {
       console.log('Journey system notified successfully');
     } catch (error) {
       console.error('Failed to notify journey system:', error.message);
+      throw error;
+    }
+  }
+
+  private async notifyMissionSystem(plantId: string): Promise<void> {
+    const plant = this.findById(plantId);
+
+    try {
+      console.log(
+        'Sending plant data to mission system:',
+        JSON.stringify(plant, null, 2)
+      );
+
+      const response = await firstValueFrom(
+        this.httpService.post(`/api/missions/plant/${plantId}`, {
+          plant: plant,
+        })
+      );
+
+      console.log('Mission system notified successfully');
+    } catch (error) {
+      console.error(
+        'Failed to notify mission system:',
+        error.response?.data || error.message
+      );
       throw error;
     }
   }

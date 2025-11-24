@@ -13,8 +13,8 @@ import { BlurView } from "expo-blur";
 import { router } from "expo-router";
 import Constants from "expo-constants";
 
-export default function PlantsScroll({ plantIds }) {
-  const [plants, setPlants] = useState([]);
+export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
+  const [plants, setPlants] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const host =
@@ -31,14 +31,32 @@ export default function PlantsScroll({ plantIds }) {
           return;
         }
 
-        const results = [];
+        const results: any[] = [];
         for (const id of plantIds) {
-          const res = await fetch(API_URL + id);
-          const data = await res.json();
-          results.push(data);
+          try {
+            const res = await fetch(API_URL + id);
+            const data = await res.json();
+            // only push valid objects with an id/_id
+            if (data && (data.id || data._id)) {
+              results.push(data);
+            } else {
+              console.warn("PlantsScroll: resposta inválida para id", id, data);
+            }
+          } catch (e) {
+            console.warn("PlantsScroll: erro buscando planta", id, e);
+          }
         }
 
-        setPlants(results);
+        // remove duplicados (por id ou _id)
+        const unique = results.filter(
+          (p, index, self) =>
+            index ===
+            self.findIndex(
+              (x) => (x.id && x.id === p.id) || (x._id && x._id === p._id)
+            )
+        );
+
+        setPlants(unique);
       } catch (err) {
         console.log("Erro ao carregar plantas:", err);
       } finally {
@@ -57,58 +75,80 @@ export default function PlantsScroll({ plantIds }) {
     );
   }
 
-  if (plants.length === 0) return null;
+  if (!plants || plants.length === 0) return null;
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Plants still on the run!</Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {plants.map((p) => (
-          <Pressable
-            key={p.id}
-            onPress={() =>
-              router.push({
-                pathname: "/(tabs)/plantas/plant",
-                params: { id: p.id },
-              })
-            }
-            style={{
-              width: 160,
-              height: 160 * 1.8,
-              borderRadius: 15,
-              backgroundColor: "#ffffff22",
-              marginHorizontal: 2,
-            }}
-          >
-            <View
-              style={{
-                width: "90%",
-                height: "70%",
-                borderRadius: 15,
-                overflow: "hidden",
-              }}
-            >
-              <Image
-                source={{ uri: p.photoUrl }}
-                style={{ width: "100%", height: "100%" }}
-                resizeMode="cover"
-              />
-              <LinearGradient
-                colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,1)"]}
-                start={{ x: 0.5, y: 0 }}
-                end={{ x: 0.5, y: 4 }}
-                style={styles.overlay}
-              />
-              <BlurView intensity={10} tint="dark" style={styles.blur} />
-            </View>
+        {plants
+          .filter((p) => p && (p.id || p._id)) // garante itens válidos
+          .map((p, index) => {
+            const key = p.id ?? p._id ?? `plant-${index}`;
+            const photoUri =
+              p.photoUrl ||
+              p.regular_url ||
+              p.medium_url ||
+              p.small_url ||
+              p.thumbnail ||
+              null;
 
-            <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
-              <Text style={styles.name}>{p.chosenName}</Text>
-              <Text style={styles.namesci}>{p.scientificName}</Text>
-            </View>
-          </Pressable>
-        ))}
+            return (
+              <Pressable
+                key={key}
+                onPress={() =>
+                  router.push({
+                    pathname: "/(tabs)/plantas/plant",
+                    params: { id: key },
+                  })
+                }
+                style={{
+                  width: 160,
+                  height: 160 * 1.8,
+                  borderRadius: 15,
+                  backgroundColor: "#ffffff22",
+                  marginHorizontal: 2,
+                }}
+              >
+                <View
+                  style={{
+                    width: "90%",
+                    height: "70%",
+                    borderRadius: 15,
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image
+                    source={{ uri: photoUri }}
+                    style={{ width: "100%", height: "100%" }}
+                    resizeMode="cover"
+                  />
+
+                  <View style={StyleSheet.absoluteFill} pointerEvents="none">
+                    <LinearGradient
+                      colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,1)"]}
+                      start={{ x: 0.5, y: 0 }}
+                      end={{ x: 0.5, y: 4 }}
+                      style={styles.overlay}
+                    />
+                    <BlurView intensity={10} tint="dark" style={styles.blur} />
+                  </View>
+                </View>
+
+                <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
+                  <Text style={styles.name}>{p.chosenName || p.commonName}</Text>
+                  <Text style={styles.namesci}>
+                    {p.scientificName ||
+                      (Array.isArray(p.scientific_name)
+                        ? p.scientific_name[0]
+                        : p.scientific_name) ||
+                      ""}
+                  </Text>
+                </View>
+              </Pressable>
+            );
+          })}
       </ScrollView>
     </View>
   );
