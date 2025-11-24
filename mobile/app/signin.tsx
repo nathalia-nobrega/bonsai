@@ -22,91 +22,99 @@ import { LinearGradient } from "expo-linear-gradient";
 export default function Signin() {
   const router = useRouter();
   const { width, height } = useWindowDimensions();
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // const host = Constants?.expoGoConfig?.hostUri?.split(':')[0] || 
-  //     Constants?.expoConfig?.hostUri?.split(':')[0]
+  const host = Constants?.expoGoConfig?.hostUri?.split(':')[0] || 
+      Constants?.expoConfig?.hostUri?.split(':')[0];
 
-  // const handleLogin = async () => {
-  //   if (!email || !password) {
-  //     Toast.show({
-  //       type: "error",
-  //       text1: "Validation error",
-  //       text2: "Please fill in all fields",
-  //       position: "bottom",
-  //     });
-  //     return;
-  //   }
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Toast.show({
+        type: "error",
+        text1: "Validation error",
+        text2: "Please fill in all fields",
+        position: "bottom",
+      });
+      return;
+    }
 
-  //   setLoading(true);
+    setLoading(true);
     
-  //   try {
-  //     const response = await fetch(`http://${host}:3000/api/login`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify({ email, password }),
-  //     });
+    try {
+      const response = await fetch(`http://${host}:3000/api/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-  //     if (!response.ok) {
-  //       const errorData = await response.json();
-  //       console.log("Login error data:", errorData);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log("Login error data:", errorData);
 
-  //       const messageText =
-  //         errorData?.content?.message ||
-  //         (Array.isArray(errorData?.message)
-  //           ? errorData.message.join("\n")
-  //           : errorData?.message) || 
-  //         "Invalid email or password";
+        const messageText =
+          errorData?.content?.message ||
+          (Array.isArray(errorData?.message)
+            ? errorData.message.join("\n")
+            : errorData?.message) || 
+          "Invalid email or password";
 
-  //       Toast.show({
-  //         type: "error",
-  //         text1: "Login failed",
-  //         text2: messageText,
-  //         position: "bottom",
-  //       });
-  //       return;
-  //     }
+        Toast.show({
+          type: "error",
+          text1: "Login failed",
+          text2: messageText,
+          position: "bottom",
+        });
+        return;
+      }
 
-  //     const data = await response.json();
-  //     console.log("Login successful:", data);
+      const data = await response.json();
+      console.log("Login successful:", data);
 
-  //     if (data.token) {
-  //       await AsyncStorage.setItem("token", data.token);
-  //       await AsyncStorage.setItem("userId", data.user.id);
-  //       await AsyncStorage.setItem("userData", JSON.stringify(data.user));
-  //     }
+      try {
+        if (!data?.id) {
+          console.log("ERRO: data.id está indefinido!", data);
+          throw new Error("data.id está indefinido — o backend não retornou o ID.");
+        }
 
-  //     const token = await AsyncStorage.getItem("token");
-  //     const userId = await AsyncStorage.getItem("userId");
-  //     console.log("Token stored:", token);
-  //     console.log("User Id stored:", userId);
+        // tentar salvar
+        await AsyncStorage.setItem("userId", data.id);
 
-  //     Toast.show({
-  //       type: "success",
-  //       text1: "Welcome back!",
-  //       text2: "Login successful",
-  //       position: "bottom",
-  //     });
+        // testar se salvou
+        const id = await AsyncStorage.getItem("userId");
+        console.log("ID salvo no AsyncStorage:", id);
 
-  //     router.replace("/(tabs)/home");
+      } catch (error) {
+        console.log("ERRO AO SALVAR userId NO ASYNCSTORAGE:", error);
+      }
 
-  //   } catch (err) {
-  //     console.error("Network error:", err);
 
-  //     Toast.show({
-  //       type: "error",
-  //       text1: "Connection error",
-  //       text2: "Please check your internet connection and try again.",
-  //       position: "bottom",
-  //     });
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+
+      Toast.show({
+        type: "success",
+        text1: "Welcome back!",
+        text2: "Login successful",
+        position: "bottom",
+      });
+
+      router.replace("/home");
+
+    } catch (err) {
+      console.error("Network error:", err);
+
+      Toast.show({
+        type: "error",
+        text1: "Connection error",
+        text2: "Please check your internet connection and try again.",
+        position: "bottom",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -114,10 +122,11 @@ export default function Signin() {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}
-            keyboardShouldPersistTaps="handled"
-            keyboardDismissMode="interactive"
-            >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
+      >
         <ImageBackground
           source={require("../assets/images/image.png")}
           style={styles.background}
@@ -150,7 +159,10 @@ export default function Signin() {
                 style={styles.input}
                 keyboardType="email-address"
                 autoCapitalize="none"
+                placeholder="Enter your email"
                 placeholderTextColor="#999"
+                value={email}
+                onChangeText={setEmail}
               />
             </View>
 
@@ -160,15 +172,20 @@ export default function Signin() {
                 style={styles.input}
                 secureTextEntry={true}
                 autoCapitalize="none"
+                placeholder="Enter your password"
                 placeholderTextColor="#999"
+                value={password}
+                onChangeText={setPassword}
               />
             </View>
 
             <TouchableOpacity
               style={[styles.button, { width: width * 0.9 }]}
-              onPress={() => router.replace("/(tabs)/home")}
+              onPress={handleLogin}
             >
-              <Text style={styles.buttonText}>Enter</Text>
+              <Text style={styles.buttonText}>
+                {loading ? "Loading..." : "Enter"}
+              </Text>
             </TouchableOpacity>
           </View>
         </ImageBackground>

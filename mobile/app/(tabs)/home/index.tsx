@@ -4,7 +4,6 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-  StyleSheet,
   useWindowDimensions,
   Animated,
   ScrollView,
@@ -15,26 +14,27 @@ import { s } from "./styleHome";
 import * as React from "react";
 import Noplants from "@/components/Noplants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Constants from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
 import PlantsHome from "@/components/PlantsHome";
 
+// mock
 const plants = [
-  { 
-    id: 1, 
+  {
+    id: 1,
     name: "Cassandra",
     species: "aloe vera",
-    image: require("../../../assets/images/Jason.jpeg")
+    image: require("../../../assets/images/Jason.jpeg"),
   },
-  { 
+  {
     id: 2,
     name: "Timothy",
     species: "pothos",
     image: require("../../../assets/images/Tim.jpeg"),
   },
-  { 
-    id: 3, 
+  {
+    id: 3,
     name: "Damian",
     species: "bambu",
     image: require("../../../assets/images/Damian.jpeg"),
@@ -60,14 +60,13 @@ const host =
 export default function Index() {
   const [journeys, setJourneys] = useState<Journey[]>([]);
   const [activeJourney, setActiveJourney] = useState<Journey | null>(null);
+  const [missions, setMissions] = useState<any[]>([]);
   const [loadingUser, setLoadingUser] = useState(true);
 
-
-  const router = useRouter(); // moved up so a função pode usar o router diretamente
+  const router = useRouter();
   const { width, height } = useWindowDimensions();
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
-
   const initialWhiteHeight = height * 0.75;
 
   const calculateMaxHeight = () => {
@@ -75,27 +74,20 @@ export default function Index() {
     const secondTitleHeight = 30;
     const missionsHeight = 4 * 77 + 3 * 10;
     const paddingExtra = 100;
-
-    const totalContentHeight =
-      titleHeight +
-      secondTitleHeight +
-      missionsHeight +
-      paddingExtra;
-
-    return Math.min(totalContentHeight, height * 1);
+    return Math.min(
+      titleHeight + secondTitleHeight + missionsHeight + paddingExtra,
+      height * 1
+    );
   };
 
   const MAX_HEIGHT = calculateMaxHeight();
   const SCROLL_LIMIT = 200;
 
-  // Função que tenta dar parse SEM quebrar
+  // Parse seguro
   async function safeJSON(res: Response | null) {
     if (!res) return null;
     try {
-      // Se status não OK, consideramos que não há usuário
-      if (!res.ok) {
-        return null;
-      }
+      if (!res.ok) return null;
       const text = await res.text();
       if (!text) return null;
       try {
@@ -110,6 +102,9 @@ export default function Index() {
     }
   }
 
+  // ==========================================================
+  //               loadJourneys()
+  // ==========================================================
   const loadJourneys = React.useCallback(async () => {
     setLoadingUser(true);
 
@@ -122,6 +117,7 @@ export default function Index() {
       return;
     }
 
+    // ---------- JOURNEYS ----------
     try {
       const resAll = await fetch(
         `http://${host}:3000/api/journeys/user/${userId}`
@@ -144,16 +140,38 @@ export default function Index() {
 
       setJourneys(dataAll);
       setActiveJourney(active);
-
     } catch (err) {
-      console.log("Erro ao carregar journeys", err);
-    } finally {
-      setLoadingUser(false);
+      console.log("Erro ao carregar journeys:", err);
     }
-  }, [router]);
 
+    // ---------- MISSÕES ----------
+    try {
+      console.log("Buscando missões para o usuário:", userId);
 
-  // Executa sempre que a tela ganha foco
+      const resMissions = await fetch(
+        `http://${host}:3000/missions/user/${userId}`
+      );
+
+      if (!resMissions.ok) {
+        throw new Error(`Erro HTTP ao buscar missões: ${resMissions.status}`);
+      }
+
+      const dataMissions = await safeJSON(resMissions);
+      console.log("➜ Missoes carregadas:", dataMissions);
+
+      if (Array.isArray(dataMissions)) {
+        setMissions(dataMissions);
+      } else {
+        console.log("⚠️ Formato inesperado das missões:", dataMissions);
+      }
+    } catch (err) {
+      console.log("❌ Erro ao carregar missoes:", err);
+    }
+
+    setLoadingUser(false);
+  }, [host]);
+
+  // Executa quando volta para a tela
   useFocusEffect(
     React.useCallback(() => {
       loadJourneys();
@@ -161,13 +179,8 @@ export default function Index() {
   );
 
   const hasNoPlants = !plants || plants.length === 0;
-  const hasNoMissions = !journeys || journeys.length === 0;
 
-  if (loadingUser) return null; // ou uma tela de loading
-
-  if (loadingUser) {
-    return null; // ou <Loading />
-  }
+  if (loadingUser) return null;
 
   return (
     <ImageBackground
@@ -198,6 +211,7 @@ export default function Index() {
           >
             <View style={{ height: height * 0.3 }} />
 
+            {/* ícones de missões */}
             <View style={s.circularImagesContainer}>
               {circularImages.slice(0, 3).map((image, index) => (
                 <View
@@ -236,7 +250,7 @@ export default function Index() {
               ))}
             </View>
 
-            {/* ANIMAÇÃO DO FUNDO BRANCO */}
+            {/* fundo animado */}
             <Animated.View
               style={[
                 s.halfWhiteBackground,
@@ -262,31 +276,22 @@ export default function Index() {
 
               <PlantsHome />
 
-              {/* DAILY MISSIONS */}
               <Text style={s.second_title}>Daily Missions</Text>
 
               <View>
-                {plants.map((p, index) => {
-                  const isWater = index < 2;
-                  const action = isWater ? "Water" : "Trim";
-                  const freq = isWater
-                    ? "needs to be watered daily!"
-                    : "needs to be trimmed every week!";
+                {journeys.map((j) => (
+                  <View key={j.order} style={s.container2}>
+                    <Text style={s.textcontainer}>
+                      Mission: <Text style={s.secondtext}>{j.name}</Text>
+                    </Text>
 
-                  return (
-                    <View key={p.id} style={s.container2}>
-                      <Text style={s.textcontainer}>
-                        {action} <Text style={s.secondtext}>{p.name}</Text>
-                      </Text>
+                    <Text style={s.desctextname}>
+                      Status: <Text style={s.desctext}>{j.status}</Text>
+                    </Text>
 
-                      <Text style={s.desctextname}>
-                        {p.species} <Text style={s.desctext}>{freq}</Text>
-                      </Text>
-
-                      <TouchableOpacity style={s.circleButton}></TouchableOpacity>
-                    </View>
-                  );
-                })}
+                    <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+                  </View>
+                ))}
               </View>
 
               <LinearGradient
