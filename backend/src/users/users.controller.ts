@@ -17,7 +17,7 @@ import { UserUpdateDto } from './dto/user-update-dto';
 import { Journey } from '../journeys/entities/journey.entity';
 import { LowdbService } from '../database/lowdb.service';
 
-@ApiTags('bonsai')
+@ApiTags('users')
 @Controller('users')
 export class UserController {
   constructor(private readonly db: LowdbService) {
