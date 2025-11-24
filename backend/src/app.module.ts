@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UsersModule } from './users/users.module';
-import { PlantsModule } from './plants/plants.module';
+import { LowdbModule } from './database/lowdb.module';
 import { JourneysModule } from './journeys/journeys.module';
 import { MissionModule } from './missions/missions.module';
-import { LowdbModule } from './database/lowdb.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { PlantsModule } from './plants/plants.module';
+import { UsersModule } from './users/users.module';
 
 /* Each new module must be added here */
 @Module({
@@ -13,6 +14,7 @@ import { LowdbModule } from './database/lowdb.module';
     PlantsModule,
     JourneysModule,
     MissionModule,
+    NotificationsModule
   ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
+import { join } from 'path';
 
 interface Database {
   users: Array<{
@@ -12,6 +13,14 @@ interface Database {
     photoUrl: string;
     level: number;
     pointsGained: number;
+  }>;
+
+  notifications: Array<{
+    id: string;
+    userId: string;
+    message: string;
+    read: boolean;
+    createdAt: Date;
   }>;
 
   plants: Array<{
@@ -63,6 +72,7 @@ interface Database {
     id: string;
     idPlant: string;
     lastCompletedAt: Date | null;
+    userId: string;
     title: string;
     description: string;
     type: 'water' | 'sunlight' | 'trim';
@@ -85,12 +95,15 @@ export class LowdbService implements OnModuleInit {
   async start(): Promise<Low<Database>> {
     if (this.initialized) return this.db;
 
-    const adapter = new JSONFile<Database>('db.json');
+    const file = join(process.cwd(), 'db.json');
+
+    const adapter = new JSONFile<Database>(file);
     this.db = new Low<Database>(adapter, {
       users: [],
       plants: [],
       journeys: [],
       missions: [],
+      notifications: [],
     } as Database);
 
     await this.db.read();
@@ -99,11 +112,13 @@ export class LowdbService implements OnModuleInit {
       plants: [],
       journeys: [],
       missions: [],
+      notifications: [],
     } as Database;
     this.db.data.users ||= [];
     this.db.data.plants ||= [];
     this.db.data.journeys ||= [];
     this.db.data.missions ||= [];
+    this.db.data.notifications ||= [];
 
     this.initialized = true;
     return this.db;

@@ -18,7 +18,7 @@ import { HttpModule } from '@nestjs/axios';
   controllers: [MissionsController],
 })
 export class MissionModule implements OnModuleInit {
-  constructor(private readonly db: LowdbService) {}
+  constructor(private readonly db: LowdbService) { }
 
   onModuleInit() {
     Mission.injectDb(this.db);
