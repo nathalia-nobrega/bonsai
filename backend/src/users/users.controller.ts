@@ -1,21 +1,25 @@
 import {
+  Body,
   Controller,
   Get,
-  Param,
-  Post,
-  Body,
-  ValidationPipe,
-  Patch,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
+  Param,
+  Patch,
+  Post,
   UnauthorizedException,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { UserResponseDto } from './dto/user-response-dto';
-import { UserCreationDto } from './dto/user-creation-dto';
-import { User } from './entities/user.entity';
-import { UserUpdateDto } from './dto/user-update-dto';
-import { Journey } from '../journeys/entities/journey.entity';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LowdbService } from '../database/lowdb.service';
+import { Journey } from '../journeys/entities/journey.entity';
+import { UserCreationDto } from './dto/user-creation-dto';
+import { UserLoginDto } from './dto/user-login-dto';
+import { UserResponseDto } from './dto/user-response-dto';
+import { UserUpdateDto } from './dto/user-update-dto';
+import { User } from './entities/user.entity';
 
 @ApiTags('users')
 @Controller('users')
@@ -91,6 +95,28 @@ export class UserController {
     return createdUser;
   }
 
+  @Post('login')
+  @ApiOperation({ summary: 'Authenticate user' })
+  @ApiResponse({
+    status: 200,
+    description: 'User authenticated successfully',
+    type: UserResponseDto,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid credentials',
+  })
+  async login(@Body(ValidationPipe) loginDto: UserLoginDto): Promise<UserResponseDto> {
+    try {
+      return await User.validateCredentials(loginDto.email, loginDto.password);
+    } catch (error) {
+      throw new UnauthorizedException({
+        success: false,
+        message: 'Invalid email or password'
+      });
+    }
+  }
+
   @Patch(':id')
   updateUser(
     @Param('id') id: string,
@@ -141,5 +167,9 @@ export class UserController {
       }
       throw new Error(`Failed to update user progress: ${error.message}`);
     }
+
+
   }
+
+
 }

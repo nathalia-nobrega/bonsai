@@ -61,6 +61,23 @@ export class User {
       excludeExtraneousValues: true,
     });
   }
+
+  public static async validateCredentials(email: string, password: string): Promise<UserResponseDto> {
+    const user = this.db.data.users.find((u) => u.email === email);
+
+    if (!user) {
+      throw new Error('Invalid credentials');
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error('Invalid credentials');
+    }
+
+    return plainToInstance(UserResponseDto, user, {
+      excludeExtraneousValues: true,
+    });
+  }
   public async create(): Promise<UserResponseDto> {
     const emailExists = User.db.data.users.some((u) => u.email === this._email);
 

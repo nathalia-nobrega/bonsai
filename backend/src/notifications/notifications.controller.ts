@@ -24,11 +24,6 @@ export class NotificationsController {
         Notification.injectDb(db);
     }
 
-    @Cron(CronExpression.EVERY_10_SECONDS)
-    handleCron() {
-        this.logger.log('Called every 10 seconds');
-    }
-
     @Cron(CronExpression.EVERY_DAY_AT_7AM, {
         timeZone: 'America/Manaus'
     })
