@@ -19,6 +19,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 1,
       "pointsGained": 0
+    },
+    {
+      "id": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "createdAt": "2025-11-24T14:03:21.451Z",
+      "name": "rebecca",
+      "email": "rebecca@email.com",
+      "password": "$2b$10$ww/4ENDR38DW5qquZo32henUW1yyxK1xZs5vIizC65xjQyxMFu3KO",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 2,
+      "pointsGained": 10
     }
   ],
   "plants": [
@@ -831,6 +841,66 @@
       "wasWatered": false,
       "gotSunlight": false,
       "wasTrimmed": false
+    },
+    {
+      "id": "f83b6d81-4c87-4d79-af7e-94c84300eddc",
+      "createdAt": "2025-11-24T14:05:19.882Z",
+      "chosenName": "doyoung",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "commonName": "michaelmas daisy",
+      "scientificName": "Aster 'Celeste'",
+      "otherName": "Not provided",
+      "family": "Asteraceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "Full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "file:///data/user/0/host.exp.exponent/cache/ImagePicker/6150f006-1ed7-4a30-8b86-5f06a7079132.jpeg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
+    },
+    {
+      "id": "378641b4-1dbe-4fea-b6d5-a78023d5d85f",
+      "createdAt": "2025-11-24T14:06:55.435Z",
+      "chosenName": "jaehyun",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "commonName": "desert rose",
+      "scientificName": "Adenium obesum",
+      "otherName": "Not provided",
+      "family": "Apocynaceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Minimum",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "file:///data/user/0/host.exp.exponent/cache/ImagePicker/eb7c5eab-d95e-41df-b3cd-ac4ec60a8030.jpeg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
     }
   ],
   "journeys": [
@@ -1001,6 +1071,90 @@
       "relatedPlants": [],
       "status": "locked",
       "type": "activities"
+    },
+    {
+      "id": "74b4c648-1a63-4ebc-9f29-61e538dad29d",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "createdAt": "2025-11-24T14:03:21.512Z",
+      "name": "First Sprout",
+      "description": "plant a new plant on your garden",
+      "pointsEarned": 10,
+      "finalPoints": 10,
+      "activitiesCompleted": 1,
+      "activitiesFinal": 1,
+      "plantCount": 1,
+      "order": 1,
+      "relatedPlants": [
+        "f83b6d81-4c87-4d79-af7e-94c84300eddc"
+      ],
+      "status": "finished",
+      "type": "garden"
+    },
+    {
+      "id": "fbaa5416-46c2-4506-85a1-cdbf8ee893cf",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "createdAt": "2025-11-24T14:03:21.515Z",
+      "name": "New Life",
+      "description": "complete every daily mission of a plant",
+      "pointsEarned": 0,
+      "finalPoints": 30,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 3,
+      "plantCount": 0,
+      "order": 2,
+      "relatedPlants": [
+        "378641b4-1dbe-4fea-b6d5-a78023d5d85f"
+      ],
+      "status": "active",
+      "type": "activities"
+    },
+    {
+      "id": "b70028f0-271e-4e18-a8ad-6d88916384a2",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "createdAt": "2025-11-24T14:03:21.518Z",
+      "name": "Triple Threat",
+      "description": "plant three more plants in your garden",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 3,
+      "plantCount": 3,
+      "order": 3,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "garden"
+    },
+    {
+      "id": "cb107e13-d665-48fb-8ad0-05295e9faa2a",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "createdAt": "2025-11-24T14:03:21.521Z",
+      "name": "Rain Season",
+      "description": "water your plants everyday for a week",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 4,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
+    },
+    {
+      "id": "cafca05b-1a37-40a6-a05c-68e72b59c203",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "createdAt": "2025-11-24T14:03:21.524Z",
+      "name": "Trimming Time",
+      "description": "Complete a trim",
+      "pointsEarned": 0,
+      "finalPoints": 20,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 1,
+      "plantCount": 0,
+      "order": 5,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
     }
   ],
   "missions": [
@@ -1015,7 +1169,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-23T20:48:49.357Z",
       "nextAvailableAt": "2025-11-23T20:48:49.357Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "5463c6e4-ac80-4a8d-ac8a-b737bfb9e6cf",
@@ -1094,6 +1248,33 @@
       "lastCompletedAt": null,
       "nextAvailableAt": "2025-11-23T21:35:56.751Z",
       "isAvailable": true
+    },
+    {
+      "id": "85a3c018-ff93-42c6-bc5e-763553fc1cdd",
+      "idPlant": "f83b6d81-4c87-4d79-af7e-94c84300eddc",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "title": "Sunlight for doyoung",
+      "description": "Expose doyoung to sunlight for 4-6 hours",
+      "type": "sunlight",
+      "hourlyFrequency": 14,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-24T14:05:19.958Z",
+      "isAvailable": true
+    },
+    {
+      "id": "bfddcbd0-fa04-471d-b28b-6ceaeca487a1",
+      "idPlant": "378641b4-1dbe-4fea-b6d5-a78023d5d85f",
+      "userId": "3009c739-565c-4f53-9f35-85723de8fbdc",
+      "title": "Sunlight for jaehyun",
+      "description": "Expose jaehyun to sunlight for 4-6 hours",
+      "type": "sunlight",
+      "hourlyFrequency": 14,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-24T14:06:55.451Z",
+      "isAvailable": true
     }
-  ]
+  ],
+  "notifications": []
 }
