@@ -392,7 +392,7 @@ export default function Index() {
                       <Text style={s.desctext}>{m.description}</Text>
                     </Text>
 
-                    <View style={{ flexDirection: "row", marginTop: 10 }}>
+                    <View style={{ flexDirection: "row", marginTop: 5 }}>
                       <TouchableOpacity
                         style={[
                           s.circleButton,

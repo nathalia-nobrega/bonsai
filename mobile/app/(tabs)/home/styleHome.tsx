@@ -64,7 +64,7 @@ export const s = StyleSheet.create({
 
   container2: {
     width: "100%",
-    height: 77,
+    height: 75,
     backgroundColor: "transparent",
     borderWidth: 1,
     borderColor: "#8F8F8F",
@@ -78,37 +78,44 @@ export const s = StyleSheet.create({
     fontFamily: "Nunito-SemiBold",
     color: "#3C3C3C",
     fontSize: 15,
+    flexShrink: 1,
+    maxWidth: "80%",
+    marginTop: 5,
   },
 
   secondtext: {
     fontFamily: "Nunito-ExtraBold",
     color: "#3C3C3C",
     fontSize: 15,
+    flexShrink: 1,
   },
 
   desctext: {
     fontFamily: "Poppins-Regular",
     color: "#3C3C3C",
     fontSize: 11,
+    flexShrink: 1,
+    marginTop: 5,
   },
   
   desctextname: {
     fontFamily: "Poppins-Bold",
     color: "#3C3C3C",
     fontSize: 11,
+    flexShrink: 1,
+    maxWidth: "80%",
   },
 
   circleButton: {
-    position: "absolute",
-    right: 20,
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-    backgroundColor: "transparent",
-    borderWidth: 8,
-    borderColor: "#5C9F60",
-  },
-
+  width: 40,
+  height: 40,
+  borderRadius: 40,
+  backgroundColor: "transparent",
+  borderWidth: 8,
+  borderColor: "#5C9F60",
+  marginRight: 15,
+  left: 290,
+},
   scrollView: {
     width: "100%",
   },
@@ -149,11 +156,5 @@ export const s = StyleSheet.create({
   },
 missionContainer: {
     alignItems: 'center',
-  },
-current: {
-  fontSize: 15, fontFamily:"Nunito-Medium" , color: "#fff", left: 5,
-},
-mission: {
-  fontSize: 15, color: "#fff", fontFamily: "Nunito-ExtraBold", left: 5,
-},
+}
 });
