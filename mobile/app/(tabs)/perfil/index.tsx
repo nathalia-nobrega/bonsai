@@ -34,7 +34,6 @@ export default function ProfileScreen() {
     Constants?.expoConfig?.hostUri?.split(":")[0] ||
     "localhost";
 
-  // === LOGOUT ===
   const handleLogout = async () => {
     await AsyncStorage.removeItem("token");
     await AsyncStorage.removeItem("userId");
@@ -106,11 +105,6 @@ export default function ProfileScreen() {
     <ScrollView style={styles.container}>
       <ProfileHeader user={{ ...user, plants: plantsCount }} />
 
-      {/* === BOTÃO DE LOGOUT === */}
-      <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
-        <Text style={styles.logoutText}>Logout</Text>
-      </TouchableOpacity>
-
       <View style={styles.achievementsContainer}>
         <Text style={styles.achievementsTitle}>Achievements</Text>
         <View style={styles.iconsGrid}>
@@ -119,6 +113,9 @@ export default function ProfileScreen() {
           ))}
         </View>
       </View>
+      <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
+        <Text style={styles.logoutText}>Logout</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -126,15 +123,14 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#FFFFFF" },
 
-  // === ESTILO DO LOGOUT ===
   logoutBtn: {
     alignSelf: "flex-end",
     marginRight: 20,
-    marginTop: 10,
     paddingVertical: 8,
     paddingHorizontal: 16,
     backgroundColor: "#D9534F",
     borderRadius: 20,
+    marginTop: 170,
   },
   logoutText: {
     color: "#fff",

@@ -25,7 +25,7 @@
       "createdAt": "2025-11-24T14:03:21.451Z",
       "name": "rebecca",
       "email": "rebecca@email.com",
-      "password": "$2b$10$ww/4ENDR38DW5qquZo32henUW1yyxK1xZs5vIizC65xjQyxMFu3KO",
+      "password": "$2b$10$ww/4ENDR38DW5qquZo32henUW1yyxK1xZs5vIizC65xjQyxMFu3KO"
     },
     {
       "id": "76d1a519-b539-485c-a310-4ca36285511a",
@@ -46,6 +46,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 2,
       "pointsGained": 10
+    },
+    {
+      "id": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "createdAt": "2025-11-24T22:59:25.537Z",
+      "name": "rebecca udo kier",
+      "email": "rebecca@gmail.com",
+      "password": "$2b$10$Sg/s46alig08BVVxu6U55O5oMFjgzQs7Dr.r2eF16DFz5GVhSF72y",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 4,
+      "pointsGained": 90
     }
   ],
   "plants": [
@@ -948,6 +958,156 @@
       "wasWatered": false,
       "gotSunlight": false,
       "wasTrimmed": false
+    },
+    {
+      "id": "b5ffb8f4-36f4-4bd1-99b9-47073a2443b2",
+      "createdAt": "2025-11-25T00:49:55.432Z",
+      "chosenName": "Rose Marie Magnolia",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "commonName": "Rose Marie Magnolia",
+      "scientificName": "Magnolia 'Rose Marie'",
+      "otherName": "Rosemarie Magnolia",
+      "family": "Unknown",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Minimum",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/334_magnolia_rose_marie/regular/Magnolia_C397_soulangeana_BW_1.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
+    },
+    {
+      "id": "e13ac4d5-77e5-4218-b81c-3d3c58ee917d",
+      "createdAt": "2025-11-25T01:07:33.470Z",
+      "chosenName": "Dolgo Apple",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "commonName": "Dolgo Apple",
+      "scientificName": "Malus 'Dolgo'",
+      "otherName": "Roseybloom",
+      "family": "Unknown",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/359_malus_dolgo/regular/apple-zieraepfel-wild-apple-tree-branch.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
+    },
+    {
+      "id": "1b49e924-549b-446a-918f-1b656faa9411",
+      "createdAt": "2025-11-25T01:13:53.441Z",
+      "chosenName": "African daisy",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "commonName": "African daisy",
+      "scientificName": "Arctotis hybrida",
+      "otherName": "Not provided",
+      "family": "Asteraceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "Full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/924_arctotis_hybrida/regular/50811071336_f9b50120cc_b.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
+    },
+    {
+      "id": "d933f2c1-e4a2-425a-8f1b-0edf194280f4",
+      "createdAt": "2025-11-25T01:27:17.657Z",
+      "chosenName": "African lily",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "commonName": "African lily",
+      "scientificName": "Agapanthus africanus",
+      "otherName": "Not provided",
+      "family": "Amaryllidaceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/572_agapanthus_africanus/regular/agapanthus-flower-blue-violet.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
+    },
+    {
+      "id": "fb7f062c-1228-4f87-bc89-0aaee90a9b90",
+      "createdAt": "2025-11-25T02:00:34.889Z",
+      "chosenName": "lily of the Nile",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "commonName": "lily of the Nile",
+      "scientificName": "Agapanthus (group)",
+      "otherName": "Not provided",
+      "family": "Amaryllidaceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/575_agapanthus_group/regular/2742717111_04f3b1bee3_b.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
     }
   ],
   "journeys": [
@@ -1135,7 +1295,7 @@
       "status": "finished",
       "type": "garden"
     },
-      {
+    {
       "id": "127e0895-411b-4c5c-91d4-5a7e5121e329",
       "userId": "76d1a519-b539-485c-a310-4ca36285511a",
       "createdAt": "2025-11-24T13:48:09.831Z",
@@ -1364,6 +1524,95 @@
       "relatedPlants": [],
       "status": "locked",
       "type": "activities"
+    },
+    {
+      "id": "68ce319f-2300-4ccf-bc0b-39d724d8bb0c",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "createdAt": "2025-11-24T22:59:25.752Z",
+      "name": "First Sprout",
+      "description": "plant a new plant on your garden",
+      "pointsEarned": 10,
+      "finalPoints": 10,
+      "activitiesCompleted": 1,
+      "activitiesFinal": 1,
+      "plantCount": 1,
+      "order": 1,
+      "relatedPlants": [
+        "b5ffb8f4-36f4-4bd1-99b9-47073a2443b2"
+      ],
+      "status": "finished",
+      "type": "garden"
+    },
+    {
+      "id": "465abfb9-0abc-49fc-9423-28417ea51317",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "createdAt": "2025-11-24T22:59:25.760Z",
+      "name": "New Life",
+      "description": "complete every daily mission of a plant",
+      "pointsEarned": 30,
+      "finalPoints": 30,
+      "activitiesCompleted": 3,
+      "activitiesFinal": 3,
+      "plantCount": 0,
+      "order": 2,
+      "relatedPlants": [
+        "e13ac4d5-77e5-4218-b81c-3d3c58ee917d",
+        "1b49e924-549b-446a-918f-1b656faa9411"
+      ],
+      "status": "finished",
+      "type": "activities"
+    },
+    {
+      "id": "579d99c6-d28c-4061-9312-1fdaab0da2d9",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "createdAt": "2025-11-24T22:59:25.764Z",
+      "name": "Triple Threat",
+      "description": "plant three more plants in your garden",
+      "pointsEarned": 50,
+      "finalPoints": 50,
+      "activitiesCompleted": 4,
+      "activitiesFinal": 3,
+      "plantCount": 4,
+      "order": 3,
+      "relatedPlants": [
+        "d933f2c1-e4a2-425a-8f1b-0edf194280f4"
+      ],
+      "status": "finished",
+      "type": "garden"
+    },
+    {
+      "id": "1a7a734f-5e8c-46cd-a9cc-9553f42de348",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "createdAt": "2025-11-24T22:59:25.768Z",
+      "name": "Rain Season",
+      "description": "water your plants everyday for a week",
+      "pointsEarned": 10,
+      "finalPoints": 50,
+      "activitiesCompleted": 1,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 4,
+      "relatedPlants": [
+        "fb7f062c-1228-4f87-bc89-0aaee90a9b90"
+      ],
+      "status": "active",
+      "type": "activities"
+    },
+    {
+      "id": "880147eb-f8f2-4c88-99ca-e32c35446be1",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "createdAt": "2025-11-24T22:59:25.776Z",
+      "name": "Trimming Time",
+      "description": "Complete a trim",
+      "pointsEarned": 0,
+      "finalPoints": 20,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 1,
+      "plantCount": 0,
+      "order": 5,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
     }
   ],
   "missions": [
@@ -1495,6 +1744,71 @@
       "points": 10,
       "lastCompletedAt": null,
       "nextAvailableAt": "2025-11-24T14:31:39.662Z",
+      "isAvailable": true
+    },
+    {
+      "id": "7e1c2ac7-abf0-42c6-8caa-d66fb1fbed3d",
+      "idPlant": "b5ffb8f4-36f4-4bd1-99b9-47073a2443b2",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "title": "Sunlight for Rose Marie Magnolia",
+      "description": "Expose Rose Marie Magnolia to sunlight for 4-6 hours",
+      "type": "sunlight",
+      "hourlyFrequency": 14,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T00:50:08.322Z",
+      "nextAvailableAt": "2025-11-25T14:50:08.322Z",
+      "isAvailable": false
+    },
+    {
+      "id": "f3878e6f-8a22-4c13-9982-ed0d231a9452",
+      "idPlant": "e13ac4d5-77e5-4218-b81c-3d3c58ee917d",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "title": "Sunlight for Dolgo Apple",
+      "description": "Expose Dolgo Apple to sunlight for 4-6 hours",
+      "type": "sunlight",
+      "hourlyFrequency": 14,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T01:17:47.146Z",
+      "nextAvailableAt": "2025-11-25T15:17:47.146Z",
+      "isAvailable": false
+    },
+    {
+      "id": "a276cadf-343f-4361-a0e2-18ac5127f46c",
+      "idPlant": "1b49e924-549b-446a-918f-1b656faa9411",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "title": "Sunlight for African daisy",
+      "description": "Expose African daisy to sunlight for 4-6 hours",
+      "type": "sunlight",
+      "hourlyFrequency": 14,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T01:17:48.794Z",
+      "nextAvailableAt": "2025-11-25T15:17:48.794Z",
+      "isAvailable": false
+    },
+    {
+      "id": "16544f36-43b8-4ded-8028-65e06bb7f6be",
+      "idPlant": "d933f2c1-e4a2-425a-8f1b-0edf194280f4",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "title": "Sunlight for African lily",
+      "description": "Expose African lily to sunlight for 4-6 hours",
+      "type": "sunlight",
+      "hourlyFrequency": 14,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T01:35:57.157Z",
+      "nextAvailableAt": "2025-11-25T15:35:57.157Z",
+      "isAvailable": false
+    },
+    {
+      "id": "92630765-0f30-4c4f-8f01-57cc0f49834a",
+      "idPlant": "fb7f062c-1228-4f87-bc89-0aaee90a9b90",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "title": "Sunlight for lily of the Nile",
+      "description": "Expose lily of the Nile to sunlight for 4-6 hours",
+      "type": "sunlight",
+      "hourlyFrequency": 14,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-25T02:00:34.968Z",
       "isAvailable": true
     }
   ],

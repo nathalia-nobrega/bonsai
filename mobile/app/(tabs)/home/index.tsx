@@ -1,3 +1,4 @@
+import React, { useCallback, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,44 +8,39 @@ import {
   useWindowDimensions,
   Animated,
   ScrollView,
+  ActivityIndicator,
+  Alert,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import { s } from "./styleHome";
-import * as React from "react";
 import Noplants from "@/components/Noplants";
+import NoMissions from "@/components/Nomissions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useState } from "react";
 import Constants from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
 import PlantsHome from "@/components/PlantsHome";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-// mock
-const plants = [
-  {
-    id: 1,
-    name: "Cassandra",
-    species: "aloe vera",
-    image: require("../../../assets/images/Jason.jpeg"),
-  },
-  {
-    id: 2,
-    name: "Timothy",
-    species: "pothos",
-    image: require("../../../assets/images/Tim.jpeg"),
-  },
-  {
-    id: 3,
-    name: "Damian",
-    species: "bambu",
-    image: require("../../../assets/images/Damian.jpeg"),
-  },
-];
+interface Mission {
+  id: string;
+  idPlant?: string;
+  userId?: string;
+  title: string;
+  description?: string;
+  type?: string;
+  hourlyFrequency?: number;
+  points?: number;
+  lastCompletedAt?: string | null;
+  nextAvailableAt?: string | null;
+  isAvailable?: boolean;
+}
 
 interface Journey {
-  name: string;
-  status: string;
-  order: number;
+  id?: string;
+  name?: string;
+  order?: number;
+  status?: string;
 }
 
 const circularImages = [
@@ -53,37 +49,26 @@ const circularImages = [
   require("../../../assets/images/mission3icon.png"),
 ];
 
-const host =
-  Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
-  Constants?.expoConfig?.hostUri?.split(":")[0];
-
 export default function Index() {
-  const [journeys, setJourneys] = useState<Journey[]>([]);
-  const [activeJourney, setActiveJourney] = useState<Journey | null>(null);
-  const [missions, setMissions] = useState<any[]>([]);
-  const [loadingUser, setLoadingUser] = useState(true);
+  const [activeJourney, setActiveJourney] = useState<Journey | null>(null); // USADO apenas para o ícone do topo
+  const [missions, setMissions] = useState<Mission[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const insets = useSafeAreaInsets();
 
   const router = useRouter();
   const { width, height } = useWindowDimensions();
 
   const scrollY = React.useRef(new Animated.Value(0)).current;
   const initialWhiteHeight = height * 0.75;
-
-  const calculateMaxHeight = () => {
-    const titleHeight = 20;
-    const secondTitleHeight = 30;
-    const missionsHeight = 4 * 77 + 3 * 10;
-    const paddingExtra = 100;
-    return Math.min(
-      titleHeight + secondTitleHeight + missionsHeight + paddingExtra,
-      height * 1
-    );
-  };
-
-  const MAX_HEIGHT = calculateMaxHeight();
   const SCROLL_LIMIT = 200;
 
-  // Parse seguro
+  const host =
+    Constants?.expoGoConfig?.hostUri?.split(":")[0] ||
+    Constants?.expoConfig?.hostUri?.split(":")[0] ||
+    "localhost";
+
+    
+
   async function safeJSON(res: Response | null) {
     if (!res) return null;
     try {
@@ -102,85 +87,183 @@ export default function Index() {
     }
   }
 
-  // ==========================================================
-  //               loadJourneys()
-  // ==========================================================
-  const loadJourneys = React.useCallback(async () => {
-    setLoadingUser(true);
+  const fetchActiveJourney = useCallback(
+    async (userId: string) => {
+      try {
+        const res = await fetch(
+          `http://${host}:3000/api/journeys/user/${userId}/active`
+        ).catch(() => null);
+        const data = await safeJSON(res);
+        if (data) {
+          setActiveJourney({
+            id: data.id ?? data._id,
+            name: data.name ?? data.title ?? data.journeyName,
+            order: data.order ?? data.position,
+            status: data.status ?? undefined,
+          });
+        } else {
+          setActiveJourney(null);
+        }
+      } catch (err) {
+        console.log("Erro ao buscar activeJourney:", err);
+        setActiveJourney(null);
+      }
+    },
+    [host]
+  );
 
-    let userId = await AsyncStorage.getItem("userId");
-    console.log("ID do user no home:", userId);
+  // fetch missions
+  const fetchMissions = useCallback(
+    async (userId: string) => {
+      try {
+        const res = await fetch(
+          `http://${host}:3000/api/missions/user/${userId}`
+        ).catch(() => null);
 
-    if (!userId || userId.trim() === "" || userId.length < 10) {
-      await AsyncStorage.removeItem("userId");
-      router.replace("/index");
-      return;
-    }
+        const data = await safeJSON(res);
 
-    // ---------- JOURNEYS ----------
+        if (Array.isArray(data)) {
+        console.log("TIPOS DE MISSÕES RETORNADAS:", data.map((m: any) => m.type));
+      } else if (data?.missions && Array.isArray(data.missions)) {
+        console.log("TIPOS DE MISSÕES RETORNADAS:", data.missions.map((m: any) => m.type));
+      }
+
+        if (Array.isArray(data)) {
+          setMissions(
+            data.map((m: any) => ({
+              id: m.id ?? m._id,
+              idPlant: m.idPlant ?? m.plantId,
+              userId: m.userId,
+              title: m.title ?? m.name ?? "Untitled mission",
+              description: m.description ?? "",
+              type: m.type,
+              hourlyFrequency: m.hourlyFrequency,
+              points: m.points,
+              isAvailable:
+                typeof m.isAvailable === "boolean" ? m.isAvailable : true,
+            }))
+          );
+        } else if (data && data.missions && Array.isArray(data.missions)) {
+          setMissions(
+            data.missions.map((m: any) => ({
+              id: m.id ?? m._id,
+              idPlant: m.idPlant ?? m.plantId,
+              userId: m.userId,
+              title: m.title ?? m.name ?? "Untitled mission",
+              description: m.description ?? "",
+              type: m.type,
+              hourlyFrequency: m.hourlyFrequency,
+              points: m.points,
+              isAvailable:
+                typeof m.isAvailable === "boolean" ? m.isAvailable : true,
+            }))
+          );
+        } else {
+          console.log("Formato inesperado ao buscar missions:", data);
+          setMissions([]);
+        }
+      } catch (err) {
+        console.log("Erro ao buscar missions:", err);
+        setMissions([]);
+      }
+    },
+    [host]
+  );
+
+  // complete mission
+  const handleComplete = useCallback(
+    async (missionId: string) => {
+      try {
+        const res = await fetch(
+          `http://${host}:3000/api/missions/${missionId}/complete`,
+          {
+            method: "PUT",
+          }
+        ).catch(() => null);
+
+        if (!res || !res.ok) {
+          Alert.alert("Erro", "Não foi possível completar a missão.");
+          return;
+        }
+
+        const userId = await AsyncStorage.getItem("userId");
+        if (userId) fetchMissions(userId);
+      } catch (err) {
+        console.log("Erro complete mission:", err);
+      }
+    },
+    [fetchMissions, host]
+  );
+
+
+  const handleReactivate = useCallback(
+    async (missionId: string) => {
+      try {
+        const res = await fetch(
+          `http://${host}:3000/api/missions/${missionId}/reactivate`,
+          {
+            method: "PUT",
+          }
+        ).catch(() => null);
+
+        if (!res || !res.ok) {
+          Alert.alert("Erro", "Não foi possível reativar a missão.");
+          return;
+        }
+
+
+        const userId = await AsyncStorage.getItem("userId");
+        if (userId) fetchMissions(userId);
+      } catch (err) {
+        console.log("Erro reactivate mission:", err);
+      }
+    },
+    [fetchMissions, host]
+  );
+
+  const loadData = useCallback(async () => {
+    setLoading(true);
+
     try {
-      const resAll = await fetch(
-        `http://${host}:3000/api/journeys/user/${userId}`
-      ).catch(() => null);
+      const userId = await AsyncStorage.getItem("userId");
+      console.log("ID do user no home:", userId);
 
-      const dataAll = await safeJSON(resAll);
-
-      if (!dataAll || (Array.isArray(dataAll) && dataAll.length === 0)) {
-        console.log("Usuário não existe mais. Limpando storage...");
+      if (!userId || userId.trim() === "" || userId.length < 10) {
         await AsyncStorage.removeItem("userId");
         router.replace("/index");
         return;
       }
 
-      const resActive = await fetch(
-        `http://${host}:3000/api/journeys/user/${userId}/active`
-      ).catch(() => null);
+      // buscar active journey
+      await fetchActiveJourney(userId);
 
-      const active = await safeJSON(resActive);
-
-      setJourneys(dataAll);
-      setActiveJourney(active);
+      // buscar missions
+      await fetchMissions(userId);
+      
     } catch (err) {
-      console.log("Erro ao carregar journeys:", err);
+      console.log("Erro no loadData:", err);
+    } finally {
+      setLoading(false);
     }
+  }, [fetchActiveJourney, fetchMissions, router]);
 
-    // ---------- MISSÕES ----------
-    try {
-      console.log("Buscando missões para o usuário:", userId);
-
-      const resMissions = await fetch(
-        `http://${host}:3000/missions/user/${userId}`
-      );
-
-      if (!resMissions.ok) {
-        throw new Error(`Erro HTTP ao buscar missões: ${resMissions.status}`);
-      }
-
-      const dataMissions = await safeJSON(resMissions);
-      console.log("➜ Missoes carregadas:", dataMissions);
-
-      if (Array.isArray(dataMissions)) {
-        setMissions(dataMissions);
-      } else {
-        console.log("⚠️ Formato inesperado das missões:", dataMissions);
-      }
-    } catch (err) {
-      console.log("❌ Erro ao carregar missoes:", err);
-    }
-
-    setLoadingUser(false);
-  }, [host]);
-
-  // Executa quando volta para a tela
   useFocusEffect(
     React.useCallback(() => {
-      loadJourneys();
-    }, [loadJourneys])
+      loadData();
+    }, [])
   );
 
-  const hasNoPlants = !plants || plants.length === 0;
+  const MAX_HEIGHT = Math.min(20 + 30 + 4 * 77 + 3 * 10 + 100, height * 1);
 
-  if (loadingUser) return null;
+  const hasNoPlants = false;
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
@@ -201,7 +284,10 @@ export default function Index() {
 
           <ScrollView
             style={{ flex: 1 }}
-            contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              paddingBottom: insets.bottom + 120,
+            }}
             showsVerticalScrollIndicator={false}
             scrollEventThrottle={16}
             onScroll={Animated.event(
@@ -211,14 +297,14 @@ export default function Index() {
           >
             <View style={{ height: height * 0.3 }} />
 
-            {/* ícones de missões */}
+            {/* ícones de missões (usando apenas activeJourney para o ícone maior) */}
             <View style={s.circularImagesContainer}>
               {circularImages.slice(0, 3).map((image, index) => (
                 <View
                   key={index}
                   style={[
                     s.circularImageWrapper,
-                    index === (activeJourney?.order ?? 1) - 1 &&
+                    index === (activeJourney?.order ?? 2) - 1 &&
                       s.secondImageWrapper,
                   ]}
                 >
@@ -227,13 +313,13 @@ export default function Index() {
                       source={image}
                       style={[
                         s.circularImage,
-                        index === (activeJourney?.order ?? 1) - 1 &&
+                        index === (activeJourney?.order ?? 2) - 1 &&
                           s.secondImage,
                       ]}
                       resizeMode="cover"
                     />
 
-                    {index === (activeJourney?.order ?? 1) - 1 && (
+                    {index === (activeJourney?.order ?? 2) - 1 && (
                       <View
                         style={{
                           marginTop: 5,
@@ -242,7 +328,9 @@ export default function Index() {
                         }}
                       >
                         <Text style={s.current}>Current Mission:</Text>
-                        <Text style={s.mission}>{activeJourney?.name}</Text>
+                        <Text style={s.mission}>
+                          {activeJourney?.name ?? "No active mission"}
+                        </Text>
                       </View>
                     )}
                   </View>
@@ -250,16 +338,17 @@ export default function Index() {
               ))}
             </View>
 
-            {/* fundo animado */}
             <Animated.View
               style={[
                 s.halfWhiteBackground,
                 {
-                  height: scrollY.interpolate({
+                  // evita que o conteudo cresça
+                  minHeight: scrollY.interpolate({
                     inputRange: [0, SCROLL_LIMIT],
                     outputRange: [initialWhiteHeight, MAX_HEIGHT],
                     extrapolate: "clamp",
                   }),
+                  paddingBottom: insets.bottom + 40,
                   transform: [
                     {
                       translateY: scrollY.interpolate({
@@ -279,17 +368,38 @@ export default function Index() {
               <Text style={s.second_title}>Daily Missions</Text>
 
               <View>
-                {journeys.map((j) => (
-                  <View key={j.order} style={s.container2}>
+
+                {missions.length === 0 && (
+                  <View
+                    style={{
+                      padding: 20,
+                      paddingBottom: insets.bottom + 20,
+                    }}
+                  >
+                    <NoMissions />
+                  </View>
+                )}
+
+                {missions.map((m) => (
+                  <View key={m.id} style={s.container2}>
                     <Text style={s.textcontainer}>
-                      Mission: <Text style={s.secondtext}>{j.name}</Text>
+                    <Text style={s.secondtext}>{m.title}</Text>
                     </Text>
 
                     <Text style={s.desctextname}>
-                      Status: <Text style={s.desctext}>{j.status}</Text>
+                      <Text style={s.desctext}>
+                        {m.description}
+                      </Text>
                     </Text>
 
-                    <TouchableOpacity style={s.circleButton}></TouchableOpacity>
+                    <View style={{ flexDirection: "row", marginTop: 10 }}>
+                      <TouchableOpacity
+                        style={[s.circleButton, { marginRight: -10, marginTop: -50, }]}
+                        onPress={() => handleComplete(m.id)}
+                      >
+                        <Text style={{ color: "#fff" }}>✓</Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 ))}
               </View>
@@ -300,6 +410,7 @@ export default function Index() {
               />
 
               <View
+                pointerEvents="none"
                 style={{
                   position: "absolute",
                   bottom: -100,
