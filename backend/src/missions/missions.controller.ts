@@ -24,7 +24,6 @@ import { HttpService } from '@nestjs/axios';
 export class MissionsController {
   constructor(private readonly httpService: HttpService) {}
 
-  //criar
   @Post()
   @ApiOperation({ summary: 'Create a new mission' })
   @ApiResponse({ status: 201, description: 'Mission successfully created.' })
@@ -42,7 +41,7 @@ export class MissionsController {
       );
 
       if (missionData.isAvailable !== undefined) {
-        // @ts-ignore - We know isAvailable exists on the instance
+        // @ts-ignore
         mission._isAvailable = missionData.isAvailable;
       }
 
@@ -52,7 +51,6 @@ export class MissionsController {
     }
   }
 
-  // Update a mission
   @Put(':id')
   @ApiOperation({ summary: 'Update a mission' })
   @ApiResponse({ status: 200, description: 'Mission successfully updated.' })
@@ -69,7 +67,6 @@ export class MissionsController {
     }
   }
 
-  //completar
   @Put(':id/complete')
   @ApiOperation({ summary: 'Mark a mission as completed' })
   @ApiResponse({ status: 200, description: 'Mission marked as completed.' })
@@ -94,6 +91,13 @@ export class MissionsController {
         nextAvailableAt: this.calculateNextAvailableTime(now, frequencyHours),
       });
 
+      // Atualizar o estado da planta baseado no tipo de missão
+      try {
+        await this.updatePlantStateOnCompletion(mission.idPlant, mission.type);
+      } catch (err) {
+        console.error('Failed to update plant state:', err.message);
+      }
+
       // Notificar o sistema de jornadas
       try {
         await this.notifyJourneySystemOnCompletion(
@@ -114,16 +118,29 @@ export class MissionsController {
     }
   }
 
-  //reativar
   @Put(':id/reactivate')
   @ApiOperation({ summary: 'Reactivate a mission' })
   @ApiResponse({ status: 200, description: 'Mission reactivated.' })
   @ApiResponse({ status: 404, description: 'Mission not found.' })
   async reactivate(@Param('id') id: string) {
     try {
-      return await Mission.updatePlant(id, {
+      const mission = await Mission.findById(id);
+      if (!mission) {
+        throw new NotFoundException(`Mission with ID ${id} not found`);
+      }
+
+      const reactivatedMission = await Mission.updatePlant(id, {
         isAvailable: true,
       });
+
+      // Resetar o estado da planta quando a missão é reativada
+      try {
+        await this.resetPlantStateOnReactivation(mission.idPlant, mission.type);
+      } catch (err) {
+        console.error('Failed to reset plant state:', err.message);
+      }
+
+      return reactivatedMission;
     } catch (error) {
       if (error instanceof Error && error.message.includes('not found')) {
         throw new NotFoundException(`Mission with ID ${id} not found`);
@@ -132,7 +149,6 @@ export class MissionsController {
     }
   }
 
-  //get
   @Get(':id')
   @ApiOperation({ summary: 'Get mission by ID' })
   @ApiResponse({ status: 200, description: 'Mission found.' })
@@ -148,7 +164,6 @@ export class MissionsController {
     }
   }
 
-  //get
   @Get('user/:userId')
   @ApiOperation({ summary: 'Get all active missions of a user' })
   @ApiResponse({ status: 200, description: 'List of all user missions.' })
@@ -170,7 +185,6 @@ export class MissionsController {
     }
   }
 
-  //pra quando uma planta for adicionada
   @Post('plant/:plantId')
   @ApiOperation({ summary: 'Create missions for a specific plant' })
   @ApiResponse({
@@ -185,20 +199,6 @@ export class MissionsController {
     @Body() body: CreateMissionsForPlantRequest
   ) {
     try {
-      console.log('Received request to create missions for plant:', {
-        plantId,
-        requestBody: body,
-        plantFromBody: body.plant,
-        plantIdFromBody: body.plant?.id,
-        plantIdsMatch: body.plant?.id === plantId,
-      });
-
-      console.log('=== DEBUG: Received request ===');
-      console.log('Plant ID from param:', plantId);
-      console.log('Body received:', JSON.stringify(body, null, 2));
-      console.log('Plant from body:', body.plant);
-      console.log('Plant ID from body:', body.plant?.id);
-
       const plant = body.plant;
 
       if (!plant || plant.id !== plantId) {
@@ -228,7 +228,7 @@ export class MissionsController {
         missions.push(createdMission);
       }
 
-      return missions; // Swagger agora entende que é um array de Mission
+      return missions;
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes('not found')) {
@@ -240,7 +240,8 @@ export class MissionsController {
     }
   }
 
-  //helpers
+  // Métodos auxiliares
+
   private calculateNextAvailableTime(
     currentTime: Date,
     hoursToAdd: number
@@ -251,11 +252,8 @@ export class MissionsController {
   }
 
   private planMissionsForPlant(plant: PlantResponseDto): MissionCreationDto[] {
-    console.log('Gerando missões simplificadas para a planta:', plant);
-
     const missions: MissionCreationDto[] = [];
 
-    // Missão 1 — Água
     missions.push({
       idPlant: plant.id,
       userId: plant.userId,
@@ -267,7 +265,6 @@ export class MissionsController {
       isAvailable: true,
     });
 
-    // Missão 2 — Sol
     missions.push({
       idPlant: plant.id,
       userId: plant.userId,
@@ -279,7 +276,6 @@ export class MissionsController {
       isAvailable: true,
     });
 
-    // Missão 3 — Poda
     missions.push({
       idPlant: plant.id,
       userId: plant.userId,
@@ -293,8 +289,6 @@ export class MissionsController {
 
     return missions;
   }
-
-  //controle de tempo
 
   @Cron(CronExpression.EVERY_5_MINUTES)
   async handleMissionReactivation() {
@@ -314,6 +308,19 @@ export class MissionsController {
               isAvailable: true,
             });
 
+            // Resetar o estado da planta quando a missão é reativada automaticamente
+            try {
+              await this.resetPlantStateOnReactivation(
+                mission.idPlant,
+                mission.type
+              );
+            } catch (err) {
+              console.error(
+                `Failed to reset plant state for mission ${mission.id}:`,
+                err.message
+              );
+            }
+
             reactivatedCount++;
             console.log(
               `Mission "${mission.title}" (${mission.id}) reactivated`
@@ -330,7 +337,6 @@ export class MissionsController {
     }
   }
 
-  //lida com missao
   private async notifyJourneySystemOnCompletion(
     userId: string,
     missionId: string,
@@ -352,6 +358,86 @@ export class MissionsController {
         'Failed to notify journey system on mission completion:',
         error.message
       );
+      throw error;
+    }
+  }
+
+  /**
+   * Atualiza o estado da planta quando uma missão é completada
+   */
+  private async updatePlantStateOnCompletion(
+    plantId: string,
+    missionType: MissionType
+  ): Promise<void> {
+    try {
+      // Buscar o estado atual da planta
+      const plantResponse = await firstValueFrom(
+        this.httpService.get(`/api/plants/${plantId}`)
+      );
+      const currentPlant = plantResponse.data;
+
+      // Preparar o update mantendo os valores existentes
+      const stateUpdate: any = {
+        wasWatered: currentPlant.wasWatered || false,
+        gotSunlight: currentPlant.gotSunlight || false,
+        wasTrimmed: currentPlant.wasTrimmed || false,
+      };
+
+      // Atualizar apenas o campo específico da missão
+      switch (missionType) {
+        case MissionType.Water:
+          stateUpdate.wasWatered = true;
+          break;
+        case MissionType.Sunlight:
+          stateUpdate.gotSunlight = true;
+          break;
+        case MissionType.Trim:
+          stateUpdate.wasTrimmed = true;
+          break;
+      }
+
+      await firstValueFrom(
+        this.httpService.put(`/api/plants/${plantId}/state`, stateUpdate)
+      );
+    } catch (error) {
+      // ...
+    }
+  }
+
+  /**
+   * Reseta o estado da planta quando uma missão é reativada
+   */
+  private async resetPlantStateOnReactivation(
+    plantId: string,
+    missionType: MissionType
+  ): Promise<void> {
+    try {
+      const stateUpdate: any = {};
+
+      switch (missionType) {
+        case MissionType.Water:
+          stateUpdate.wasWatered = false;
+          break;
+        case MissionType.Sunlight:
+          stateUpdate.gotSunlight = false;
+          break;
+        case MissionType.Trim:
+          stateUpdate.wasTrimmed = false;
+          break;
+        default:
+          console.warn(`Unknown mission type: ${missionType}`);
+          return;
+      }
+
+      await firstValueFrom(
+        this.httpService.put(`/api/plants/${plantId}/state`, stateUpdate)
+      );
+
+      console.log(
+        `Plant ${plantId} state reset: ${JSON.stringify(stateUpdate)}`
+      );
+    } catch (error) {
+      console.error(`Failed to reset plant ${plantId} state:`, error.message);
       throw error;
     }
   }

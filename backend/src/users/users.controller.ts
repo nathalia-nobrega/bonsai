@@ -13,8 +13,9 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 import { LowdbService } from '../database/lowdb.service';
-import { Journey } from '../journeys/entities/journey.entity';
 import { UserCreationDto } from './dto/user-creation-dto';
 import { UserLoginDto } from './dto/user-login-dto';
 import { UserResponseDto } from './dto/user-response-dto';
@@ -24,7 +25,10 @@ import { User } from './entities/user.entity';
 @ApiTags('users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly db: LowdbService) {
+  constructor(
+    private readonly db: LowdbService,
+    private readonly httpService: HttpService
+  ) {
     User.injectDb(this.db);
   }
 
@@ -78,18 +82,27 @@ export class UserController {
 
     const createdUser = await user.create();
 
-    console.log(createdUser.id);
+    console.log('User created:', createdUser.id);
 
+    // Notificar o JourneyController para criar as jornadas padrão
     try {
-      console.log('Creating default journeys for user:', createdUser.id);
-      const journeys = await Journey.createDefaultForUser(createdUser.id);
       console.log(
-        'Default journeys created successfully:',
-        journeys.length,
-        'journeys'
+        'Requesting default journeys creation for user:',
+        createdUser.id
+      );
+      await firstValueFrom(
+        this.httpService.post(`/api/journeys/user/${createdUser.id}/initialize`)
+      );
+      console.log(
+        'Default journeys created successfully via JourneyController'
       );
     } catch (error) {
-      console.error('Error creating default journeys:', error);
+      console.error(
+        'Error creating default journeys:',
+        error.response?.data || error.message
+      );
+      // Não lançar erro aqui para não falhar a criação do usuário
+      // Você pode decidir se quer logar apenas ou tomar outra ação
     }
 
     return createdUser;
@@ -106,13 +119,15 @@ export class UserController {
     status: 401,
     description: 'Invalid credentials',
   })
-  async login(@Body(ValidationPipe) loginDto: UserLoginDto): Promise<UserResponseDto> {
+  async login(
+    @Body(ValidationPipe) loginDto: UserLoginDto
+  ): Promise<UserResponseDto> {
     try {
       return await User.validateCredentials(loginDto.email, loginDto.password);
     } catch (error) {
       throw new UnauthorizedException({
         success: false,
-        message: 'Invalid email or password'
+        message: 'Invalid email or password',
       });
     }
   }
@@ -125,7 +140,6 @@ export class UserController {
     return User.updateUser(id, userUpdateDto);
   }
 
-  //atualizar a partir de jornada
   @Post(':userId/journey-completed')
   @ApiResponse({
     status: 200,
@@ -148,7 +162,6 @@ export class UserController {
       }
 
       const newPointsGained = user.pointsGained + body.points;
-
       const newLevel = user.level + 1;
 
       const updates: UserUpdateDto = {
@@ -167,9 +180,5 @@ export class UserController {
       }
       throw new Error(`Failed to update user progress: ${error.message}`);
     }
-
-
   }
-
-
 }

@@ -4,8 +4,14 @@ import { LowdbModule } from 'src/database/lowdb.module';
 import { LowdbService } from 'src/database/lowdb.service';
 import { User } from './entities/user.entity';
 import { JourneysModule } from '../journeys/journeys.module';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
+  imports: [
+    HttpModule.register({
+      baseURL: 'http://localhost:3000',
+    }),
+  ],
   controllers: [UserController],
 })
 export class UsersModule implements OnModuleInit {
