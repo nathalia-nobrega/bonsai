@@ -79,7 +79,6 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Plants still on the run!</Text>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {plants
@@ -104,8 +103,8 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
                   })
                 }
                 style={{
-                  width: 160,
-                  height: 160 * 1.8,
+                  width: 140,
+                  height: 140 * 1.4,
                   borderRadius: 15,
                   backgroundColor: "#ffffff22",
                   marginHorizontal: 2,
@@ -113,8 +112,8 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
               >
                 <View
                   style={{
-                    width: "90%",
-                    height: "70%",
+                    width: "100%",
+                    height: "100%",
                     borderRadius: 15,
                     overflow: "hidden",
                   }}
@@ -136,7 +135,7 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
                   </View>
                 </View>
 
-                <View style={{ paddingHorizontal: 10, paddingTop: 5 }}>
+                <View style={{ paddingHorizontal: 10, }}>
                   <Text style={styles.name}>{p.chosenName || p.commonName}</Text>
                   <Text style={styles.namesci}>
                     {p.scientificName ||
@@ -156,15 +155,7 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 25,
-    paddingLeft: 18,
-    marginBottom: 80,
-  },
-  title: {
-    fontWeight: "700",
-    fontSize: 18,
-    marginBottom: 15,
-    color: "#5C9F60",
+    marginBottom:20
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

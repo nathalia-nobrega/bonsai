@@ -25,7 +25,7 @@ export const s = StyleSheet.create({
     fontSize: 16,
     color: "#5C9F60",
     fontFamily: "Nunito-ExtraBold",
-    marginBottom: 35,
+    marginBottom: 20,
     marginTop: 30,
   },
 
@@ -46,7 +46,6 @@ export const s = StyleSheet.create({
   },
   name: {
     position: "absolute",
-    bottom: 25,
     left: 10,
     fontFamily: "Poppins-Bold",
     color: "#FFFFFF",
@@ -57,7 +56,6 @@ export const s = StyleSheet.create({
     fontSize: 16,
     color: "#5C9F60",
     fontFamily: "Nunito-ExtraBold",
-    marginTop: -20,
     marginBottom: 10,
     left: 1,
   },

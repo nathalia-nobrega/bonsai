@@ -82,8 +82,10 @@ export default function MissaoScreen() {
           <Text style={styles.text}>points earned</Text>
         </View>
       </View>
-
+      <View style={{marginLeft:20, marginBottom:40}}>
+      <Text style={styles.title}>Plants still on the run!</Text>
       <PlantsScroll key={missionId} plantIds={mission.relatedPlants} />
+      </View>
     </ScrollView>
   );
 }
@@ -92,6 +94,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
+    
+  },
+  title: {
+    fontWeight: "700",
+    fontSize: 18,
+    marginBottom: 15,
+    color: "#5C9F60",
+    
+    marginTop:30
   },
   loading: {
     flex: 1,

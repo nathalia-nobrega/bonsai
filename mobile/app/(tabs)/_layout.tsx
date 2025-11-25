@@ -4,6 +4,7 @@ import { Tabs } from 'expo-router';
 import { View } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { usePathname } from "expo-router";
+import { router } from "expo-router";
 
 
 import PerfilIconGray from '../../assets/images/perfil-icon-gray.svg';
@@ -55,6 +56,12 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="jornada"
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.replace("/jornada");
+          },
+        }}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -68,8 +75,15 @@ export default function TabLayout() {
         }}
       />
 
+
       <Tabs.Screen
         name="home"
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.replace("/home");
+          },
+        }}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -83,8 +97,15 @@ export default function TabLayout() {
         }}
       />
 
+
       <Tabs.Screen
         name="plantas"
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.replace("/plantas");
+          },
+        }}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -98,8 +119,15 @@ export default function TabLayout() {
         }}
       />
 
+
       <Tabs.Screen
         name="perfil"
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.replace("/perfil");
+          },
+        }}
         options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -112,6 +140,7 @@ export default function TabLayout() {
           ),
         }}
       />
+
     </Tabs>
   );
 }

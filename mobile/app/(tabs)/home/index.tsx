@@ -19,7 +19,7 @@ import NoMissions from "@/components/Nomissions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
-import PlantsHome from "@/components/PlantsHome";
+import PlantsScroll from "../../../components/PlantsScroll";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface Mission {
@@ -41,6 +41,7 @@ interface Journey {
   name?: string;
   order?: number;
   status?: string;
+  relatedPlants?: string[];
 }
 
 const circularImages = [
@@ -98,6 +99,7 @@ export default function Index() {
             name: data.name ?? data.title ?? data.journeyName,
             order: data.order ?? data.position,
             status: data.status ?? undefined,
+            relatedPlants: data.relatedPlants ?? []
           });
         } else {
           setActiveJourney(null);
@@ -299,7 +301,21 @@ export default function Index() {
             )}
           >
             <View style={{ height: height * 0.3 }} />
-
+             {/* Ícone no canto direito */}
+             <TouchableOpacity
+                style={{
+                  position: "absolute",
+                  top: 40,
+                  right: 20,
+                  zIndex: 99,
+                }}
+                onPress={() => router.push("/(tabs)/home/notifications")}
+              >
+                <Image
+                  source={require("../../../assets/images/notification.png")}
+                  style={{ width: 28, height: 28 }}
+                />
+              </TouchableOpacity>
             {/* ícones de missões (usando apenas activeJourney para o ícone maior) */}
             <View style={s.circularImagesContainer}>
               {circularImages.slice(0, 3).map((image, index) => (
@@ -330,8 +346,8 @@ export default function Index() {
                           marginBottom: -55,
                         }}
                       >
-                        <Text style={s.current}>Current Mission:</Text>
-                        <Text style={s.mission}>
+                        <Text style={{ color: "#fff", fontWeight: "bold" }}>Current Mission:</Text>
+                        <Text style={{ color: "#fff", fontWeight: "bold" }}>
                           {activeJourney?.name ?? "No active mission"}
                         </Text>
                       </View>
@@ -364,9 +380,11 @@ export default function Index() {
                 },
               ]}
             >
+            
+
               <Text style={s.title}>Your garden</Text>
 
-              <PlantsHome />
+              <PlantsScroll key={activeJourney?.id} plantIds={activeJourney?.relatedPlants} />
 
               <Text style={s.second_title}>Daily Missions</Text>
 

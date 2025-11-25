@@ -96,6 +96,16 @@
       "photoUrl": "https://i.pinimg.com/736x/83/c2/fb/83c2fb4e80e001c8000e8c8b6d4323c5.jpg",
       "level": 2,
       "pointsGained": 10
+    },
+    {
+      "id": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "createdAt": "2025-11-25T22:05:20.794Z",
+      "name": "AMANTEDOFELIX",
+      "email": "hyunjin@gmail.com",
+      "password": "$2b$10$YzMi5ACfxUxPoGmdOd1VYuLyTuINMsLi.DkD7Mz4baz9uzaQIaZEC",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 4,
+      "pointsGained": 90
     }
   ],
   "plants": [
@@ -816,7 +826,7 @@
       ],
       "photoUrl": "https://perenual.com/storage/species_image/540_adenium_obesum/regular/9244335137_6d662ed77c_b.jpg",
       "wasWatered": false,
-      "gotSunlight": false,
+      "gotSunlight": true,
       "wasTrimmed": false
     },
     {
@@ -846,7 +856,7 @@
       ],
       "photoUrl": "file:///data/user/0/host.exp.exponent/cache/ImagePicker/3a1ca043-5af6-4f1b-889e-a5fc5977cf0e.jpeg",
       "wasWatered": false,
-      "gotSunlight": false,
+      "gotSunlight": true,
       "wasTrimmed": false
     },
     {
@@ -876,7 +886,7 @@
       ],
       "photoUrl": "https://perenual.com/storage/species_image/574_agapanthus_cold_hardy_white/regular/43927844454_7676af386f_b.jpg",
       "wasWatered": false,
-      "gotSunlight": false,
+      "gotSunlight": true,
       "wasTrimmed": false
     },
     {
@@ -906,7 +916,7 @@
       ],
       "photoUrl": "https://via.placeholder.com/400.png?text=🌱",
       "wasWatered": false,
-      "gotSunlight": false,
+      "gotSunlight": true,
       "wasTrimmed": false
     },
     {
@@ -1268,6 +1278,126 @@
       "wasWatered": false,
       "gotSunlight": false,
       "wasTrimmed": true
+    },
+    {
+      "id": "55fe5e7f-8d6a-4145-8bd3-d2906651782c",
+      "createdAt": "2025-11-25T22:21:55.603Z",
+      "chosenName": "lily",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "commonName": "lily of the Incas",
+      "scientificName": "Alstroemeria aurea",
+      "otherName": "Not provided",
+      "family": "Alstroemeriaceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/735_alstroemeria_aurea/regular/9065256170_72118879aa_b.jpg",
+      "wasWatered": true,
+      "gotSunlight": true,
+      "wasTrimmed": true
+    },
+    {
+      "id": "69e6dafb-6902-4cb7-bb37-14b64a500b60",
+      "createdAt": "2025-11-25T22:22:56.233Z",
+      "chosenName": "Star Wars",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "commonName": "Star Wars Magnolia",
+      "scientificName": "Magnolia 'Star Wars'",
+      "otherName": "Not provided",
+      "family": "Unknown",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Frequent",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/335_magnolia_star_wars/regular/2560px-Flower_of_magnolia_Star_wars.jpg",
+      "wasWatered": true,
+      "gotSunlight": true,
+      "wasTrimmed": true
+    },
+    {
+      "id": "40388a96-5d6b-4396-b4bf-05ec5d051886",
+      "createdAt": "2025-11-25T22:46:13.339Z",
+      "chosenName": "wild ginger",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "commonName": "wild ginger",
+      "scientificName": "Asarum shuttleworthii",
+      "otherName": "Not provided",
+      "family": "Aristolochiaceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Frequent",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "Part shade",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/1005_asarum_shuttleworthii/regular/47754652012_8550c0a56c_b.jpg",
+      "wasWatered": true,
+      "gotSunlight": true,
+      "wasTrimmed": true
+    },
+    {
+      "id": "e8f45acb-27f3-41fe-bcd2-b685f312e538",
+      "createdAt": "2025-11-25T22:50:07.357Z",
+      "chosenName": "large-flowered tickseed",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "commonName": "large-flowered tickseed",
+      "scientificName": "Coreopsis grandiflora",
+      "otherName": "Not provided",
+      "family": "Asteraceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Minimum",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "Full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/2053_coreopsis_grandiflora/regular/4727228506_8c81831cae_b.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
     }
   ],
   "journeys": [
@@ -1377,9 +1507,9 @@
       "createdAt": "2025-11-23T20:43:53.656Z",
       "name": "New Life",
       "description": "complete every daily mission of a plant",
-      "pointsEarned": 0,
+      "pointsEarned": 20,
       "finalPoints": 30,
-      "activitiesCompleted": 0,
+      "activitiesCompleted": 4,
       "activitiesFinal": 7,
       "plantCount": 0,
       "order": 2,
@@ -2101,6 +2231,94 @@
       "relatedPlants": [],
       "status": "locked",
       "type": "activities"
+    },
+    {
+      "id": "0a8fb112-d6ea-4017-8121-25c7a41bb8ce",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "createdAt": "2025-11-25T22:05:20.969Z",
+      "name": "First Sprout",
+      "description": "plant a new plant on your garden",
+      "pointsEarned": 10,
+      "finalPoints": 10,
+      "activitiesCompleted": 1,
+      "activitiesFinal": 1,
+      "plantCount": 1,
+      "order": 1,
+      "relatedPlants": [
+        "55fe5e7f-8d6a-4145-8bd3-d2906651782c"
+      ],
+      "status": "finished",
+      "type": "garden"
+    },
+    {
+      "id": "00f41302-c99f-4539-8499-4f4decdf04aa",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "createdAt": "2025-11-25T22:05:20.974Z",
+      "name": "New Life",
+      "description": "complete every daily mission of a plant",
+      "pointsEarned": 30,
+      "finalPoints": 30,
+      "activitiesCompleted": 3,
+      "activitiesFinal": 3,
+      "plantCount": 0,
+      "order": 2,
+      "relatedPlants": [
+        "69e6dafb-6902-4cb7-bb37-14b64a500b60"
+      ],
+      "status": "finished",
+      "type": "activities"
+    },
+    {
+      "id": "4c99b280-d121-4bff-8000-ce6ddc2be840",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "createdAt": "2025-11-25T22:05:20.981Z",
+      "name": "Triple Threat",
+      "description": "plant three more plants in your garden",
+      "pointsEarned": 50,
+      "finalPoints": 50,
+      "activitiesCompleted": 4,
+      "activitiesFinal": 3,
+      "plantCount": 4,
+      "order": 3,
+      "relatedPlants": [
+        "40388a96-5d6b-4396-b4bf-05ec5d051886"
+      ],
+      "status": "finished",
+      "type": "garden"
+    },
+    {
+      "id": "8d0eeeb7-22a3-45f6-a5f3-6e31c2be8c07",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "createdAt": "2025-11-25T22:05:20.986Z",
+      "name": "Rain Season",
+      "description": "water your plants everyday for a week",
+      "pointsEarned": 30,
+      "finalPoints": 50,
+      "activitiesCompleted": 3,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 4,
+      "relatedPlants": [
+        "e8f45acb-27f3-41fe-bcd2-b685f312e538"
+      ],
+      "status": "active",
+      "type": "activities"
+    },
+    {
+      "id": "624c18ca-d6cb-41a7-81d1-485e37c173bc",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "createdAt": "2025-11-25T22:05:20.992Z",
+      "name": "Trimming Time",
+      "description": "Complete a trim",
+      "pointsEarned": 0,
+      "finalPoints": 20,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 1,
+      "plantCount": 0,
+      "order": 5,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
     }
   ],
   "missions": [
@@ -2152,9 +2370,9 @@
       "type": "sunlight",
       "hourlyFrequency": 14,
       "points": 5,
-      "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-23T20:46:23.317Z",
-      "isAvailable": true
+      "lastCompletedAt": "2025-11-25T21:56:31.698Z",
+      "nextAvailableAt": "2025-11-26T11:56:31.698Z",
+      "isAvailable": false
     },
     {
       "id": "a32273a3-0fd0-4096-8363-97b71994062a",
@@ -2165,9 +2383,9 @@
       "type": "sunlight",
       "hourlyFrequency": 14,
       "points": 5,
-      "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-23T21:28:20.040Z",
-      "isAvailable": true
+      "lastCompletedAt": "2025-11-25T21:56:35.780Z",
+      "nextAvailableAt": "2025-11-26T11:56:35.780Z",
+      "isAvailable": false
     },
     {
       "id": "f257ec15-08af-44d2-a4e1-883b6260e0ff",
@@ -2178,9 +2396,9 @@
       "type": "sunlight",
       "hourlyFrequency": 14,
       "points": 5,
-      "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-23T21:33:36.801Z",
-      "isAvailable": true
+      "lastCompletedAt": "2025-11-25T21:56:34.679Z",
+      "nextAvailableAt": "2025-11-26T11:56:34.679Z",
+      "isAvailable": false
     },
     {
       "id": "e8deb49d-1d2b-4ae6-9436-a5e25c4405f2",
@@ -2191,9 +2409,9 @@
       "type": "sunlight",
       "hourlyFrequency": 14,
       "points": 5,
-      "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-23T21:35:56.751Z",
-      "isAvailable": true
+      "lastCompletedAt": "2025-11-25T21:56:36.388Z",
+      "nextAvailableAt": "2025-11-26T11:56:36.388Z",
+      "isAvailable": false
     },
     {
       "id": "c03bc3b6-2e35-4f57-b057-d2407baac6be",
@@ -2245,7 +2463,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T00:50:08.322Z",
       "nextAvailableAt": "2025-11-25T14:50:08.322Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "f3878e6f-8a22-4c13-9982-ed0d231a9452",
@@ -2258,7 +2476,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T01:17:47.146Z",
       "nextAvailableAt": "2025-11-25T15:17:47.146Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "a276cadf-343f-4361-a0e2-18ac5127f46c",
@@ -2271,7 +2489,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T01:17:48.794Z",
       "nextAvailableAt": "2025-11-25T15:17:48.794Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "16544f36-43b8-4ded-8028-65e06bb7f6be",
@@ -2284,7 +2502,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T01:35:57.157Z",
       "nextAvailableAt": "2025-11-25T15:35:57.157Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "92630765-0f30-4c4f-8f01-57cc0f49834a",
@@ -2388,7 +2606,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T06:27:50.344Z",
       "nextAvailableAt": "2025-11-25T07:27:50.344Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "e6676a65-68a5-4821-9b9e-f6bd39984693",
@@ -2401,7 +2619,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T06:26:59.185Z",
       "nextAvailableAt": "2025-11-25T09:26:59.185Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "b6cfda5f-89b5-43c9-b044-02e2616ae2e1",
@@ -2454,7 +2672,165 @@
       "lastCompletedAt": "2025-11-25T06:30:26.657Z",
       "nextAvailableAt": "2025-11-26T06:30:26.657Z",
       "isAvailable": false
+    },
+    {
+      "id": "81d1769d-27f1-4b92-ba7f-e94136dd7ff3",
+      "idPlant": "55fe5e7f-8d6a-4145-8bd3-d2906651782c",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Water lily",
+      "description": "Water your lily of the Incas (Alstroemeria aurea)",
+      "type": "water",
+      "hourlyFrequency": 1,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:33:17.820Z",
+      "nextAvailableAt": "2025-11-25T23:33:17.820Z",
+      "isAvailable": true
+    },
+    {
+      "id": "c7e5ad58-7090-4642-8667-4608d9efde8b",
+      "idPlant": "55fe5e7f-8d6a-4145-8bd3-d2906651782c",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Give sunlight to lily",
+      "description": "Place lily in sunlight",
+      "type": "sunlight",
+      "hourlyFrequency": 3,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:33:18.628Z",
+      "nextAvailableAt": "2025-11-26T01:33:18.628Z",
+      "isAvailable": false
+    },
+    {
+      "id": "b95fcf09-6fd2-4f4f-afd9-33f0841d96ea",
+      "idPlant": "55fe5e7f-8d6a-4145-8bd3-d2906651782c",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Trim lily",
+      "description": "Trim your lily of the Incas",
+      "type": "trim",
+      "hourlyFrequency": 24,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:33:19.252Z",
+      "nextAvailableAt": "2025-11-26T22:33:19.252Z",
+      "isAvailable": false
+    },
+    {
+      "id": "1fb13c8b-923f-47bc-947b-a2d4df880de6",
+      "idPlant": "69e6dafb-6902-4cb7-bb37-14b64a500b60",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Water Star Wars",
+      "description": "Water your Star Wars Magnolia (Magnolia 'Star Wars')",
+      "type": "water",
+      "hourlyFrequency": 1,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:33:19.870Z",
+      "nextAvailableAt": "2025-11-25T23:33:19.870Z",
+      "isAvailable": true
+    },
+    {
+      "id": "5bd7f228-7e37-43b3-a75e-92c764852ed9",
+      "idPlant": "69e6dafb-6902-4cb7-bb37-14b64a500b60",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Give sunlight to Star Wars",
+      "description": "Place Star Wars in sunlight",
+      "type": "sunlight",
+      "hourlyFrequency": 3,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:33:20.536Z",
+      "nextAvailableAt": "2025-11-26T01:33:20.536Z",
+      "isAvailable": false
+    },
+    {
+      "id": "b5795d7e-adec-4c12-a712-ade0325d8dce",
+      "idPlant": "69e6dafb-6902-4cb7-bb37-14b64a500b60",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Trim Star Wars",
+      "description": "Trim your Star Wars Magnolia",
+      "type": "trim",
+      "hourlyFrequency": 24,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:33:21.204Z",
+      "nextAvailableAt": "2025-11-26T22:33:21.204Z",
+      "isAvailable": false
+    },
+    {
+      "id": "c9548d57-288e-44bf-8198-f5bfd8683f67",
+      "idPlant": "40388a96-5d6b-4396-b4bf-05ec5d051886",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Water wild ginger",
+      "description": "Water your wild ginger (Asarum shuttleworthii)",
+      "type": "water",
+      "hourlyFrequency": 1,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:48:19.691Z",
+      "nextAvailableAt": "2025-11-25T23:48:19.691Z",
+      "isAvailable": true
+    },
+    {
+      "id": "f2f14fbe-2a0d-4643-831c-621c4e83b737",
+      "idPlant": "40388a96-5d6b-4396-b4bf-05ec5d051886",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Give sunlight to wild ginger",
+      "description": "Place wild ginger in sunlight",
+      "type": "sunlight",
+      "hourlyFrequency": 3,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:48:20.466Z",
+      "nextAvailableAt": "2025-11-26T01:48:20.466Z",
+      "isAvailable": false
+    },
+    {
+      "id": "370f1d62-34e6-4676-90ba-469397c34b4d",
+      "idPlant": "40388a96-5d6b-4396-b4bf-05ec5d051886",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Trim wild ginger",
+      "description": "Trim your wild ginger",
+      "type": "trim",
+      "hourlyFrequency": 24,
+      "points": 10,
+      "lastCompletedAt": "2025-11-25T22:48:21.054Z",
+      "nextAvailableAt": "2025-11-26T22:48:21.054Z",
+      "isAvailable": false
+    },
+    {
+      "id": "e1cdca30-632e-4699-8df7-84a0f7d4044c",
+      "idPlant": "e8f45acb-27f3-41fe-bcd2-b685f312e538",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Water large-flowered tickseed",
+      "description": "Water your large-flowered tickseed (Coreopsis grandiflora)",
+      "type": "water",
+      "hourlyFrequency": 1,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-25T22:50:07.388Z",
+      "isAvailable": true
+    },
+    {
+      "id": "6caa4ebc-4cee-4708-a2b4-d411c20507ab",
+      "idPlant": "e8f45acb-27f3-41fe-bcd2-b685f312e538",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Give sunlight to large-flowered tickseed",
+      "description": "Place large-flowered tickseed in sunlight",
+      "type": "sunlight",
+      "hourlyFrequency": 3,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-25T22:50:07.394Z",
+      "isAvailable": true
+    },
+    {
+      "id": "eebd9eaa-5594-4402-912d-e9b991db6096",
+      "idPlant": "e8f45acb-27f3-41fe-bcd2-b685f312e538",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "title": "Trim large-flowered tickseed",
+      "description": "Trim your large-flowered tickseed",
+      "type": "trim",
+      "hourlyFrequency": 24,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-25T22:50:07.399Z",
+      "isAvailable": true
     }
   ],
-  "notifications": []
+  "notifications": [
+    
+  ]
 }

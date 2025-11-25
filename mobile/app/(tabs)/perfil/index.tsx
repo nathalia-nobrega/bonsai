@@ -39,7 +39,19 @@ export default function ProfileScreen() {
     await AsyncStorage.removeItem("userId");
     await AsyncStorage.removeItem("userData");
 
-    router.replace("/signin"); // Volta ao index cinza
+    router.replace("/index"); // Volta ao index cinza
+  };
+
+
+  const getIcon = (order) => {
+    switch (order) {
+      case 1: return SeedIcon;
+      case 2: return SproutIcon;
+      case 3: return BloomIcon;
+      case 4: return WaterIcon;
+      case 5: return LeafIcon;
+      default: return SeedIcon ;
+    }
   };
 
   useEffect(() => {
@@ -97,8 +109,8 @@ export default function ProfileScreen() {
   // achievements agora vêm das missões concluídas
   const achievements = finishedMissions.map((m) => ({
     id: m.id,
-    icon: SeedIcon,
     title: m.title,
+    order: m.order,
   }));
 
   return (
@@ -109,7 +121,7 @@ export default function ProfileScreen() {
         <Text style={styles.achievementsTitle}>Achievements</Text>
         <View style={styles.iconsGrid}>
           {achievements.map((a) => (
-            <AchievementIcon key={a.id} Icon={a.icon} />
+            <AchievementIcon key={a.id} Icon={getIcon(a.order)} />
           ))}
         </View>
       </View>
@@ -130,7 +142,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: "#D9534F",
     borderRadius: 20,
-    marginTop: 170,
+    marginTop: 150,
   },
   logoutText: {
     color: "#fff",

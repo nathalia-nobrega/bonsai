@@ -94,7 +94,7 @@ export default function MissionHeader({ missionId }) {
   };
 
   const renderStars = () => {
-    if (progress === 100) {
+    if (progress > 100) {
       return (
         <View style={styles.starsContainer}>
           <Stars width={150} height={150} />
