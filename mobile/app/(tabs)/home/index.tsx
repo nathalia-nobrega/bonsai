@@ -149,7 +149,7 @@ export default function Index() {
       console.log("Buscando missões para o usuário:", userId);
 
       const resMissions = await fetch(
-        `http://${host}:3000/missions/user/${userId}`
+        `http://${host}:3000/api/missions/user/${userId}`
       );
 
       if (!resMissions.ok) {

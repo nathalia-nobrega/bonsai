@@ -251,80 +251,45 @@ export class MissionsController {
   }
 
   private planMissionsForPlant(plant: PlantResponseDto): MissionCreationDto[] {
-    console.log('chegou a ser chamaod');
+    console.log('Gerando missões simplificadas para a planta:', plant);
+
     const missions: MissionCreationDto[] = [];
-    const now = new Date();
 
-    console.log('planta recebida pra missao: ', plant);
+    // Missão 1 — Água
+    missions.push({
+      idPlant: plant.id,
+      userId: plant.userId,
+      title: `Water ${plant.chosenName}`,
+      description: `Water your ${plant.commonName} (${plant.scientificName})`,
+      type: MissionType.Water,
+      hourlyFrequency: 1,
+      points: 5,
+      isAvailable: true,
+    });
 
-    const seasonToMonthMap: Record<string, string> = {
-      Spring: '3',
-      Summer: '6',
-      Fall: '9',
-      Winter: '12',
-    };
+    // Missão 2 — Sol
+    missions.push({
+      idPlant: plant.id,
+      userId: plant.userId,
+      title: `Give sunlight to ${plant.chosenName}`,
+      description: `Place ${plant.chosenName} in sunlight`,
+      type: MissionType.Sunlight,
+      hourlyFrequency: 3,
+      points: 5,
+      isAvailable: true,
+    });
 
-    if (plant.trimmingMonths && Array.isArray(plant.trimmingMonths)) {
-      plant.trimmingMonths = plant.trimmingMonths.map((m) => {
-        if (seasonToMonthMap[m]) return seasonToMonthMap[m];
-        if (!isNaN(+m)) return m;
-        return m;
-      });
-    }
-
-    if (plant.wateringPeriod) {
-      const wateringMap = {
-        daily: 24,
-        weekly: 168,
-        biweekly: 336,
-        monthly: 720,
-      };
-
-      const wateringPeriod = plant.wateringPeriod.toLowerCase();
-      const hourlyFrequency = wateringMap[wateringPeriod];
-
-      if (hourlyFrequency) {
-        missions.push({
-          idPlant: plant.id,
-          userId: plant.userId,
-          title: `Water ${plant.chosenName}`,
-          description: `Water your ${plant.commonName} (${plant.scientificName})`,
-          type: MissionType.Water,
-          hourlyFrequency: 0.3,
-          points: 10,
-          isAvailable: true,
-        });
-      }
-    }
-
-    if (plant.sunlightDuration) {
-      missions.push({
-        idPlant: plant.id,
-        userId: plant.userId,
-        title: `Sunlight for ${plant.chosenName}`,
-        description: `Expose ${plant.chosenName} to sunlight for ${plant.sunlightDuration}`,
-        type: MissionType.Sunlight,
-        hourlyFrequency: 14,
-        points: 10,
-        isAvailable: true,
-      });
-    }
-
-    if (plant.trimmingCount > 0 && plant.trimmingMonths?.length > 0) {
-      const currentMonth = (now.getMonth() + 1).toString();
-      const shouldBeAvailable = plant.trimmingMonths.includes(currentMonth);
-
-      missions.push({
-        idPlant: plant.id,
-        userId: plant.userId,
-        title: `Trim ${plant.chosenName}`,
-        description: `Trim your ${plant.commonName} (${plant.scientificName})`,
-        type: MissionType.Trim,
-        hourlyFrequency: 720, // 24 * 30
-        points: 10,
-        isAvailable: shouldBeAvailable,
-      });
-    }
+    // Missão 3 — Poda
+    missions.push({
+      idPlant: plant.id,
+      userId: plant.userId,
+      title: `Trim ${plant.chosenName}`,
+      description: `Trim your ${plant.commonName}`,
+      type: MissionType.Trim,
+      hourlyFrequency: 24,
+      points: 5,
+      isAvailable: true,
+    });
 
     return missions;
   }
