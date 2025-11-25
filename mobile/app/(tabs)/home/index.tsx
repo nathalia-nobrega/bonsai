@@ -67,8 +67,6 @@ export default function Index() {
     Constants?.expoConfig?.hostUri?.split(":")[0] ||
     "localhost";
 
-    
-
   async function safeJSON(res: Response | null) {
     if (!res) return null;
     try {
@@ -122,11 +120,19 @@ export default function Index() {
 
         const data = await safeJSON(res);
 
+        console.log("data:", data);
+
         if (Array.isArray(data)) {
-        console.log("TIPOS DE MISSÕES RETORNADAS:", data.map((m: any) => m.type));
-      } else if (data?.missions && Array.isArray(data.missions)) {
-        console.log("TIPOS DE MISSÕES RETORNADAS:", data.missions.map((m: any) => m.type));
-      }
+          console.log(
+            "TIPOS DE MISSÕES RETORNADAS:",
+            data.map((m: any) => m.type)
+          );
+        } else if (data?.missions && Array.isArray(data.missions)) {
+          console.log(
+            "TIPOS DE MISSÕES RETORNADAS:",
+            data.missions.map((m: any) => m.type)
+          );
+        }
 
         if (Array.isArray(data)) {
           setMissions(
@@ -195,7 +201,6 @@ export default function Index() {
     [fetchMissions, host]
   );
 
-
   const handleReactivate = useCallback(
     async (missionId: string) => {
       try {
@@ -210,7 +215,6 @@ export default function Index() {
           Alert.alert("Erro", "Não foi possível reativar a missão.");
           return;
         }
-
 
         const userId = await AsyncStorage.getItem("userId");
         if (userId) fetchMissions(userId);
@@ -239,7 +243,6 @@ export default function Index() {
 
       // buscar missions
       await fetchMissions(userId);
-      
     } catch (err) {
       console.log("Erro no loadData:", err);
     } finally {
@@ -247,34 +250,6 @@ export default function Index() {
     }
   }, [fetchActiveJourney, fetchMissions, router]);
 
-    // ---------- MISSÕES ----------
-    try {
-      console.log("Buscando missões para o usuário:", userId);
-
-      const resMissions = await fetch(
-        `http://${host}:3000/api/missions/user/${userId}`
-      );
-
-      if (!resMissions.ok) {
-        throw new Error(`Erro HTTP ao buscar missões: ${resMissions.status}`);
-      }
-
-      const dataMissions = await safeJSON(resMissions);
-      console.log("➜ Missoes carregadas:", dataMissions);
-
-      if (Array.isArray(dataMissions)) {
-        setMissions(dataMissions);
-      } else {
-        console.log("⚠️ Formato inesperado das missões:", dataMissions);
-      }
-    } catch (err) {
-      console.log("❌ Erro ao carregar missoes:", err);
-    }
-
-    setLoadingUser(false);
-  }, [host]);
-
-  // Executa quando volta para a tela
   useFocusEffect(
     React.useCallback(() => {
       loadData();
@@ -396,7 +371,6 @@ export default function Index() {
               <Text style={s.second_title}>Daily Missions</Text>
 
               <View>
-
                 {missions.length === 0 && (
                   <View
                     style={{
@@ -411,18 +385,19 @@ export default function Index() {
                 {missions.map((m) => (
                   <View key={m.id} style={s.container2}>
                     <Text style={s.textcontainer}>
-                    <Text style={s.secondtext}>{m.title}</Text>
+                      <Text style={s.secondtext}>{m.title}</Text>
                     </Text>
 
                     <Text style={s.desctextname}>
-                      <Text style={s.desctext}>
-                        {m.description}
-                      </Text>
+                      <Text style={s.desctext}>{m.description}</Text>
                     </Text>
 
                     <View style={{ flexDirection: "row", marginTop: 10 }}>
                       <TouchableOpacity
-                        style={[s.circleButton, { marginRight: -10, marginTop: -50, }]}
+                        style={[
+                          s.circleButton,
+                          { marginRight: -10, marginTop: -50 },
+                        ]}
                         onPress={() => handleComplete(m.id)}
                       >
                         <Text style={{ color: "#fff" }}>✓</Text>

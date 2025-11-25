@@ -56,6 +56,16 @@
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
       "level": 4,
       "pointsGained": 90
+    },
+    {
+      "id": "33cf516d-9904-476d-9865-12df35b137e1",
+      "createdAt": "2025-11-25T02:52:25.564Z",
+      "name": "jes",
+      "email": "dickgrayson@gmail.com",
+      "password": "$2b$10$zmLqS8PVdL28EK2uXO.Dq.j4mtrOTpbGju9aaAN80YGtCidL6jWg.",
+      "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+      "level": 2,
+      "pointsGained": 10
     }
   ],
   "plants": [
@@ -1108,6 +1118,36 @@
       "wasWatered": false,
       "gotSunlight": false,
       "wasTrimmed": false
+    },
+    {
+      "id": "483ece87-d471-4b8c-85d5-54b92f3a286f",
+      "createdAt": "2025-11-25T02:52:39.483Z",
+      "chosenName": "Shirazz Japanese Maple",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "commonName": "Shirazz Japanese Maple",
+      "scientificName": "Acer palmatum 'Gwen's Rose Delight'",
+      "otherName": "Not provided",
+      "family": "Unknown",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://via.placeholder.com/400.png?text=🌱",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
     }
   ],
   "journeys": [
@@ -1613,6 +1653,88 @@
       "relatedPlants": [],
       "status": "locked",
       "type": "activities"
+    },
+    {
+      "id": "2917f01b-45f9-4cc7-998f-90a309319341",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "createdAt": "2025-11-25T02:52:25.650Z",
+      "name": "First Sprout",
+      "description": "plant a new plant on your garden",
+      "pointsEarned": 10,
+      "finalPoints": 10,
+      "activitiesCompleted": 1,
+      "activitiesFinal": 1,
+      "plantCount": 1,
+      "order": 1,
+      "relatedPlants": [
+        "483ece87-d471-4b8c-85d5-54b92f3a286f"
+      ],
+      "status": "finished",
+      "type": "garden"
+    },
+    {
+      "id": "22840c52-ced9-4c02-9217-cd49a9e4f048",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "createdAt": "2025-11-25T02:52:25.651Z",
+      "name": "New Life",
+      "description": "complete every daily mission of a plant",
+      "pointsEarned": 0,
+      "finalPoints": 30,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 3,
+      "plantCount": 0,
+      "order": 2,
+      "relatedPlants": [],
+      "status": "active",
+      "type": "activities"
+    },
+    {
+      "id": "8a1556cc-c3c5-45a7-9513-99a6ec9fb2c9",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "createdAt": "2025-11-25T02:52:25.653Z",
+      "name": "Triple Threat",
+      "description": "plant three more plants in your garden",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 3,
+      "plantCount": 3,
+      "order": 3,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "garden"
+    },
+    {
+      "id": "60511362-f2a5-40c2-9ff2-83fc79e28986",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "createdAt": "2025-11-25T02:52:25.654Z",
+      "name": "Rain Season",
+      "description": "water your plants everyday for a week",
+      "pointsEarned": 0,
+      "finalPoints": 50,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 7,
+      "plantCount": 0,
+      "order": 4,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
+    },
+    {
+      "id": "781f8eb4-75dc-4ea1-be6c-075eedefcd19",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "createdAt": "2025-11-25T02:52:25.656Z",
+      "name": "Trimming Time",
+      "description": "Complete a trim",
+      "pointsEarned": 0,
+      "finalPoints": 20,
+      "activitiesCompleted": 0,
+      "activitiesFinal": 1,
+      "plantCount": 0,
+      "order": 5,
+      "relatedPlants": [],
+      "status": "locked",
+      "type": "activities"
     }
   ],
   "missions": [
@@ -1809,6 +1931,45 @@
       "points": 10,
       "lastCompletedAt": null,
       "nextAvailableAt": "2025-11-25T02:00:34.968Z",
+      "isAvailable": true
+    },
+    {
+      "id": "1c82d0c7-c751-4963-8250-b45c8d678b03",
+      "idPlant": "483ece87-d471-4b8c-85d5-54b92f3a286f",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "title": "Water Shirazz Japanese Maple",
+      "description": "Water your Shirazz Japanese Maple (Acer palmatum 'Gwen's Rose Delight')",
+      "type": "water",
+      "hourlyFrequency": 1,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-25T02:52:39.525Z",
+      "isAvailable": true
+    },
+    {
+      "id": "fae80c49-4452-443a-81d5-0e9f21eff5c9",
+      "idPlant": "483ece87-d471-4b8c-85d5-54b92f3a286f",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "title": "Give sunlight to Shirazz Japanese Maple",
+      "description": "Place Shirazz Japanese Maple in sunlight",
+      "type": "sunlight",
+      "hourlyFrequency": 3,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-25T02:52:39.526Z",
+      "isAvailable": true
+    },
+    {
+      "id": "6142690e-7899-4f3d-9dec-c976729e8edf",
+      "idPlant": "483ece87-d471-4b8c-85d5-54b92f3a286f",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "title": "Trim Shirazz Japanese Maple",
+      "description": "Trim your Shirazz Japanese Maple",
+      "type": "trim",
+      "hourlyFrequency": 24,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-25T02:52:39.527Z",
       "isAvailable": true
     }
   ],

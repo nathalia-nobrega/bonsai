@@ -263,7 +263,7 @@ export class MissionsController {
       description: `Water your ${plant.commonName} (${plant.scientificName})`,
       type: MissionType.Water,
       hourlyFrequency: 1,
-      points: 5,
+      points: 10,
       isAvailable: true,
     });
 
@@ -275,7 +275,7 @@ export class MissionsController {
       description: `Place ${plant.chosenName} in sunlight`,
       type: MissionType.Sunlight,
       hourlyFrequency: 3,
-      points: 5,
+      points: 10,
       isAvailable: true,
     });
 
@@ -287,7 +287,7 @@ export class MissionsController {
       description: `Trim your ${plant.commonName}`,
       type: MissionType.Trim,
       hourlyFrequency: 24,
-      points: 5,
+      points: 10,
       isAvailable: true,
     });
 
