@@ -247,6 +247,34 @@ export default function Index() {
     }
   }, [fetchActiveJourney, fetchMissions, router]);
 
+    // ---------- MISSÕES ----------
+    try {
+      console.log("Buscando missões para o usuário:", userId);
+
+      const resMissions = await fetch(
+        `http://${host}:3000/api/missions/user/${userId}`
+      );
+
+      if (!resMissions.ok) {
+        throw new Error(`Erro HTTP ao buscar missões: ${resMissions.status}`);
+      }
+
+      const dataMissions = await safeJSON(resMissions);
+      console.log("➜ Missoes carregadas:", dataMissions);
+
+      if (Array.isArray(dataMissions)) {
+        setMissions(dataMissions);
+      } else {
+        console.log("⚠️ Formato inesperado das missões:", dataMissions);
+      }
+    } catch (err) {
+      console.log("❌ Erro ao carregar missoes:", err);
+    }
+
+    setLoadingUser(false);
+  }, [host]);
+
+  // Executa quando volta para a tela
   useFocusEffect(
     React.useCallback(() => {
       loadData();
