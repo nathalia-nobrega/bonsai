@@ -26,7 +26,7 @@ export default function Index() {
   if (logged === null) return null; // carregando
 
   // // Se estiver logado, manda direto pro app
-  // if (logged) return <Redirect href="(tabs)/home" />;
+  if (logged) return <Redirect href="(tabs)/home" />;
 
   // Se NÃO estiver logado, exibe a landing page normalmente
   return (
