@@ -401,7 +401,16 @@ export default function Index() {
             
 
               <Text style={s.title}>Your garden</Text>
-
+              {(!activeJourney?.relatedPlants || activeJourney.relatedPlants.length === 0) && (
+                <View
+                  style={{
+                    padding: 20,
+                    paddingBottom: insets.bottom + 20,
+                  }}
+                >
+                  <Noplants />
+              </View>
+              )}
               <PlantsScroll key={activeJourney?.id} plantIds={activeJourney?.relatedPlants} />
 
               <Text style={s.second_title}>Daily Missions</Text>

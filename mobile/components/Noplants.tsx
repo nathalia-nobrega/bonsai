@@ -1,18 +1,22 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, ImageBackground, TouchableOpacity } from "react-native";
-import PlantsHome from "./PlantsHome";
+import { useRouter } from "expo-router";
 
-export default function Noplants({ plants }) {
-  if (!plants || plants.length === 0) {
-    return (
-      <View style={styles.emptyContainer}>
-        <Image 
-          source={require('../assets/images/noplant.png')}
-          style={styles.emptyImage}
-        />
+export default function NoMissions() {
+  const router = useRouter();
+  return (
+    <View style={styles.emptyContainer}>
+      <Image 
+        source={require('../assets/images/noplant.png')}
+        style={styles.emptyImage}
+      />
         <Text style={styles.emptyText}>No plants in your garden...</Text>
         <Text style={styles.emptySubtext}>Plant new seeds and watch them bloom!</Text>
-        <TouchableOpacity style={styles.button}>
+
+        <TouchableOpacity 
+                style={styles.button}
+                onPress={() => router.push("/(tabs)/plantas")}
+        >
           <Image
             source={require('../assets/images/botao.png')}
             style={styles.buttonIcon}
@@ -21,8 +25,7 @@ export default function Noplants({ plants }) {
         </TouchableOpacity>
       </View>
     );
-  }
-};
+  };
 
 const styles = StyleSheet.create({
 emptyContainer: {
@@ -43,12 +46,12 @@ emptyContainer: {
     fontSize: 17,
     fontFamily: 'Nunito-ExtraBold',
     color: '#3C3C3C',
-    left: 10,
+    left: 110,
   },
   emptySubtext: {
     position: "absolute",
     top: 65,
-    left: 10,
+    left: 110,
     fontSize: 10,
     fontFamily: 'Poppins-Medium',
     color: '#3C3C3C',
@@ -56,12 +59,12 @@ emptyContainer: {
   },
 button: {
   position: "absolute",
-  top: 90,
+  top: 100,
   backgroundColor: "#5C9F60",
   borderRadius: 35,
   paddingVertical: 9,
   paddingHorizontal: 20,
-  right: -40,
+  left: 100,
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "flex-end",
