@@ -233,10 +233,10 @@ export class Journey {
       {
         userId,
         name: 'Triple Threat',
-        description: 'plant three more plants in your garden',
+        description: 'plant three MORE plants in your garden',
         finalPoints: 50,
         activitiesFinal: 3,
-        plantCount: 3,
+        plantCount: 0,
         order: 3,
         relatedPlants: [],
         status: 'locked' as const,

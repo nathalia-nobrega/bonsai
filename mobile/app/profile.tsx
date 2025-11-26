@@ -107,7 +107,8 @@ export default function Index() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             name: name.trim(),
-            photoUrl: "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
+            photoUrl:
+              "https://i.pinimg.com/736x/78/91/5d/78915dac355554d24ed8231d45b32c39.jpg",
           }),
         }
       );

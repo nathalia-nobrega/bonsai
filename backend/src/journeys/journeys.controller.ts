@@ -315,10 +315,34 @@ export class JourneyController {
     const nextJourney = journeys.find((j) => j.order === currentOrder + 1);
 
     if (nextJourney && nextJourney.status === 'locked') {
-      await Journey.updateJourney(nextJourney.id, { status: 'active' });
+      console.log('BEFORE activation:', JSON.stringify(nextJourney, null, 2));
+
+      const allUserPlants = await this.getAllUserPlants(userId);
+      const existingPlantIds = allUserPlants.map((p) => p.id);
+
+      await Journey.updateJourney(nextJourney.id, {
+        status: 'active',
+        relatedPlants: existingPlantIds,
+        plantCount: existingPlantIds.length,
+      });
+
+      const updated = await Journey.findById(nextJourney.id);
+      console.log('AFTER activation:', JSON.stringify(updated, null, 2));
       console.log(
         `Next journey activated for user ${userId}: ${nextJourney.name}`
       );
+    }
+  }
+
+  private async getAllUserPlants(userId: string): Promise<any[]> {
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/api/plants/user/${userId}`)
+      );
+      return response.data || [];
+    } catch (error) {
+      console.error('Failed to fetch user plants:', error.message);
+      return [];
     }
   }
 }
