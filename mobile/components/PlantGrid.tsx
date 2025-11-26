@@ -107,6 +107,17 @@ export default function PlantGrid({ plantIds = [], host: hostProp }) {
     });
   };
 
+  function getMood(plant) {
+    const { wasWatered, gotSunlight, wasTrimmed } = plant;
+    
+    const trueCount = [wasWatered, gotSunlight, wasTrimmed].filter(Boolean).length;
+
+    if (trueCount === 0) return "sad";
+    if (trueCount === 3) return "good";
+    return "medium";
+  }
+
+
   const renderItem = ({ item, index }) => {
     const key = item.id ?? item._id ?? index;
     const photoUri =
@@ -117,7 +128,9 @@ export default function PlantGrid({ plantIds = [], host: hostProp }) {
       item.thumbnail ||
       null;
 
-    const FaceIcon = moods[item.mood] || MediumFace;
+    const mood = getMood(item);
+    const FaceIcon = moods[mood];
+
 
     return (
       <TouchableOpacity
@@ -187,7 +200,7 @@ export default function PlantGrid({ plantIds = [], host: hostProp }) {
         keyExtractor={(item, idx) => String(item.id ?? item._id ?? idx)}
         numColumns={3}
         columnWrapperStyle={{ gap: 10 }}
-        contentContainerStyle={{ gap: 15 }}
+        contentContainerStyle={{ gap: 0 }}
         showsVerticalScrollIndicator={false}
       />
     </View>

@@ -82,7 +82,7 @@ export default function MissaoScreen() {
           <Text style={styles.text}>points earned</Text>
         </View>
       </View>
-      <View style={{marginLeft:20, marginBottom:40}}>
+      <View style={{marginLeft:20, marginBottom:80}}>
       <Text style={styles.title}>Plants still on the run!</Text>
       <PlantsScroll key={missionId} plantIds={mission.relatedPlants} />
       </View>

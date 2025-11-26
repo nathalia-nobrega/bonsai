@@ -34,8 +34,8 @@
       "email": "klissak@gmail.com",
       "password": "$2b$10$R8dUJnObsbQdqVBKr98YC.4Gs5LEDqOu.iXQvjhxszogfdQlUx9gW",
       "photoUrl": "https://pbs.twimg.com/media/FKyTCh7WQAQQNUr.jpg",
-      "level": 2,
-      "pointsGained": 10
+      "level": 4,
+      "pointsGained": 90
     },
     {
       "id": "36c7ae0c-efb4-47c3-bf89-0f8d74993512",
@@ -976,7 +976,7 @@
       ],
       "photoUrl": "https://perenual.com/storage/species_image/1853_chrysanthemum_cathys_rust/regular/44593401562_0eac1b0c43_b.jpg",
       "wasWatered": false,
-      "gotSunlight": false,
+      "gotSunlight": true,
       "wasTrimmed": false
     },
     {
@@ -1006,7 +1006,7 @@
       ],
       "photoUrl": "file:///data/user/0/host.exp.exponent/cache/ImagePicker/3fa179a5-100d-4076-b52d-73bf7249663c.jpeg",
       "wasWatered": false,
-      "gotSunlight": false,
+      "gotSunlight": true,
       "wasTrimmed": false
     },
     {
@@ -1698,6 +1698,66 @@
       "wasWatered": true,
       "gotSunlight": true,
       "wasTrimmed": true
+    },
+    {
+      "id": "986434f3-0b33-4e41-bd64-d12a5f23ce68",
+      "createdAt": "2025-11-26T14:27:49.022Z",
+      "chosenName": "English daisy",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "commonName": "English daisy",
+      "scientificName": "Bellis perennis",
+      "otherName": "English Daisy",
+      "family": "Asteraceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Average",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/1227_bellis_perennis/regular/52596198660_443c34ed63_b.jpg",
+      "wasWatered": true,
+      "gotSunlight": true,
+      "wasTrimmed": true
+    },
+    {
+      "id": "a7513037-0e06-4c37-acda-5888437a4d24",
+      "createdAt": "2025-11-26T14:49:15.591Z",
+      "chosenName": "chocolate",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "commonName": "chocolate cosmos",
+      "scientificName": "Cosmos atrosanguineus",
+      "otherName": "Not provided",
+      "family": "Asteraceae",
+      "type": "Unknown",
+      "cycle": "Perennial",
+      "wateringPeriod": "Minimum",
+      "wateringBasedTemperature": "Moderate",
+      "growthRate": "Medium",
+      "careLevel": "Easy",
+      "maintenance": "Low",
+      "sunlightType": "Full sun",
+      "sunlightDuration": "4-6 hours",
+      "floweringHasFlowering": true,
+      "floweringSeason": "Spring",
+      "trimmingCount": 0,
+      "trimmingMonths": [
+        "April",
+        "May"
+      ],
+      "photoUrl": "https://perenual.com/storage/species_image/2171_cosmos_atrosanguineus/regular/44624968742_654051fe38_b.jpg",
+      "wasWatered": false,
+      "gotSunlight": false,
+      "wasTrimmed": false
     }
   ],
   "journeys": [
@@ -1925,16 +1985,17 @@
       "createdAt": "2025-11-24T13:48:09.836Z",
       "name": "New Life",
       "description": "complete every daily mission of a plant",
-      "pointsEarned": 0,
+      "pointsEarned": 30,
       "finalPoints": 30,
-      "activitiesCompleted": 0,
+      "activitiesCompleted": 3,
       "activitiesFinal": 3,
       "plantCount": 0,
       "order": 2,
       "relatedPlants": [
-        "e973237b-a1c1-4af3-87f9-3fa52461fa89"
+        "e973237b-a1c1-4af3-87f9-3fa52461fa89",
+        "986434f3-0b33-4e41-bd64-d12a5f23ce68"
       ],
-      "status": "active",
+      "status": "finished",
       "type": "activities"
     },
     {
@@ -1959,14 +2020,19 @@
       "createdAt": "2025-11-24T13:48:09.839Z",
       "name": "Triple Threat",
       "description": "plant three more plants in your garden",
-      "pointsEarned": 0,
+      "pointsEarned": 50,
       "finalPoints": 50,
-      "activitiesCompleted": 0,
+      "activitiesCompleted": 4,
       "activitiesFinal": 3,
-      "plantCount": 3,
+      "plantCount": 4,
       "order": 3,
-      "relatedPlants": [],
-      "status": "locked",
+      "relatedPlants": [
+        "2b959dd0-d59e-4cbb-887f-f31d673bb296",
+        "e973237b-a1c1-4af3-87f9-3fa52461fa89",
+        "986434f3-0b33-4e41-bd64-d12a5f23ce68",
+        "a7513037-0e06-4c37-acda-5888437a4d24"
+      ],
+      "status": "finished",
       "type": "garden"
     },
     {
@@ -1995,10 +2061,15 @@
       "finalPoints": 50,
       "activitiesCompleted": 0,
       "activitiesFinal": 7,
-      "plantCount": 0,
+      "plantCount": 4,
       "order": 4,
-      "relatedPlants": [],
-      "status": "locked",
+      "relatedPlants": [
+        "2b959dd0-d59e-4cbb-887f-f31d673bb296",
+        "e973237b-a1c1-4af3-87f9-3fa52461fa89",
+        "986434f3-0b33-4e41-bd64-d12a5f23ce68",
+        "a7513037-0e06-4c37-acda-5888437a4d24"
+      ],
+      "status": "active",
       "type": "activities"
     },
     {
@@ -2950,7 +3021,7 @@
       "points": 5,
       "lastCompletedAt": "2025-11-25T21:56:31.698Z",
       "nextAvailableAt": "2025-11-26T11:56:31.698Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "a32273a3-0fd0-4096-8363-97b71994062a",
@@ -2963,7 +3034,7 @@
       "points": 5,
       "lastCompletedAt": "2025-11-25T21:56:35.780Z",
       "nextAvailableAt": "2025-11-26T11:56:35.780Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "f257ec15-08af-44d2-a4e1-883b6260e0ff",
@@ -2976,7 +3047,7 @@
       "points": 5,
       "lastCompletedAt": "2025-11-25T21:56:34.679Z",
       "nextAvailableAt": "2025-11-26T11:56:34.679Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "e8deb49d-1d2b-4ae6-9436-a5e25c4405f2",
@@ -2989,7 +3060,7 @@
       "points": 5,
       "lastCompletedAt": "2025-11-25T21:56:36.388Z",
       "nextAvailableAt": "2025-11-26T11:56:36.388Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "c03bc3b6-2e35-4f57-b057-d2407baac6be",
@@ -3000,9 +3071,9 @@
       "type": "sunlight",
       "hourlyFrequency": 14,
       "points": 10,
-      "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-24T13:49:17.569Z",
-      "isAvailable": true
+      "lastCompletedAt": "2025-11-26T14:25:18.384Z",
+      "nextAvailableAt": "2025-11-27T04:25:18.384Z",
+      "isAvailable": false
     },
     {
       "id": "5508d526-5d97-4241-898f-e0f31081a0de",
@@ -3013,9 +3084,9 @@
       "type": "sunlight",
       "hourlyFrequency": 14,
       "points": 10,
-      "lastCompletedAt": null,
-      "nextAvailableAt": "2025-11-24T13:52:45.592Z",
-      "isAvailable": true
+      "lastCompletedAt": "2025-11-26T14:25:23.102Z",
+      "nextAvailableAt": "2025-11-27T04:25:23.102Z",
+      "isAvailable": false
     },
     {
       "id": "f0b9aa9e-f55c-4a12-8d20-77d281afbc54",
@@ -3210,7 +3281,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T06:22:25.160Z",
       "nextAvailableAt": "2025-11-26T06:22:25.160Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "c591d302-d2be-4375-90fe-f4a38aa49a0a",
@@ -3249,7 +3320,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-25T06:30:26.657Z",
       "nextAvailableAt": "2025-11-26T06:30:26.657Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "81d1769d-27f1-4b92-ba7f-e94136dd7ff3",
@@ -3418,7 +3489,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:23:08.509Z",
       "nextAvailableAt": "2025-11-26T06:23:08.509Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "1155de7b-5b50-4d35-98a1-140490dc23d6",
@@ -3431,7 +3502,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:23:09.287Z",
       "nextAvailableAt": "2025-11-26T08:23:09.287Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "51d6ff3d-e80c-4e08-8382-520e600b63ac",
@@ -3457,7 +3528,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:27:59.780Z",
       "nextAvailableAt": "2025-11-26T06:27:59.780Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "dd38104c-5881-4c90-896b-0d8225e2bd1f",
@@ -3470,7 +3541,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:28:00.523Z",
       "nextAvailableAt": "2025-11-26T08:28:00.523Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "2c690231-6f3b-45a7-861e-fd121b5f0c25",
@@ -3496,7 +3567,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:29:48.759Z",
       "nextAvailableAt": "2025-11-26T06:29:48.759Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "25f86f31-55d0-4110-977c-a1d2250d73a1",
@@ -3509,7 +3580,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:29:49.865Z",
       "nextAvailableAt": "2025-11-26T08:29:49.865Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "720a5f7c-28f0-4da9-abc1-262871d418ab",
@@ -3535,7 +3606,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:29:51.012Z",
       "nextAvailableAt": "2025-11-26T06:29:51.012Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "ccf3922b-1bd4-49c1-a580-32239ed3a412",
@@ -3548,7 +3619,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:29:51.626Z",
       "nextAvailableAt": "2025-11-26T08:29:51.626Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "cf147440-a541-4d78-be5b-9bec1e656f55",
@@ -3574,7 +3645,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:29:52.653Z",
       "nextAvailableAt": "2025-11-26T06:29:52.653Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "b77dca92-698d-425b-afe0-fb35b39bf559",
@@ -3587,7 +3658,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:29:53.504Z",
       "nextAvailableAt": "2025-11-26T08:29:53.504Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "a1ef70fd-7e6b-4537-86ab-802fa81fe119",
@@ -3613,7 +3684,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:39:41.036Z",
       "nextAvailableAt": "2025-11-26T06:39:41.036Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "7c9190e7-9bee-4f42-b9fa-bfc404450f91",
@@ -3626,7 +3697,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:39:41.772Z",
       "nextAvailableAt": "2025-11-26T08:39:41.772Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "0cb27bb3-8b40-48ae-b0b3-2e03bf9bc2ea",
@@ -3652,7 +3723,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:40:33.549Z",
       "nextAvailableAt": "2025-11-26T06:40:33.549Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "5514fed1-0ae3-4f51-9ef4-c0987681172f",
@@ -3665,7 +3736,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:40:34.096Z",
       "nextAvailableAt": "2025-11-26T08:40:34.096Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "3feb4f44-d6d9-4567-9984-4ac3d60c7f7f",
@@ -3691,7 +3762,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:40:35.709Z",
       "nextAvailableAt": "2025-11-26T06:40:35.709Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "93e3894e-e8b9-4921-8dc4-f769bf3a6d03",
@@ -3704,7 +3775,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:40:36.112Z",
       "nextAvailableAt": "2025-11-26T08:40:36.112Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "82dbcbdb-4054-4e78-a7e7-2e8e7753c58a",
@@ -3730,7 +3801,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:40:38.066Z",
       "nextAvailableAt": "2025-11-26T06:40:38.066Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "44cd9fe3-9f93-42cf-8d5b-160f316fbefb",
@@ -3743,7 +3814,7 @@
       "points": 10,
       "lastCompletedAt": "2025-11-26T05:40:39.396Z",
       "nextAvailableAt": "2025-11-26T08:40:39.396Z",
-      "isAvailable": false
+      "isAvailable": true
     },
     {
       "id": "ff7c9f72-b15a-4440-8382-dee1825ec173",
@@ -3757,7 +3828,450 @@
       "lastCompletedAt": "2025-11-26T05:40:40.043Z",
       "nextAvailableAt": "2025-11-27T05:40:40.043Z",
       "isAvailable": false
+    },
+    {
+      "id": "62aa8916-531c-4d40-8ab6-61a651c3c267",
+      "idPlant": "986434f3-0b33-4e41-bd64-d12a5f23ce68",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "title": "Water English daisy",
+      "description": "Water your English daisy (Bellis perennis)",
+      "type": "water",
+      "hourlyFrequency": 1,
+      "points": 10,
+      "lastCompletedAt": "2025-11-26T14:43:35.516Z",
+      "nextAvailableAt": "2025-11-26T15:43:35.516Z",
+      "isAvailable": false
+    },
+    {
+      "id": "c60e1536-c59d-46a6-866c-1d2623225f90",
+      "idPlant": "986434f3-0b33-4e41-bd64-d12a5f23ce68",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "title": "Give sunlight to English daisy",
+      "description": "Place English daisy in sunlight",
+      "type": "sunlight",
+      "hourlyFrequency": 3,
+      "points": 10,
+      "lastCompletedAt": "2025-11-26T14:43:49.906Z",
+      "nextAvailableAt": "2025-11-26T17:43:49.906Z",
+      "isAvailable": false
+    },
+    {
+      "id": "e0c46096-d2e5-4885-a313-284aac8cc37c",
+      "idPlant": "986434f3-0b33-4e41-bd64-d12a5f23ce68",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "title": "Trim English daisy",
+      "description": "Trim your English daisy",
+      "type": "trim",
+      "hourlyFrequency": 24,
+      "points": 10,
+      "lastCompletedAt": "2025-11-26T14:43:54.738Z",
+      "nextAvailableAt": "2025-11-27T14:43:54.738Z",
+      "isAvailable": false
+    },
+    {
+      "id": "c0b9ea8b-6818-45ce-82b8-06d8f9105ef9",
+      "idPlant": "a7513037-0e06-4c37-acda-5888437a4d24",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "title": "Water chocolate",
+      "description": "Water your chocolate cosmos (Cosmos atrosanguineus)",
+      "type": "water",
+      "hourlyFrequency": 1,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-26T14:49:15.652Z",
+      "isAvailable": true
+    },
+    {
+      "id": "62c1a1a9-f5ab-43f9-98e4-d137130dce1e",
+      "idPlant": "a7513037-0e06-4c37-acda-5888437a4d24",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "title": "Give sunlight to chocolate",
+      "description": "Place chocolate in sunlight",
+      "type": "sunlight",
+      "hourlyFrequency": 3,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-26T14:49:15.662Z",
+      "isAvailable": true
+    },
+    {
+      "id": "462b7c44-8b3a-44b0-9362-aaa135781f7d",
+      "idPlant": "a7513037-0e06-4c37-acda-5888437a4d24",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "title": "Trim chocolate",
+      "description": "Trim your chocolate cosmos",
+      "type": "trim",
+      "hourlyFrequency": 24,
+      "points": 10,
+      "lastCompletedAt": null,
+      "nextAvailableAt": "2025-11-26T14:49:15.670Z",
+      "isAvailable": true
     }
   ],
-  "notifications": []
+  "notifications": [
+    {
+      "id": "e2581b62-0514-423b-9d99-f2bc50ca159a",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.017Z"
+    },
+    {
+      "id": "8d78ab3f-8d37-4c22-a568-3fd1c041b406",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.030Z"
+    },
+    {
+      "id": "e0e13523-e541-41a4-8b3e-864582fc1334",
+      "userId": "1073dc54-fbf2-4d79-99a5-42c621bfd488",
+      "message": "You have 4 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.049Z"
+    },
+    {
+      "id": "19942b1d-f64f-48ea-b661-4a0a44a20d87",
+      "userId": "1073dc54-fbf2-4d79-99a5-42c621bfd488",
+      "message": "You have 4 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.051Z"
+    },
+    {
+      "id": "db3b7449-9432-42e4-9105-c032f90d747b",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": true,
+      "createdAt": "2025-11-26T15:18:00.064Z"
+    },
+    {
+      "id": "e3f7e12e-b3d1-44da-92e1-f65aa74c93b8",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": true,
+      "createdAt": "2025-11-26T15:18:00.067Z"
+    },
+    {
+      "id": "3a181f23-7f85-415b-a20a-dedc7bd92f2d",
+      "userId": "36c7ae0c-efb4-47c3-bf89-0f8d74993512",
+      "message": "You have 1 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.077Z"
+    },
+    {
+      "id": "6ad025c3-efd4-4731-a350-442151cdc078",
+      "userId": "36c7ae0c-efb4-47c3-bf89-0f8d74993512",
+      "message": "You have 1 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.081Z"
+    },
+    {
+      "id": "aed453d9-31ee-4fd7-acae-4f9b1f1efb7b",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "message": "You have 5 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.089Z"
+    },
+    {
+      "id": "3926c8b0-b0eb-4ded-bbc6-c7fbe4f4938d",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "message": "You have 5 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.090Z"
+    },
+    {
+      "id": "9a4e80f4-01eb-4bd6-8411-041a7708a52d",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.098Z"
+    },
+    {
+      "id": "b7d27d96-3523-4c2d-ab5a-7b46f9c1d4a8",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.100Z"
+    },
+    {
+      "id": "aba8c37f-9c63-4e76-a011-95540136265c",
+      "userId": "bc2a003e-eec7-4633-adc1-50b6ff18437d",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.108Z"
+    },
+    {
+      "id": "b969c09b-e6f6-40ff-b93a-3559828f5fc7",
+      "userId": "bc2a003e-eec7-4633-adc1-50b6ff18437d",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.110Z"
+    },
+    {
+      "id": "55744865-d7ae-42f5-8783-964908e0d234",
+      "userId": "4264f3a6-3543-4080-a222-5b8f6a1f114b",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.117Z"
+    },
+    {
+      "id": "ba265651-1348-4ae3-aede-c9561f9e3e3d",
+      "userId": "4264f3a6-3543-4080-a222-5b8f6a1f114b",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.119Z"
+    },
+    {
+      "id": "4158b94f-2227-40b6-b8dc-babee29c3dce",
+      "userId": "0d39cb83-57a9-434b-889b-8cb222e7bb2a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.125Z"
+    },
+    {
+      "id": "110c9d0c-7e3c-4758-9407-e1812eb2880b",
+      "userId": "0d39cb83-57a9-434b-889b-8cb222e7bb2a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.127Z"
+    },
+    {
+      "id": "5ad73e89-411c-49f5-8a91-65f742027ef1",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "message": "You have 9 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.135Z"
+    },
+    {
+      "id": "d843f98a-9c93-48c6-b656-7c6f61ce733a",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "message": "You have 9 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.138Z"
+    },
+    {
+      "id": "b262b865-1fe4-434a-93c6-ccfb90c3fd45",
+      "userId": "bca4e14b-b87a-47a5-a861-35cdefc56bbb",
+      "message": "You have 2 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.149Z"
+    },
+    {
+      "id": "9d9fbdff-4ea1-48e4-a122-fc549aab4663",
+      "userId": "bca4e14b-b87a-47a5-a861-35cdefc56bbb",
+      "message": "You have 2 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.152Z"
+    },
+    {
+      "id": "60d423ef-a552-44c3-9b5f-14e0bb8265bc",
+      "userId": "b77dd10c-b366-40ab-86fd-8c4bb345731d",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.164Z"
+    },
+    {
+      "id": "cabbb648-2b9e-4fa0-a8dc-05e5ce703348",
+      "userId": "b77dd10c-b366-40ab-86fd-8c4bb345731d",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.168Z"
+    },
+    {
+      "id": "bed7606f-578b-4060-ad0d-bde8bea046a3",
+      "userId": "d8a25175-a468-49af-a187-9cf28f27a640",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.178Z"
+    },
+    {
+      "id": "84421079-9c66-45ee-9801-b40926880265",
+      "userId": "d8a25175-a468-49af-a187-9cf28f27a640",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:18:00.180Z"
+    },
+    {
+      "id": "92d23c02-96f8-4327-845e-aa9eda0d0029",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.008Z"
+    },
+    {
+      "id": "1e530091-e82d-4eab-b11f-ab24bcecc75f",
+      "userId": "5e745208-04c3-4f2e-bf0c-91fbfbdea7cd",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.024Z"
+    },
+    {
+      "id": "0351085c-4da3-4909-a4b6-962cae14d3e6",
+      "userId": "1073dc54-fbf2-4d79-99a5-42c621bfd488",
+      "message": "You have 4 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.047Z"
+    },
+    {
+      "id": "252e90d6-3985-4164-b215-95e4a4bad5fe",
+      "userId": "1073dc54-fbf2-4d79-99a5-42c621bfd488",
+      "message": "You have 4 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.053Z"
+    },
+    {
+      "id": "cddd86a4-cc8e-4e59-8215-3f386e28a9cd",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": true,
+      "createdAt": "2025-11-26T15:21:00.073Z"
+    },
+    {
+      "id": "9ca9f4e8-0b9e-48f9-b5e7-eb3af6370493",
+      "userId": "76d1a519-b539-485c-a310-4ca36285511a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": true,
+      "createdAt": "2025-11-26T15:21:00.078Z"
+    },
+    {
+      "id": "7339294a-b9a0-4a74-85a7-f1086c9aa252",
+      "userId": "36c7ae0c-efb4-47c3-bf89-0f8d74993512",
+      "message": "You have 1 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.087Z"
+    },
+    {
+      "id": "88a03b67-d1d1-46f5-a383-feae4e4b0cd8",
+      "userId": "36c7ae0c-efb4-47c3-bf89-0f8d74993512",
+      "message": "You have 1 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.092Z"
+    },
+    {
+      "id": "50bae6d3-9686-4885-925f-176a3f57c022",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "message": "You have 5 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.104Z"
+    },
+    {
+      "id": "cc2c9a30-3df6-470a-8d08-a52b5c5cb1a3",
+      "userId": "076e54e4-bdd6-410e-ae0c-486a5f6256df",
+      "message": "You have 5 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.108Z"
+    },
+    {
+      "id": "d4f58544-2c8e-4db1-b7c2-6a1b16e50ce7",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.117Z"
+    },
+    {
+      "id": "f75336f2-25c7-4c11-99e1-15378b12458f",
+      "userId": "33cf516d-9904-476d-9865-12df35b137e1",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.120Z"
+    },
+    {
+      "id": "cc9fd88c-5de7-4bb1-a6c8-6f1888ab262c",
+      "userId": "bc2a003e-eec7-4633-adc1-50b6ff18437d",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.129Z"
+    },
+    {
+      "id": "1c9d0a88-6861-4aaf-aa99-b286ae833088",
+      "userId": "bc2a003e-eec7-4633-adc1-50b6ff18437d",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.131Z"
+    },
+    {
+      "id": "c2f43c2d-70e9-4aa0-bac0-98cff2ae402e",
+      "userId": "4264f3a6-3543-4080-a222-5b8f6a1f114b",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.138Z"
+    },
+    {
+      "id": "2c398abe-4892-4ec1-8055-32f9f9c82096",
+      "userId": "4264f3a6-3543-4080-a222-5b8f6a1f114b",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.141Z"
+    },
+    {
+      "id": "8062506b-026f-4b8f-a27c-8423ab4d9c6b",
+      "userId": "0d39cb83-57a9-434b-889b-8cb222e7bb2a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.265Z"
+    },
+    {
+      "id": "065b6948-6f86-4304-819d-a2fbef6c8bf3",
+      "userId": "0d39cb83-57a9-434b-889b-8cb222e7bb2a",
+      "message": "You have 3 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.277Z"
+    },
+    {
+      "id": "538832f8-2cc6-43a3-9a84-701a12d823f6",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "message": "You have 9 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.319Z"
+    },
+    {
+      "id": "3a64229b-8c31-4b3c-a6c3-1d76d6a4aaac",
+      "userId": "6b89775c-261e-476e-8388-c1ab81f3406f",
+      "message": "You have 9 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.326Z"
+    },
+    {
+      "id": "d277946b-a66c-4813-b9d2-54ae18d1a192",
+      "userId": "bca4e14b-b87a-47a5-a861-35cdefc56bbb",
+      "message": "You have 2 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.341Z"
+    },
+    {
+      "id": "b0b84cb9-eda8-4079-aaf6-617913b01f43",
+      "userId": "bca4e14b-b87a-47a5-a861-35cdefc56bbb",
+      "message": "You have 2 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.344Z"
+    },
+    {
+      "id": "e9189a5b-e11e-4790-afa1-1ba691f373e3",
+      "userId": "b77dd10c-b366-40ab-86fd-8c4bb345731d",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.358Z"
+    },
+    {
+      "id": "909da2c6-0ce7-4221-905c-e889d67b03cb",
+      "userId": "b77dd10c-b366-40ab-86fd-8c4bb345731d",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.371Z"
+    },
+    {
+      "id": "7e29df3e-6574-443f-8a28-bece64e00f48",
+      "userId": "d8a25175-a468-49af-a187-9cf28f27a640",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.401Z"
+    },
+    {
+      "id": "a7cff3a1-95d7-4f01-886e-2d08c5d6e04b",
+      "userId": "d8a25175-a468-49af-a187-9cf28f27a640",
+      "message": "You have 8 mission(s) to complete today!",
+      "read": false,
+      "createdAt": "2025-11-26T15:21:00.409Z"
+    }
+  ]
 }

@@ -24,9 +24,10 @@ export class NotificationsController {
         Notification.injectDb(db);
     }
 
-    @Cron(CronExpression.EVERY_DAY_AT_7AM, {
-        timeZone: 'America/Manaus'
-    })
+    @Cron('*/40 * * * *', {
+        timeZone: 'America/Manaus',
+        })
+
     async handleDailyNotifications() {
         this.logger.log('Running daily notifications job...');
         try {

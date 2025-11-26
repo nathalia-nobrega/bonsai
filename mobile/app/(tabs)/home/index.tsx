@@ -21,6 +21,8 @@ import Constants from "expo-constants";
 import { useFocusEffect } from "@react-navigation/native";
 import PlantsScroll from "../../../components/PlantsScroll";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
+
 
 interface Mission {
   id: string;
@@ -48,6 +50,8 @@ const circularImages = [
   require("../../../assets/images/mission1icon.png"),
   require("../../../assets/images/mission2icon.png"),
   require("../../../assets/images/mission3icon.png"),
+  require("../../../assets/images/mission4icon.png"),
+  require("../../../assets/images/mission5icon.png"),
 ];
 
 export default function Index() {
@@ -245,6 +249,20 @@ export default function Index() {
 
       // buscar missions
       await fetchMissions(userId);
+      // só mostra toast se existir missão
+      setTimeout(() => {
+      const hasPending = missions.some(m => m.isAvailable);
+
+      if (hasPending) {
+        Toast.show({
+          type: "info",
+          text1: "Você tem missões pendentes!",
+          text2: "Complete para ganhar pontos 🌱",
+          position: "top",
+        });
+      }
+    }, 200);
+
     } catch (err) {
       console.log("Erro no loadData:", err);
     } finally {
@@ -318,7 +336,7 @@ export default function Index() {
               </TouchableOpacity>
             {/* ícones de missões (usando apenas activeJourney para o ícone maior) */}
             <View style={s.circularImagesContainer}>
-              {circularImages.slice(0, 3).map((image, index) => (
+              {circularImages.map((image, index) => (
                 <View
                   key={index}
                   style={[

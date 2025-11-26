@@ -108,6 +108,7 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
                   borderRadius: 15,
                   backgroundColor: "#ffffff22",
                   marginHorizontal: 2,
+                  marginRight:10
                 }}
               >
                 <View
@@ -135,14 +136,13 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
                   </View>
                 </View>
 
-                <View style={{ paddingHorizontal: 10, }}>
-                  <Text style={styles.name}>{p.chosenName || p.commonName}</Text>
-                  <Text style={styles.namesci}>
-                    {p.scientificName ||
-                      (Array.isArray(p.scientific_name)
-                        ? p.scientific_name[0]
-                        : p.scientific_name) ||
-                      ""}
+                <View style={styles.textBox}>
+                  <Text style={styles.name}>
+                    {p.chosenName || p.commonName}
+                  </Text>
+
+                  <Text style={styles.namesci} numberOfLines={2}>
+                    {p.scientificName}
                   </Text>
                 </View>
               </Pressable>
@@ -155,7 +155,7 @@ export default function PlantsScroll({ plantIds }: { plantIds: string[] }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom:20
+    marginBottom:20,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -167,20 +167,24 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 22,
     zIndex: 1,
   },
-  name: {
-    position: "absolute",
-    bottom: 25,
-    left: 10,
-    fontFamily: "Poppins-Bold",
-    color: "#FFFFFF",
-    fontSize: 12,
-  },
-  namesci: {
-    position: "absolute",
-    bottom: 10,
-    left: 10,
-    fontFamily: "Poppins-Regular",
-    color: "#FFFFFF",
-    fontSize: 11,
-  },
+  textBox: {
+  position: "absolute",
+  bottom: 8,
+  left: 10,
+  right: 10,
+},
+
+name: {
+  fontFamily: "Poppins-Bold",
+  color: "#FFFFFF",
+  fontSize: 12,
+},
+
+namesci: {
+  fontFamily: "Poppins-Regular",
+  color: "#FFFFFF",
+  fontSize: 11,
+  marginTop: 2,
+},
+
 });

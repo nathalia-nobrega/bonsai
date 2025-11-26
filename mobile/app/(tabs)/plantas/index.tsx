@@ -79,7 +79,25 @@ export default function PlantasScreen() {
   }, []);
 
   // extrai os ids para passar ao PlantGrid (aceita id ou _id)
-  const plantIds = (plants || []).map((p) => p.id ?? p._id ?? String(p._id ?? p.id ?? "")).filter(Boolean);
+  const filtered = filterPlants(plants, selectedFilters);
+
+  const plantIds = filtered
+    .map((p) => p.id ?? p._id ?? String(p._id ?? p.id ?? ""))
+    .filter(Boolean);
+
+
+  function filterPlants(plants, filters) {
+    if (filters.length === 0) return plants;
+
+    return plants.filter(p => {
+      return filters.every((f) => {
+        if (f === "water") return p.wasWatered === false;
+        if (f === "sunlight") return p.gotSunlight === false;
+        if (f === "trim") return p.wasTrimmed === false;
+        return true;
+      });
+    });
+  }
 
   return (
     <View style={s.container}>

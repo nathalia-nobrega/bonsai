@@ -112,7 +112,8 @@ export const s = StyleSheet.create({
   borderWidth: 8,
   borderColor: "#5C9F60",
   marginRight: 15,
-  left: 290,
+  left: 260,
+  top:5
 },
   scrollView: {
     width: "100%",
